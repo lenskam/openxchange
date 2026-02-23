@@ -1,75 +1,28 @@
-# Enhanced GEMINI.md – Complete Development Plan for Interxchange
+# GEMINI.md – Interxchange Development Guide
 
-This document provides an exhaustive specification for building the **Interxchange** interoperability platform. It is intended for an LLM agent (or development team) to generate code, configurations, and documentation. All decisions are based on the provided context, prototype images, and the answers to clarifying questions.
+This document provides an exhaustive specification for building the **Interxchange** interoperability platform. It is intended for the **Gemini AI agent** (or development team) to generate code, configurations, and documentation. All decisions are based on the provided context, prototype images, and the answers to clarifying questions. This guide also incorporates AI productivity best practices to maximise efficiency and consistency.
 
 ---
 
 ## Table of Contents
-- [Enhanced GEMINI.md – Complete Development Plan for Interxchange](#enhanced-geminimd--complete-development-plan-for-interxchange)
-  - [Table of Contents](#table-of-contents)
-  - [1. Project Overview](#1-project-overview)
-  - [2. Technology Stack](#2-technology-stack)
-  - [3. System Architecture](#3-system-architecture)
-  - [4. Detailed Frontend Specifications](#4-detailed-frontend-specifications)
-    - [4.1 Common Components](#41-common-components)
-    - [4.2 Dashboard Page](#42-dashboard-page)
-    - [4.3 Connections Page](#43-connections-page)
-    - [4.4 Workflows Page](#44-workflows-page)
-    - [4.5 Transactions Page](#45-transactions-page)
-    - [4.6 Channels Page](#46-channels-page)
-    - [4.7 Mappings Page](#47-mappings-page)
-    - [4.8 Users Page](#48-users-page)
-    - [4.9 Audit Log Page](#49-audit-log-page)
-    - [4.10 Settings Pages](#410-settings-pages)
-      - [4.10.1 Profile Tab](#4101-profile-tab)
-      - [4.10.2 Organization Tab](#4102-organization-tab)
-      - [4.10.3 Notifications Tab](#4103-notifications-tab)
-      - [4.10.4 Security Tab](#4104-security-tab)
-      - [4.10.5 System Tab](#4105-system-tab)
-  - [5. Backend Specifications](#5-backend-specifications)
-    - [5.1 Database Models](#51-database-models)
-      - [User](#user)
-      - [Connection](#connection)
-      - [Workflow](#workflow)
-      - [Mapping](#mapping)
-      - [Channel](#channel)
-      - [Transaction](#transaction)
-      - [AuditLog](#auditlog)
-      - [ApiKey (for programmatic access)](#apikey-for-programmatic-access)
-      - [SystemSettings (singleton table)](#systemsettings-singleton-table)
-    - [5.2 API Endpoints](#52-api-endpoints)
-      - [Authentication](#authentication)
-      - [Users (admin only)](#users-admin-only)
-      - [Connections](#connections)
-      - [Workflows](#workflows)
-      - [Mappings](#mappings)
-      - [Channels](#channels)
-      - [Transactions](#transactions)
-      - [Audit Logs](#audit-logs)
-      - [Settings](#settings)
-      - [Dashboard](#dashboard)
-      - [Admin Operations](#admin-operations)
-      - [Metrics \& Health](#metrics--health)
-      - [WebSocket](#websocket)
-    - [5.3 Authentication \& Authorization](#53-authentication--authorization)
-    - [5.4 External Adapters](#54-external-adapters)
-    - [5.5 Mapping Engine](#55-mapping-engine)
-    - [5.6 Workflow Executor](#56-workflow-executor)
-    - [5.7 Channel Router](#57-channel-router)
-    - [5.8 Background Tasks \& Scheduling](#58-background-tasks--scheduling)
-    - [5.9 Real‑time Updates (WebSockets)](#59-realtime-updates-websockets)
-  - [6. Security \& Compliance](#6-security--compliance)
-  - [7. CI/CD \& Deployment](#7-cicd--deployment)
-    - [Docker Compose (Development)](#docker-compose-development)
-    - [Docker Compose (Production)](#docker-compose-production)
-    - [GitHub Actions Workflow](#github-actions-workflow)
-    - [Environment Variables](#environment-variables)
-  - [8. Testing Strategy](#8-testing-strategy)
-    - [Backend (pytest)](#backend-pytest)
-    - [Frontend (Jest + React Testing Library)](#frontend-jest--react-testing-library)
-    - [E2E (Cypress) – Optional but recommended for critical flows.](#e2e-cypress--optional-but-recommended-for-critical-flows)
-  - [9. Documentation](#9-documentation)
-  - [10. Development Phases](#10-development-phases)
+1. [Project Overview](#1-project-overview)
+2. [Technology Stack](#2-technology-stack)
+3. [Architecture & Design Patterns](#3-architecture--design-patterns)
+4. [Graphic Charter and Design System](#4-graphic-charter-and-design-system)
+5. [Detailed Frontend Specifications](#5-detailed-frontend-specifications)
+6. [Detailed Backend Specifications](#6-detailed-backend-specifications)
+7. [Testing Strategy](#7-testing-strategy)
+8. [Git Workflow](#8-git-workflow)
+9. [Deployment & CI/CD](#9-deployment--cicd)
+10. [Documentation Guidelines](#10-documentation-guidelines)
+11. [Coding Standards](#11-coding-standards)
+12. [Environment Setup](#12-environment-setup)
+13. [AI Productivity Configuration](#13-ai-productivity-configuration)
+14. [AI-Specific Instructions](#14-ai-specific-instructions)
+15. [Gemini Commands](#15-gemini-commands)
+16. [MCP Integration](#16-mcp-integration)
+17. [Development Phases](#17-development-phases)
+18. [Revision History](#18-revision-history)
 
 ---
 
@@ -107,7 +60,9 @@ The platform monitors all activity via a **Dashboard**, **Transactions**, and **
 
 ---
 
-## 3. System Architecture
+## 3. Architecture & Design Patterns
+
+### Overall Architecture
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -156,13 +111,60 @@ The platform monitors all activity via a **Dashboard**, **Transactions**, and **
                       └──────────┘
 ```
 
+### Design Patterns
+
+- **Repository Pattern**: Abstract data access (SQLAlchemy repositories).
+- **Adapter Pattern**: For external systems (DHIS2, FHIR, etc.) – all implement `BaseAdapter`.
+- **Strategy Pattern**: For mapping transformations (different strategies for variable, org unit, etc.).
+- **Observer Pattern**: WebSocket broadcasts on transaction updates.
+
+### Package/Module Structure
+
+```
+backend/
+  app/
+    api/            # FastAPI routes (versioned)
+    core/           # config, security, dependencies
+    models/         # SQLAlchemy models
+    schemas/        # Pydantic models
+    services/       # business logic (workflows, mappings, channels)
+    adapters/       # external system adapters
+    repositories/   # data access layer
+    tasks/          # Celery tasks
+    utils/          # helpers
+  tests/
+    unit/
+    integration/
+frontend/
+  src/
+    components/     # reusable UI components
+    features/       # feature‑based modules (connections, workflows, etc.)
+      connections/
+        components/
+        hooks/
+        services/
+        types/
+      workflows/
+      ...
+    hooks/          # custom hooks
+    store/          # Redux slices
+    types/          # TypeScript definitions
+    utils/          # helpers
+    theme/          # MUI theme overrides
+```
+
+### State Management
+
+- **Frontend**: Redux Toolkit for global state; React Query for server state.
+- **Backend**: Stateless; sessions stored in Redis.
+
 ---
 
-## 4. Detailed Frontend Specifications
+## 4. Graphic Charter and Design System
 
 All pages must exactly match the provided Figma prototypes. Use Material‑UI components with custom theme overrides.
 
-### 4.1 Common Components
+### Common Components
 
 - **Sidebar** (collapsible):
   - Logo: “InterExchange” with “Data Integration Platform” subtitle.
@@ -181,7 +183,11 @@ All pages must exactly match the provided Figma prototypes. Use Material‑UI co
 - **Icons**: Use MUI icons. For connection types: DHIS2 (custom icon or `Storage`), OpenHIM (`Router`), FHIR (`MedicalServices`), HL7 (`Message`), etc.
 - **Charts**: Recharts library.
 
-### 4.2 Dashboard Page
+---
+
+## 5. Detailed Frontend Specifications
+
+### 5.1 Dashboard Page
 
 **URL**: `/dashboard`
 
@@ -216,7 +222,7 @@ All pages must exactly match the provided Figma prototypes. Use Material‑UI co
 - Activity feed from `/api/v1/audit-logs?limit=5`
 - Active workflows from `/api/v1/workflows?status=active&limit=4`
 
-### 4.3 Connections Page
+### 5.2 Connections Page
 
 **URL**: `/connections`
 
@@ -241,7 +247,7 @@ All pages must exactly match the provided Figma prototypes. Use Material‑UI co
 **New/Edit Connection Modal**:
 - Fields: Name, Type (dropdown), URL, Authentication Type (Basic, API Key, OAuth2), credentials fields (conditional), Test Connection button, Save.
 
-### 4.4 Workflows Page
+### 5.3 Workflows Page
 
 **URL**: `/workflows`
 
@@ -264,7 +270,7 @@ All pages must exactly match the provided Figma prototypes. Use Material‑UI co
 **Actions**:
 - Click card to open detail/edit page (optional for MVP; can be modal). For simplicity, three‑dot menu with Edit, Delete, Run Now.
 
-### 4.5 Transactions Page
+### 5.4 Transactions Page
 
 **URL**: `/transactions`
 
@@ -288,7 +294,7 @@ All pages must exactly match the provided Figma prototypes. Use Material‑UI co
 **Real‑time Updates**:
 - When a transaction status changes, the table row updates via WebSocket.
 
-### 4.6 Channels Page
+### 5.5 Channels Page
 
 **URL**: `/channels`
 
@@ -311,7 +317,7 @@ All pages must exactly match the provided Figma prototypes. Use Material‑UI co
 - Routes: list of transformation steps (can be JSON editor) and target endpoint.
 - Status checkbox.
 
-### 4.7 Mappings Page
+### 5.6 Mappings Page
 
 **URL**: `/mappings`
 
@@ -339,7 +345,7 @@ All pages must exactly match the provided Figma prototypes. Use Material‑UI co
 - Workflow association (optional, can be global)
 - Upon upload, backend parses, validates, stores, and returns record count.
 
-### 4.8 Users Page
+### 5.7 Users Page
 
 **URL**: `/users` (Admin only)
 
@@ -360,7 +366,7 @@ All pages must exactly match the provided Figma prototypes. Use Material‑UI co
 **Invite User Modal**:
 - Email, Full Name, Role, optional message.
 
-### 4.9 Audit Log Page
+### 5.8 Audit Log Page
 
 **URL**: `/audit-log`
 
@@ -376,16 +382,16 @@ All pages must exactly match the provided Figma prototypes. Use Material‑UI co
   - Timestamp
 - Pagination
 
-### 4.10 Settings Pages
+### 5.9 Settings Pages
 
 Settings are organized into tabs. Use Material‑UI Tabs.
 
-#### 4.10.1 Profile Tab
+#### 5.9.1 Profile Tab
 - Avatar upload
 - Name, Email, Role (read‑only)
 - Change Password section (Current, New, Confirm)
 
-#### 4.10.2 Organization Tab
+#### 5.9.2 Organization Tab
 - Organization Name (text field)
 - Country (dropdown)
 - Primary Contact Email
@@ -393,13 +399,13 @@ Settings are organized into tabs. Use Material‑UI Tabs.
 - Platform Name (for branding)
 - Primary Color (color picker, default #2563eb)
 
-#### 4.10.3 Notifications Tab
+#### 5.9.3 Notifications Tab
 - Email Notifications (toggle)
 - Slack Integration (toggle + webhook URL field)
 - Workflow Failure Alerts (toggle)
 - Daily Digest (toggle + time selector)
 
-#### 4.10.4 Security Tab
+#### 5.9.4 Security Tab
 - Two‑Factor Authentication (toggle, placeholder)
 - Session Timeout (dropdown: 15min, 30min, 1h, etc.)
 - API Keys section:
@@ -409,7 +415,7 @@ Settings are organized into tabs. Use Material‑UI Tabs.
   - Current session details
   - Other sessions (device, IP, last active) with “Revoke” button
 
-#### 4.10.5 System Tab
+#### 5.9.5 System Tab
 - Default Date Format (dropdown: YYYY-MM-DD, DD/MM/YYYY, etc.)
 - Log Retention (days) (number input)
 - Default Timezone (dropdown)
@@ -424,9 +430,9 @@ Settings are organized into tabs. Use Material‑UI Tabs.
 
 ---
 
-## 5. Backend Specifications
+## 6. Detailed Backend Specifications
 
-### 5.1 Database Models
+### 6.1 Database Models
 
 All models are defined using SQLAlchemy 2.0 with async support. Use `sqlalchemy.orm` with `asyncpg`. Migrations via Alembic.
 
@@ -551,7 +557,7 @@ primary_color: str = "#2563eb"
 ... other settings as needed
 ```
 
-### 5.2 API Endpoints
+### 6.2 API Endpoints
 
 All endpoints under `/api/v1`. Use Pydantic models for request/response validation. Provide OpenAPI schemas.
 
@@ -681,7 +687,7 @@ All endpoints under `/api/v1`. Use Pydantic models for request/response validati
   - `transaction_update`: Sent when a transaction status changes (includes transaction object).
   - `system_alert`: For critical system events.
 
-### 5.3 Authentication & Authorization
+### 6.3 Authentication & Authorization
 
 - **JWT tokens**: 
   - Access token: short‑lived (15 minutes), stored in httpOnly cookie named `access_token`.
@@ -694,7 +700,7 @@ All endpoints under `/api/v1`. Use Pydantic models for request/response validati
   - **Viewer**: Read‑only access to all pages except settings.
 - **Permission checks** are implemented as FastAPI dependencies (`get_current_user`, `require_roles`).
 
-### 5.4 External Adapters
+### 6.4 External Adapters
 
 All adapters inherit from a base class `BaseAdapter`:
 
@@ -727,10 +733,10 @@ Implement adapters for:
 - **OpenHIM**: Use OpenHIM API to register channels, mediate requests.
 - **OpenFN**: Interact with OpenFN jobs and triggers.
 - **FHIR**: Use `fhir.resources` to parse and create FHIR resources. Communicate via REST.
-- **HL7**: Use `hl7apy` to parse HL7 messages. For listening,可能需要 a separate HL7 server (MLLP). We'll implement a client that can send HL7 over MLLP or HTTP.
+- **HL7**: Use `hl7apy` to parse HL7 messages. For listening, a separate HL7 server (MLLP) may be needed. Implement a client that can send HL7 over MLLP or HTTP.
 - **Generic**: Allow user to define HTTP method, headers, body template.
 
-### 5.5 Mapping Engine
+### 6.5 Mapping Engine
 
 **Mapping File Formats**:
 
@@ -768,9 +774,9 @@ class MappingEngine:
 ```
 
 **Transformation Functions**:
-- Support simple operations: concatenation, arithmetic, conditional. For MVP, allow user to specify a Python expression? Safer: provide a set of predefined functions. We'll start with basic field mapping and later add scripting.
+- Support simple operations: concatenation, arithmetic, conditional. For MVP, provide a set of predefined functions. Later add scripting.
 
-### 5.6 Workflow Executor
+### 6.6 Workflow Executor
 
 **Celery Task**: `execute_workflow(workflow_id, trigger_info)`
 
@@ -791,9 +797,9 @@ Steps:
 - If individual record fails, increment failed_count, continue.
 - Retry policy: configurable (e.g., retry 3 times with exponential backoff). Use Celery retry mechanism.
 
-**Dead Letter Queue**: After max retries, move to a dead letter queue (another Celery queue) for manual inspection.
+**Dead Letter Queue**: After max retries, move to a dead letter queue for manual inspection.
 
-### 5.7 Channel Router
+### 6.7 Channel Router
 
 **Purpose**: Channels allow external systems to push data into Interxchange (like OpenHIM). They listen on specific URL patterns and methods.
 
@@ -804,9 +810,9 @@ Steps:
   2. Applies any transformations defined in the channel's `routes` (e.g., mapping, filtering).
   3. Forwards to the target endpoint (could be multiple).
   4. Records a transaction (if it is a workflow trigger) or just logs.
-- Supports protocols: HTTP (native), HL7 (via a separate MLLP server – we might defer HL7 channel to Phase 2).
+- Supports protocols: HTTP (native), HL7 (via a separate MLLP server – may be deferred to Phase 2).
 
-### 5.8 Background Tasks & Scheduling
+### 6.8 Background Tasks & Scheduling
 
 - **Celery Beat** schedule reads from `Workflow` table where `schedule` is not null.
 - A periodic task (every minute) checks for workflows that need to run (cron matching). Alternatively, use Celery Beat's dynamic scheduler that reloads from DB periodically.
@@ -816,7 +822,7 @@ Steps:
 - Workflows with schedule = null can be triggered manually via API or by a channel.
 - Channels can be linked to a workflow, so that incoming requests trigger the workflow.
 
-### 5.9 Real‑time Updates (WebSockets)
+### 6.9 Real‑time Updates (WebSockets)
 
 - On transaction status change, broadcast to all connected clients (or to a room specific to the workflow).
 - Frontend subscribes and updates transaction table / dashboard.
@@ -828,29 +834,85 @@ Steps:
 
 ---
 
-## 6. Security & Compliance
+## 7. Testing Strategy
 
-- **Vault**:
-  - Store all external credentials (passwords, API keys) in Vault's Key/Value secrets engine.
-  - In `Connection` model, store a reference path (e.g., `secret/data/connections/{id}`) instead of encrypted text in DB.
-  - Backend retrieves credentials from Vault on demand (with caching).
-- **Encryption at rest**: Database encrypted, Vault encrypted.
-- **JWT security**: httpOnly cookies, secure flag in production, sameSite strict.
-- **API Keys**:
-  - Hashed with bcrypt before storing.
-  - Sent as `Authorization: Bearer <key>` header.
-  - Scoped to specific resources.
-- **GDPR**:
-  - Right to access: provide endpoint to export user data.
-  - Right to be forgotten: anonymize or delete user data (except audit logs kept for compliance).
-- **Session Management**:
-  - Store active sessions in Redis (key: `session:{user_id}:{session_id}`) with expiry.
-  - On logout or timeout, remove session.
-  - Limit concurrent sessions per user (configurable).
+### Backend (pytest)
+
+- **Unit tests** for services (mapping engine, adapters) with mocked dependencies.
+- **Integration tests** for API endpoints using `TestClient` and a test database (separate PostgreSQL instance). Use `pytest-asyncio`.
+- **Mock external APIs** using `responses` or `httpx_mock`.
+- **Coverage** target: 80%.
+
+Example test for connections API:
+
+```python
+async def test_create_connection(client, db_session, vault_mock):
+    payload = {
+        "name": "Test DHIS2",
+        "type": "dhis2",
+        "url": "https://test.dhis2.org",
+        "auth_type": "basic",
+        "credentials": {"username": "admin", "password": "pass"}
+    }
+    response = await client.post("/api/v1/connections", json=payload)
+    assert response.status_code == 201
+    data = response.json()
+    assert data["name"] == "Test DHIS2"
+    # Verify vault called
+    vault_mock.write.assert_called_once()
+```
+
+### Frontend (Jest + React Testing Library)
+
+- Test components in isolation.
+- Mock API calls with `jest-fetch-mock` or `msw`.
+- Test user interactions (clicks, form submissions).
+- Coverage target: 70%.
+
+Example test for Connections list:
+
+```javascript
+import { render, screen } from '@testing-library/react';
+import { ConnectionsPage } from './ConnectionsPage';
+
+test('displays connections', async () => {
+  render(<ConnectionsPage />);
+  expect(await screen.findByText('National DHIS2 Instance')).toBeInTheDocument();
+});
+```
+
+### E2E (Cypress) – Optional but recommended for critical flows.
 
 ---
 
-## 7. CI/CD & Deployment
+## 8. Git Workflow
+
+### Branching Model
+- `main` – production-ready
+- `develop` – integration branch
+- `feature/[task-id]-description` – new features
+- `bugfix/[task-id]-description` – bug fixes
+- `release/v*` – release preparation
+
+### Commit Convention
+Follow [Conventional Commits](https://www.conventionalcommits.org/):
+```
+feat(connections): add test connection button
+fix(workflows): correct schedule parsing for midnight
+docs(readme): update setup instructions
+test(mappings): add unit tests for date format transformation
+```
+
+### Pull Request Process
+- At least one reviewer
+- All CI checks pass
+- No merge conflicts
+- Link to task tracker issue
+- PR template fully completed
+
+---
+
+## 9. Deployment & CI/CD
 
 ### Docker Compose (Development)
 
@@ -975,59 +1037,15 @@ REACT_APP_API_URL=https://api.example.com
 
 ---
 
-## 8. Testing Strategy
+## 10. Documentation Guidelines
 
-### Backend (pytest)
+### Code Documentation
+- Use docstrings (Google style) for Python modules, classes, and public functions.
+- Use JSDoc for TypeScript functions and components.
+- Explain "why" not "what" in comments.
+- Keep comments updated with code changes.
 
-- **Unit tests** for services (mapping engine, adapters) with mocked dependencies.
-- **Integration tests** for API endpoints using `TestClient` and a test database (separate PostgreSQL instance). Use `pytest-asyncio`.
-- **Mock external APIs** using `responses` or `httpx_mock`.
-- **Coverage** target: 80%.
-
-Example test for connections API:
-
-```python
-async def test_create_connection(client, db_session, vault_mock):
-    payload = {
-        "name": "Test DHIS2",
-        "type": "dhis2",
-        "url": "https://test.dhis2.org",
-        "auth_type": "basic",
-        "credentials": {"username": "admin", "password": "pass"}
-    }
-    response = await client.post("/api/v1/connections", json=payload)
-    assert response.status_code == 201
-    data = response.json()
-    assert data["name"] == "Test DHIS2"
-    # Verify vault called
-    vault_mock.write.assert_called_once()
-```
-
-### Frontend (Jest + React Testing Library)
-
-- Test components in isolation.
-- Mock API calls with `jest-fetch-mock` or `msw`.
-- Test user interactions (clicks, form submissions).
-- Coverage target: 70%.
-
-Example test for Connections list:
-
-```javascript
-import { render, screen } from '@testing-library/react';
-import { ConnectionsPage } from './ConnectionsPage';
-
-test('displays connections', async () => {
-  render(<ConnectionsPage />);
-  expect(await screen.findByText('National DHIS2 Instance')).toBeInTheDocument();
-});
-```
-
-### E2E (Cypress) – Optional but recommended for critical flows.
-
----
-
-## 9. Documentation
-
+### Project Documentation
 - **API Documentation**: Auto‑generated OpenAPI at `/docs` (Swagger UI) and `/redoc`.
 - **User Guide**: Markdown files in `docs/` covering:
   - Installation (Docker)
@@ -1039,9 +1057,152 @@ test('displays connections', async () => {
 
 ---
 
-## 10. Development Phases
+## 11. Coding Standards
 
-Follow the phased approach from the original roadmap, but with these refined tasks:
+### Python (Backend)
+- **Style**: Follow [PEP 8](https://peps.python.org/pep-0008/). Use `black` with line length 88.
+- **Type Hints**: Mandatory for all function signatures. Use `from __future__ import annotations` to allow forward references.
+- **Async**: Use `async/await` for I/O‑bound operations (database, HTTP calls). Prefer `AsyncSession` from SQLAlchemy.
+- **Imports**: Group by standard library, third‑party, then local modules. Use absolute imports.
+- **Error Handling**: Always catch specific exceptions; log with appropriate level (`error` for failures, `warning` for recoverable issues).
+
+### TypeScript/React (Frontend)
+- **Style**: Use Prettier with 2‑space indentation, single quotes, trailing commas.
+- **Naming**: 
+  - `camelCase` for variables, functions, instances.
+  - `PascalCase` for components, types, interfaces.
+  - `UPPER_SNAKE_CASE` for constants.
+- **Imports**: Group by: 1) external libraries, 2) internal modules, 3) types. Use absolute imports with `@/` alias configured.
+- **Component Structure**: Functional components with hooks. Use `React.memo` only when profiling shows benefit.
+- **Styling**: Use Material‑UI’s `sx` prop or styled components; avoid inline styles.
+
+### Linting & Formatting
+- **Backend**: `flake8`, `black`, `isort`. Run `make lint` (to be defined).
+- **Frontend**: ESLint (with Airbnb config), Prettier. Run `npm run lint` and `npm run format`.
+
+### Code Quality Gates
+Before submitting any code:
+1. ✅ Run formatting check
+2. ✅ Run linter and fix all issues
+3. ✅ Run compile/build check
+4. ✅ Run test suite (unit + integration)
+5. ✅ Verify no commented-out code or debug logs
+
+---
+
+## 12. Environment Setup
+
+### Prerequisites
+- Docker and Docker Compose
+- Node.js 20+
+- Python 3.11+
+- Git
+
+### Setup Steps
+```bash
+git clone [repository]
+cd interxchange
+cp .env.example .env  # Fill in values
+docker-compose up -d   # starts all services
+# For frontend development outside container:
+cd frontend
+npm install
+npm start
+```
+
+### Verification
+- Backend health check: `curl http://localhost:8000/health`
+- Frontend: open http://localhost:3000
+
+---
+
+## 13. AI Productivity Configuration
+
+### User‑Level vs. Project‑Level Guidelines
+- **User‑level `gemini.md`** (personal): Contains your global coding conventions and preferences.
+- **Project‑level `gemini.md`** (this file): Contains Interxchange‑specific structure and logic.
+
+### Living Document Principle
+This file is **actively maintained**. Whenever Gemini makes repeated mistakes or you discover a better pattern, update this document. Examples of anticipated updates:
+
+| **Issue** | **Guideline Added** |
+|-----------|---------------------|
+| Timeouts for large downloads | Always use a higher timeout (e.g., `timeout=60`) for any request that may involve large payloads. |
+| Uncommenting test blocks | Never uncomment `@pytest.mark.skip` or `it.skip` blocks unless explicitly instructed. |
+| Redundant DAO functions | Prefer extending existing repository methods over creating new ones. Document with ✅/❌ examples. |
+
+### ✅ Good / ❌ Bad Examples
+**DAO Function Reuse**:
+- ❌ Bad: Creating `fetchUserWithDetails(user_id)` when `get_user(user_id, include_details=True)` already exists.
+- ✅ Good: Extend `get_user` with an optional parameter and reuse the existing query.
+
+**Error Handling**:
+- ❌ Bad: `try: ... except: pass`
+- ✅ Good: `try: ... except SpecificError as e: logger.error(...); raise`
+
+**API Response Structure**:
+- ❌ Bad: Returning raw SQLAlchemy models directly.
+- ✅ Good: Always use Pydantic schemas for request/response validation.
+
+---
+
+## 14. AI-Specific Instructions
+
+### Interaction Guidelines
+1. **Always explain reasoning** behind significant code decisions.
+2. **Suggest tests** for new functionality – unit tests for services, integration tests for endpoints.
+3. **Flag potential issues** like performance bottlenecks (N+1 queries), security concerns (hardcoded secrets), or deviations from the prototype.
+4. **Follow the "Plan Before You Code" principle** – for any task larger than ~50 lines of code, first generate an implementation plan and wait for human review.
+
+### Implementation Planning Protocol
+1. Analyze the task description and relevant sections of this document.
+2. Draft a step‑by‑step plan listing files to create/modify, key logic changes, and test cases.
+3. Present the plan to the human for approval.
+4. Incorporate feedback and adjust the plan.
+5. Proceed to coding only after the plan is validated.
+
+### Parallel Task Execution Strategy
+When multiple independent tasks are assigned (e.g., implement Connections page and Mappings upload), you may simulate parallel execution by:
+- Working on one task while another is being reviewed.
+- Using separate clones of the repository (if local) or feature branches to isolate changes.
+- Clearly communicating which task you are currently focusing on.
+
+---
+
+## 15. Gemini Commands
+
+Custom slash commands streamline repetitive workflows. Place command definitions in `.gemini/commands/` (if supported). Below are recommended commands for Interxchange:
+
+| **Command** | **Purpose** | **Step‑by‑Step SOP** |
+|-------------|-------------|----------------------|
+| `/pr` | Create a pull request | 1. Review commits in current branch.<br>2. Summarize changes concisely.<br>3. Format title as `type(scope): description` (e.g., `feat(connections): add test connection button`).<br>4. Apply PR template from `.github/PULL_REQUEST_TEMPLATE.md`.<br>5. Fill in sections: motivation, changes, testing done.<br>6. Add labels (`needs-review`) and assignees.<br>7. Create PR and return URL. |
+| `/lint` | Run linters and auto‑fix | 1. Run backend linter: `flake8 backend` and `black backend`.<br>2. Run frontend linter: `npm run lint --prefix frontend`.<br>3. If errors persist, attempt auto‑fix (e.g., `black .`, `eslint --fix`).<br>4. Report any remaining issues. |
+| `/test` | Run test suites | 1. Run backend tests: `pytest backend/tests`.<br>2. Run frontend tests: `npm test --prefix frontend -- --coverage`.<br>3. Summarize results (passed/failed, coverage). |
+| `/planned` | Show planned tasks | Display a list with status, priority, and due date. |
+| `/checkout` | Create feature branch | 1. Fetch task details from Notion/Jira.<br>2. Create branch name following convention: `feature/XXX-short-description`.<br>3. Set up local environment if needed. |
+| `/docs` | Update documentation | 1. Scan recent code changes.<br>2. Identify impacted documentation files (README, API docs, user guides).<br>3. Suggest updates or create a draft PR with doc changes. |
+
+---
+
+## 16. MCP Integration
+
+To maximize automation, integrate the following MCP servers (Model Context Protocol) into your workflow:
+
+- **GitHub MCP**: Create branches, PRs, manage issues.
+
+**Example automated workflow** (from task to PR without leaving chat):
+1. `/planned` – shows Notion tasks.
+2. `/checkout TASK-123` – creates branch and sets up environment.
+3. Implement solution (guided by this document).
+4. Human reviews and tests locally.
+5. `/lint` and `/test` – run quality checks.
+6. `/pr` – creates pull request with all details.
+
+---
+
+## 17. Development Phases
+
+Follow the phased approach from the original roadmap:
 
 - **Phase 1: Core Infrastructure** (7 days)
   - Backend foundation, auth, user models, connection manager (basic).
@@ -1071,12 +1232,26 @@ Follow the phased approach from the original roadmap, but with these refined tas
 
 - **Phase 6: CI/CD & Deployment** (parallel)
   - GitHub Actions, production Docker Compose, Vault setup.
-
+  
 - **Phase 7: Frontend (api integration) Revise and testing**
 
 - **Phase 8: Backend (api) Revise and testing**
 
 - **Phase 9: Final Project Documentation**
+
 ---
 
-This enhanced GEMINI.md provides everything needed for an LLM agent to generate the full Interxchange platform. Each component is specified in detail, with concrete examples and expected behavior. The agent should follow the phases and generate code accordingly, ensuring it matches the prototypes and meets all functional requirements.
+## 18. Rules
+
+- ALWAYS RUn PYTHONT in a .venv environment in the backend directory
+- ALWAYS RUn NPM in a node_modules environment in the frontend directory
+
+## 19. Revision History
+
+| Date       | Change                                         | Reason                                      |
+|------------|------------------------------------------------|---------------------------------------------|
+| 2026-02-22 | Initial version based on original plan and template | Establish AI‑friendly development guide.    |
+
+---
+
+*This GEMINI.md is a living document. Update it whenever new patterns emerge or mistakes are corrected.*

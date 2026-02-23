@@ -1,0 +1,31 @@
+# Git
+.git
+.gitignore
+
+# Docker
+docker-compose*.yml
+.dockerignore
+
+# Documentation
+docs/
+*.md
+
+# Local data
+postgresql_data/
+mongo_data/
+redis_data/
+
+# Backend
+backend/__pycache__/
+backend/.venv/
+backend/.pytest_cache/
+backend/.mypy_cache/
+
+# Frontend
+frontend/node_modules/
+frontend/build/
+frontend/dist/
+
+# Environment
+.env
+.env.*

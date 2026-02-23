@@ -1,0 +1,24 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.coverage
+
+# Tests
+tests/
+
+# Git
+.gitignore
+.git
+
+# Docker
+.dockerignore
+
+# Environment
+.env
+.env.*

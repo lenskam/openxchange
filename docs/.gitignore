@@ -1,0 +1,7 @@
+# Build and temporary files
+_build/
+_static/
+_templates/
+*.pdf
+*.html
+*.docx

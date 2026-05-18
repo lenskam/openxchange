@@ -14,7 +14,7 @@ api.interceptors.response.use(
       try {
         await axios.post(
           `${import.meta.env.VITE_API_URL || 'http://localhost:8000/api/v1'}/auth/refresh`,
-          { refresh_token: getCookie('refresh_token') },
+          {},
           { withCredentials: true }
         );
         return api(originalRequest);
@@ -25,11 +25,5 @@ api.interceptors.response.use(
     return Promise.reject(error);
   }
 );
-
-function getCookie(name: string) {
-  const value = `; ${document.cookie}`;
-  const parts = value.split(`; ${name}=`);
-  if (parts.length === 2) return parts.pop()?.split(';').shift();
-}
 
 export default api;

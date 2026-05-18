@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from fastapi import APIRouter, Depends, HTTPException, Response, status
+from fastapi import APIRouter, Depends, HTTPException, Request, Response, status
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 
@@ -15,7 +15,7 @@ from app.core.security import (
     verify_password,
 )
 from app.models.user import User
-from app.schemas.auth import RefreshToken, RegisterRequest, TokenResponse, UserLogin
+from app.schemas.auth import RegisterRequest, TokenResponse, UserLogin
 from app.schemas.user import UserCreate, UserInDB
 from app.services.user_service import UserService
 
@@ -108,12 +108,19 @@ async def login(
 
 @router.post("/refresh", response_model=TokenResponse)
 async def refresh(
-    refresh_data: RefreshToken,
+    request: Request,
     response: Response,
     db: AsyncSession = Depends(get_db)
 ):
+    refresh_token = request.cookies.get("refresh_token")
+    if not refresh_token:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Refresh token not found",
+        )
+
     try:
-        payload = decode_token(refresh_data.refresh_token, is_refresh_token=True)
+        payload = decode_token(refresh_token, is_refresh_token=True)
         user_id_str = payload.get("sub")
         if not user_id_str:
             raise ValueError()
@@ -144,7 +151,7 @@ async def refresh(
     
     return {
         "access_token": access_token,
-        "refresh_token": refresh_data.refresh_token,
+        "refresh_token": refresh_token,
         "token_type": "bearer"
     }
 

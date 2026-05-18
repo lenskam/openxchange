@@ -7,6 +7,7 @@ from sqlalchemy.future import select
 from app.api.dependencies import get_current_user
 from app.core.config import settings
 from app.core.database import get_db
+from app.core.exceptions import BadRequestException
 from app.core.security import (
     create_access_token,
     create_refresh_token,
@@ -14,10 +15,52 @@ from app.core.security import (
     verify_password,
 )
 from app.models.user import User
-from app.schemas.auth import RefreshToken, TokenResponse, UserLogin
-from app.schemas.user import UserInDB
+from app.schemas.auth import RefreshToken, RegisterRequest, TokenResponse, UserLogin
+from app.schemas.user import UserCreate, UserInDB
+from app.services.user_service import UserService
 
 router = APIRouter(prefix="/auth", tags=["auth"])
+
+@router.post("/register", response_model=TokenResponse, status_code=201)
+async def register(
+    register_data: RegisterRequest,
+    response: Response,
+    db: AsyncSession = Depends(get_db),
+):
+    service = UserService(db)
+    try:
+        user_in = UserCreate(
+            email=register_data.email,
+            password=register_data.password,
+            full_name=register_data.full_name or None,
+            role="viewer",
+        )
+        user = await service.create(user_in, is_active=True)
+    except BadRequestException as e:
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail=e.detail,
+        )
+
+    access_token = create_access_token(subject=user.id)
+    refresh_token = create_refresh_token(subject=user.id)
+
+    response.set_cookie(
+        key="access_token",
+        value=access_token,
+        httponly=True,
+        max_age=settings.ACCESS_TOKEN_EXPIRE_MINUTES * 60,
+        samesite="lax",
+    )
+    response.set_cookie(
+        key="refresh_token",
+        value=refresh_token,
+        httponly=True,
+        max_age=settings.REFRESH_TOKEN_EXPIRE_DAYS * 24 * 60 * 60,
+        samesite="lax",
+    )
+
+    return {"access_token": access_token, "refresh_token": refresh_token, "token_type": "bearer"}
 
 @router.post("/login", response_model=TokenResponse)
 async def login(

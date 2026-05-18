@@ -13,7 +13,7 @@ class UserService:
     def __init__(self, db: AsyncSession):
         self.repo = UserRepository(db)
 
-    async def create(self, obj_in: UserCreate) -> User:
+    async def create(self, obj_in: UserCreate, is_active: bool = False) -> User:
         existing = await self.repo.get_by_email(obj_in.email)
         if existing:
             raise BadRequestException(detail="User with this email already exists")
@@ -24,7 +24,7 @@ class UserService:
             hashed_password=hashed,
             full_name=obj_in.full_name,
             role=obj_in.role or "viewer",
-            is_active=False,
+            is_active=is_active,
         )
 
     async def get(self, user_id: int) -> Optional[User]:

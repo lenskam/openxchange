@@ -1,8 +1,8 @@
-upstream backend_api {
+upstream interxchange_backend {
     server localhost:8000;
 }
 
-upstream frontend_app {
+upstream interxchange_frontend {
     server localhost:5173;
 }
 
@@ -57,7 +57,7 @@ server {
 
     # API Proxy
     location /api/ {
-        proxy_pass http://backend_api;
+        proxy_pass http://interxchange_backend;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -95,7 +95,7 @@ server {
 
     # API Docs
     location /docs {
-        proxy_pass http://backend_api;
+        proxy_pass http://interxchange_backend;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -104,7 +104,7 @@ server {
     }
 
     location /redoc {
-        proxy_pass http://backend_api;
+        proxy_pass http://interxchange_backend;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -113,7 +113,7 @@ server {
     }
 
     location /openapi.json {
-        proxy_pass http://backend_api;
+        proxy_pass http://interxchange_backend;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -123,7 +123,7 @@ server {
 
     # Frontend Application
     location / {
-        proxy_pass http://frontend_app;
+        proxy_pass http://interxchange_frontend;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;

@@ -16,7 +16,7 @@ async def list_users(
     skip: int = 0,
     limit: int = 100,
     db: AsyncSession = Depends(get_db),
-    current_user: User = Depends(require_roles(["admin"])),
+    current_user: User = Depends(get_current_user),
 ):
     service = UserService(db)
     items = await service.get_multi(skip=skip, limit=limit)

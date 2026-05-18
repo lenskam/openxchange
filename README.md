@@ -37,31 +37,29 @@ A data integration platform that connects health information systems (DHIS2, Ope
 
 ## Prerequisites
 
-- **Docker** + **Docker Compose** (recommended — runs everything except frontend)
+- **Docker** + **Docker Compose** (recommended — runs the full stack)
 - OR **Python 3.11+**, **Node.js 20+**, **PostgreSQL 15**, **Redis 7**, **Vault 1.15** (manual setup)
 
 ---
 
 ## Quick Start (Docker)
 
+The root `.env` file configures all services. Defaults work out of the box.
+
 ```bash
-# 1. Start backend services
+# 1. Start all services (PostgreSQL, Redis, Vault, backend, frontend)
 docker-compose up -d
 
 # 2. Run database migrations
 docker-compose exec backend alembic upgrade head
-
-# 3. Start frontend (separate terminal — not in docker-compose yet)
-cd frontend
-npm install
-npm run dev
 ```
 
+- **Frontend**: http://localhost:5173
 - **Backend API**: http://localhost:8000
 - **API Docs (Swagger)**: http://localhost:8000/docs
-- **Frontend**: http://localhost:5173
 
-> The docker-compose.yml starts PostgreSQL (port 5433), Redis (6379), Vault (8200), and the FastAPI backend (8000). The frontend runs separately via Vite dev server.
+> Services run on non-standard host ports where defaults were taken:
+> PostgreSQL on `5433`, Redis on `6380` (instead of 6379), Vault on `8200`.
 
 ---
 
@@ -76,7 +74,7 @@ source .venv/bin/activate
 pip install -r requirements/dev.txt
 ```
 
-Make sure PostgreSQL, Redis, and Vault are running. Update `backend/.env` as needed, then:
+Make sure PostgreSQL, Redis (on port **6380**), and Vault are running. Update `backend/.env` as needed, then:
 
 ```bash
 alembic upgrade head
@@ -91,36 +89,52 @@ npm install
 npm run dev
 ```
 
-The frontend dev server proxies API calls to `http://localhost:8000/api/v1` (configured in `frontend/src/services/api.ts`).
+The frontend calls the API at `http://localhost:8000/api/v1` (configured in `frontend/src/services/api.ts`).
 
 ---
 
 ## Configuration
 
-Key environment variables in `backend/.env`:
+### Root `.env` (for Docker Compose)
+
+All variables are defined in `.env.example` at the project root. Copy it and adjust:
+
+```bash
+cp .env.example .env
+```
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `DATABASE_URL` | `postgresql+asyncpg://interxchange:interxchange@postgres/interxchange` | PostgreSQL connection |
+| `POSTGRES_USER` | `interxchange` | PostgreSQL user |
+| `POSTGRES_PASSWORD` | `interxchange` | PostgreSQL password |
+| `POSTGRES_DB` | `interxchange` | PostgreSQL database name |
+| `POSTGRES_HOST_PORT` | `5433` | PostgreSQL host port |
+| `REDIS_HOST_PORT` | `6380` | Redis host port |
+| `VAULT_HOST_PORT` | `8200` | Vault host port |
+| `VAULT_TOKEN` | `dev_token` | Vault dev root token |
+| `BACKEND_HOST_PORT` | `8000` | Backend API host port |
 | `JWT_SECRET_KEY` | `dev_jwt_secret` | Access token signing key |
 | `JWT_REFRESH_SECRET_KEY` | `dev_refresh_secret` | Refresh token signing key |
 | `ACCESS_TOKEN_EXPIRE_MINUTES` | `15` | Access token TTL |
 | `REFRESH_TOKEN_EXPIRE_DAYS` | `7` | Refresh token TTL |
-| `VAULT_URL` | `http://vault:8200` | HashiCorp Vault URL |
-| `VAULT_TOKEN` | `dev_token` | Vault authentication token |
 | `ENVIRONMENT` | `development` | Runtime environment |
+| `LOG_LEVEL` | `INFO` | Logging level |
+| `FRONTEND_HOST_PORT` | `5173` | Frontend dev server host port |
+| `VITE_API_URL` | `http://localhost:8000/api/v1` | API base URL for the frontend |
 
-Copy `backend/.env.example` to `backend/.env` and adjust for your environment.
+### Backend `.env` (for manual runs)
+
+Copy `backend/.env.example` → `backend/.env` and adjust database host/ports for your local environment.
 
 ---
 
 ## Hands-On Testing
 
-After starting both backend and frontend:
+After starting (Docker or manual):
 
 ### 1. Log in
 
-Navigate to http://localhost:5173. A default admin user is seeded? If not, use the `/docs` Swagger UI:
+Open http://localhost:5173. Use the `/docs` Swagger UI to create a user if none exists:
 
 ```bash
 # Create an admin user via the API
@@ -129,7 +143,7 @@ curl -X POST http://localhost:8000/api/v1/auth/login \
   -d '{"email": "admin@example.com", "password": "admin123"}'
 ```
 
-Check `app/api/v1/auth.py` or look for a seed script to find the default credentials.
+Check `backend/app/api/v1/auth.py` for the default credentials.
 
 ### 2. Browse the Dashboard
 
@@ -219,6 +233,10 @@ Base URL: `/api/v1`
 
 ```
 interxchange/
+├── .env                       # Environment variables (gitignored)
+├── .env.example               # Environment template (tracked)
+├── docker-compose.yml         # Full stack orchestration
+├── .github/workflows/ci.yml   # GitHub Actions CI
 ├── backend/
 │   ├── app/
 │   │   ├── api/v1/           # Route handlers (auth, connections, users)
@@ -232,23 +250,18 @@ interxchange/
 │   ├── requirements/         # Python dependencies (base, dev, prod)
 │   ├── tests/                # pytest integration + unit tests
 │   ├── Dockerfile
+│   ├── .env                  # Manual-run env vars (gitignored)
 │   └── .env.example
 ├── frontend/
 │   ├── src/
 │   │   ├── components/       # Shared UI components (Sidebar, TopBar, etc.)
 │   │   ├── features/         # Page-level feature modules
-│   │   │   ├── auth/         # Login page, AuthContext, Redux slice
-│   │   │   ├── connections/  # Connections CRUD page
-│   │   │   ├── dashboard/    # Dashboard with charts
-│   │   │   └── users/        # Users management page
 │   │   ├── hooks/            # Custom hooks (useAuth, useDebounce)
 │   │   ├── services/         # Axios client with token refresh
 │   │   ├── store/            # Redux store configuration
 │   │   └── theme/            # MUI theme customization
 │   ├── Dockerfile
 │   └── package.json
-├── docker-compose.yml        # PostgreSQL, Redis, Vault, Backend
-├── .github/workflows/ci.yml  # GitHub Actions CI
 └── README.md
 ```
 

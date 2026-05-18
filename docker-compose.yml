@@ -88,7 +88,7 @@ services:
     ports:
       - "${FRONTEND_HOST_PORT:-5173}:5173"
     environment:
-      - VITE_API_URL=${VITE_API_URL:-http://localhost:8000/api/v1}
+      - VITE_API_URL=${VITE_API_URL:-/api/v1}
     volumes:
       - ./frontend:/app
     restart: unless-stopped

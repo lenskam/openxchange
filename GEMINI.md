@@ -1202,42 +1202,38 @@ To maximize automation, integrate the following MCP servers (Model Context Proto
 
 ## 17. Development Phases
 
-Follow the phased approach from the original roadmap:
+The project follows a 9-phase development plan. All planning artifacts are maintained in `docs/dev/`.
 
-- **Phase 1: Core Infrastructure** (7 days)
-  - Backend foundation, auth, user models, connection manager (basic).
-  - Frontend foundation, layout, login.
-  - Docker setup, CI (test only).
+### Master Planning Files
 
-- **Phase 2: Mapping Engine** (7 days)
-  - Mapping models, file upload, parsing.
-  - Mapping engine service.
-  - Frontend Mappings page.
+| File | Purpose |
+|------|---------|
+| [docs/dev/tasks/MASTER_IMPLEMENTATION.md](docs/dev/tasks/MASTER_IMPLEMENTATION.md) | Phase overviews, goals, status, dependencies, links to specs/plans |
+| [docs/dev/tasks/MASTER_TASK.md](docs/dev/tasks/MASTER_TASK.md) | Granular task-level tracking with completion status across all phases |
 
-- **Phase 3: Workflow & Channel Management** (5 days)
-  - Workflow models, API, UI.
-  - Channel models, API, UI.
-  - Scheduler integration.
+### Phase Implementation Guides
 
-- **Phase 4: Execution Engine & Transactions** (5 days)
-  - Workflow executor, Celery tasks.
-  - Transaction logging, WebSocket updates.
-  - Frontend Transactions page, Dashboard widgets.
+Each phase has a dedicated implementation prompt file:
 
-- **Phase 5: Advanced Features & Polish** (7 days)
-  - Complete Dashboard, Settings pages, Audit Log, Users.
-  - Real‑time updates integration.
-  - Prometheus/Grafana, logging.
-  - Documentation.
+| Phase | Guide File | Scope |
+|-------|------------|-------|
+| 1 | [docs/dev/tasks/phase_1_LLM.md](docs/dev/tasks/phase_1_LLM.md) | Core Infrastructure: auth, connections, frontend foundation |
+| 2 | [docs/dev/tasks/phase_2_LLM.md](docs/dev/tasks/phase_2_LLM.md) | Mapping Engine: models, file upload, engine service |
+| 3 | [docs/dev/tasks/phase_3_LLM.md](docs/dev/tasks/phase_3_LLM.md) | Workflow & Channels: models, API, UI, scheduler |
+| 4 | [docs/dev/tasks/phase_4_LLM.md](docs/dev/tasks/phase_4_LLM.md) | Execution Engine: Celery, WebSocket, transactions |
+| 5 | [docs/dev/tasks/phase_5_LLM.md](docs/dev/tasks/phase_5_LLM.md) | Advanced Features: settings, audit log, monitoring, docs |
+| 6 | [docs/dev/tasks/phase_6_LLM.md](docs/dev/tasks/phase_6_LLM.md) | CI/CD & Deployment: GitHub Actions, Docker, Vault, SSL/TLS, DR |
+| 7 | [docs/dev/tasks/phase_7_LLM.md](docs/dev/tasks/phase_7_LLM.md) | Testing & Documentation: E2E, performance, security, API docs |
+| 8 | [docs/dev/tasks/phase_8_LLM.md](docs/dev/tasks/phase_8_LLM.md) | Post-Launch: monitoring, bug fixes, feedback, roadmap |
+| 9 | [docs/dev/tasks/phase_9_LLM.md](docs/dev/tasks/phase_9_LLM.md) | Final Project Documentation: aligned with codebase and what is being coded |
 
-- **Phase 6: CI/CD & Deployment** (parallel)
-  - GitHub Actions, production Docker Compose, Vault setup.
-  
-- **Phase 7: Frontend (api integration) Revise and testing**
+### Workflow
 
-- **Phase 8: Backend (api) Revise and testing**
-
-- **Phase 9: Final Project Documentation**
+1. Consult [MASTER_IMPLEMENTATION.md](docs/dev/tasks/MASTER_IMPLEMENTATION.md) to identify the current active phase and its dependencies.
+2. Open the corresponding `phase_X_LLM.md` for the detailed implementation prompt.
+3. Use the spec and plan files linked from MASTER_IMPLEMENTATION.md for technical details and task breakdowns.
+4. Track progress in [MASTER_TASK.md](docs/dev/tasks/MASTER_TASK.md) as tasks are completed.
+5. Update phase status in MASTER_IMPLEMENTATION.md when a phase is completed.
 
 ---
 
@@ -1251,6 +1247,7 @@ Follow the phased approach from the original roadmap:
 | Date       | Change                                         | Reason                                      |
 |------------|------------------------------------------------|---------------------------------------------|
 | 2026-02-22 | Initial version based on original plan and template | Establish AI‑friendly development guide.    |
+| 2026-05-18 | Updated Section 17 to reference MASTER_IMPLEMENTATION.md, MASTER_TASK.md, and all 9 phase LLM files; added Workflow section | Shift planning artifacts to docs/dev/ for single-source-of-truth |
 
 ---
 

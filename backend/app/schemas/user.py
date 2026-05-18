@@ -9,7 +9,7 @@ class UserBase(BaseModel):
     role: str = "viewer"
 
 class UserCreate(UserBase):
-    password: str
+    password: Optional[str] = None
 
 class UserUpdate(BaseModel):
     email: Optional[EmailStr] = None

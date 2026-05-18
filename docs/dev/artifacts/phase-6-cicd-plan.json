@@ -1,0 +1,60 @@
+{
+  "goal": "Implement CI/CD & Deployment - GitHub Actions, production Docker, Vault, SSL/TLS, monitoring, scaling, DR",
+  "created_at": "2025-02-08T00:00:00Z",
+  "tasks": [
+    {
+      "id": 6.1,
+      "description": "Create GitHub Actions CI workflow (test, build, scan, deploy)",
+      "status": "pending",
+      "depends_on": []
+    },
+    {
+      "id": 6.2,
+      "description": "Set up production Docker Compose configuration",
+      "status": "pending",
+      "depends_on": [6.1]
+    },
+    {
+      "id": 6.3,
+      "description": "Configure Vault for production secrets management",
+      "status": "pending",
+      "depends_on": [6.2]
+    },
+    {
+      "id": 6.4,
+      "description": "Configure Nginx reverse proxy with SSL/TLS (Let's Encrypt)",
+      "status": "pending",
+      "depends_on": [6.3]
+    },
+    {
+      "id": 6.5,
+      "description": "Set up database backup and restore procedures (pg_dump, WAL archiving)",
+      "status": "pending",
+      "depends_on": [6.4]
+    },
+    {
+      "id": 6.6,
+      "description": "Implement health check endpoints and monitoring alerts",
+      "status": "pending",
+      "depends_on": [6.4]
+    },
+    {
+      "id": 6.7,
+      "description": "Configure load balancing and horizontal scaling",
+      "status": "pending",
+      "depends_on": [6.6]
+    },
+    {
+      "id": 6.8,
+      "description": "Set up Prometheus metrics endpoint and Grafana dashboards",
+      "status": "pending",
+      "depends_on": [6.7]
+    },
+    {
+      "id": 6.9,
+      "description": "Create disaster recovery runbook and multi-region plan",
+      "status": "pending",
+      "depends_on": [6.5]
+    }
+  ]
+}

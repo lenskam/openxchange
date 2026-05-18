@@ -7,7 +7,7 @@ logger = logging.getLogger(__name__)
 
 class VaultService:
     def __init__(self):
-        self.client = hvac.AsyncClient(
+        self.client = hvac.Client(
             url=settings.VAULT_URL,
             token=settings.VAULT_TOKEN
         )
@@ -18,7 +18,7 @@ class VaultService:
             # Note: The hvac async implementation can sometimes be tricky.
             # We are using KV v2 engine typically.
             # Assuming kv v2 path is secret/data/<path>
-            await self.client.secrets.kv.v2.create_or_update_secret(
+            self.client.secrets.kv.v2.create_or_update_secret(
                 path=path,
                 secret=data,
             )
@@ -29,7 +29,7 @@ class VaultService:
     async def read_secret(self, path: str) -> dict:
         """Read a secret from Vault."""
         try:
-            response = await self.client.secrets.kv.v2.read_secret_version(
+            response = self.client.secrets.kv.v2.read_secret_version(
                 path=path,
             )
             return response["data"]["data"]
@@ -40,7 +40,7 @@ class VaultService:
     async def delete_secret(self, path: str):
         """Delete a secret from Vault."""
         try:
-            await self.client.secrets.kv.v2.delete_metadata_and_all_versions(
+            self.client.secrets.kv.v2.delete_metadata_and_all_versions(
                 path=path,
             )
         except Exception as e:

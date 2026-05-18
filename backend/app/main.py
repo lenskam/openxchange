@@ -1,9 +1,9 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.api.v1.auth import router as auth_router
-from app.api.v1.users import router as users_router
+from app.api.v1.api import api_router
 from app.core.config import settings
+from app.core.exceptions import setup_exception_handlers
 
 app = FastAPI(
     title="Interxchange API",
@@ -19,8 +19,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(auth_router, prefix="/api/v1")
-app.include_router(users_router, prefix="/api/v1")
+app.include_router(api_router, prefix="/api/v1")
+
+setup_exception_handlers(app)
+
 
 @app.get("/health")
 async def health_check():

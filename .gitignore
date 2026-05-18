@@ -12,9 +12,6 @@ redis_data/
 .DS_Store
 Thumbs.db
 
-# Dev
-docs/dev/
-
 # IDEs
 .vscode/
 .idea/

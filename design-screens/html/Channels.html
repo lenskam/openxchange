@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Channels | InterExchange</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=JetBrains+Mono&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+    .scrollbar-hide::-webkit-scrollbar { display: none; }
+    .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+  </style>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "surface-container-high": "#e6e8ea",
+            "surface-container-highest": "#e0e3e5",
+            "primary-fixed-dim": "#b4c5ff",
+            "outline": "#737686",
+            "on-tertiary-fixed-variant": "#7d2d00",
+            "on-secondary-fixed-variant": "#38485d",
+            "surface-tint": "#0053db",
+            "surface-container-lowest": "#ffffff",
+            "secondary": "#505f76",
+            "surface-bright": "#f7f9fb",
+            "on-tertiary": "#ffffff",
+            "on-tertiary-container": "#ffede6",
+            "on-secondary-container": "#54647a",
+            "surface": "#f7f9fb",
+            "on-surface": "#191c1e",
+            "surface-variant": "#e0e3e5",
+            "background": "#f7f9fb",
+            "error": "#ba1a1a",
+            "tertiary-fixed-dim": "#ffb596",
+            "tertiary-fixed": "#ffdbcd",
+            "tertiary": "#943700",
+            "secondary-container": "#d0e1fb",
+            "primary-container": "#2563eb",
+            "on-surface-variant": "#434655",
+            "tertiary-container": "#bc4800",
+            "on-tertiary-fixed": "#360f00",
+            "inverse-on-surface": "#eff1f3",
+            "primary": "#004ac6",
+            "surface-dim": "#d8dadc",
+            "secondary-fixed": "#d3e4fe",
+            "surface-container-low": "#f2f4f6",
+            "inverse-surface": "#2d3133",
+            "on-error": "#ffffff",
+            "on-primary-fixed-variant": "#003ea8",
+            "secondary-fixed-dim": "#b7c8e1",
+            "surface-container": "#eceef0",
+            "on-error-container": "#93000a",
+            "on-background": "#191c1e",
+            "on-primary-container": "#eeefff",
+            "outline-variant": "#c3c6d7",
+            "on-primary-fixed": "#00174b",
+            "inverse-primary": "#b4c5ff",
+            "on-primary": "#ffffff",
+            "on-secondary": "#ffffff",
+            "on-secondary-fixed": "#0b1c30",
+            "error-container": "#ffdad6",
+            "primary-fixed": "#dbe1ff"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "margin-mobile": "16px",
+            "gutter": "24px",
+            "container-max": "1440px",
+            "base": "8px",
+            "margin-desktop": "32px"
+          },
+          "fontFamily": {
+            "headline-lg": ["Inter"],
+            "headline-lg-mobile": ["Inter"],
+            "body-md": ["Inter"],
+            "body-lg": ["Inter"],
+            "code-sm": ["JetBrains Mono"],
+            "headline-md": ["Inter"],
+            "label-md": ["Inter"]
+          },
+          "fontSize": {
+            "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+            "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+            "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+            "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+            "code-sm": ["12px", {"lineHeight": "18px", "fontWeight": "400"}],
+            "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+            "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}]
+          }
+        },
+      },
+    }
+  </script>
+</head>
+<body class="bg-background text-on-surface font-body-md selection:bg-primary-container selection:text-on-primary-container">
+<!-- SideNavBar Anchor -->
+<aside class="fixed left-0 top-0 h-full flex flex-col py-8 gap-base bg-surface-container-low border-r border-outline-variant w-64 z-50">
+<div class="px-6 mb-8">
+<h1 class="text-headline-md font-headline-md font-bold text-primary">InterExchange</h1>
+<p class="text-label-md font-label-md text-on-surface-variant opacity-70">Data Integration Platform</p>
+</div>
+<nav class="flex-1 px-4 space-y-1">
+<a class="text-on-surface-variant hover:bg-surface-container-highest transition-colors rounded-lg flex items-center px-4 py-2 group" href="#">
+<span class="material-symbols-outlined mr-3 group-hover:scale-110 transition-transform" data-icon="dashboard">dashboard</span>
+<span class="font-label-md text-label-md">Dashboard</span>
+</a>
+<a class="text-on-surface-variant hover:bg-surface-container-highest transition-colors rounded-lg flex items-center px-4 py-2 group" href="#">
+<span class="material-symbols-outlined mr-3 group-hover:scale-110 transition-transform" data-icon="hub">hub</span>
+<span class="font-label-md text-label-md">Connections</span>
+</a>
+<a class="text-on-surface-variant hover:bg-surface-container-highest transition-colors rounded-lg flex items-center px-4 py-2 group" href="#">
+<span class="material-symbols-outlined mr-3 group-hover:scale-110 transition-transform" data-icon="account_tree">account_tree</span>
+<span class="font-label-md text-label-md">Workflows</span>
+</a>
+<a class="text-on-surface-variant hover:bg-surface-container-highest transition-colors rounded-lg flex items-center px-4 py-2 group" href="#">
+<span class="material-symbols-outlined mr-3 group-hover:scale-110 transition-transform" data-icon="swap_horiz">swap_horiz</span>
+<span class="font-label-md text-label-md">Transactions</span>
+</a>
+<!-- Active Tab: Channels -->
+<a class="bg-secondary-container text-on-secondary-container font-bold rounded-lg flex items-center px-4 py-2 scale-[0.98] transition-transform duration-150 shadow-sm" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="settings_input_component">settings_input_component</span>
+<span class="font-label-md text-label-md">Channels</span>
+</a>
+<a class="text-on-surface-variant hover:bg-surface-container-highest transition-colors rounded-lg flex items-center px-4 py-2 group" href="#">
+<span class="material-symbols-outlined mr-3 group-hover:scale-110 transition-transform" data-icon="transform">transform</span>
+<span class="font-label-md text-label-md">Mappings</span>
+</a>
+<a class="text-on-surface-variant hover:bg-surface-container-highest transition-colors rounded-lg flex items-center px-4 py-2 group" href="#">
+<span class="material-symbols-outlined mr-3 group-hover:scale-110 transition-transform" data-icon="group">group</span>
+<span class="font-label-md text-label-md">Users</span>
+</a>
+<a class="text-on-surface-variant hover:bg-surface-container-highest transition-colors rounded-lg flex items-center px-4 py-2 group" href="#">
+<span class="material-symbols-outlined mr-3 group-hover:scale-110 transition-transform" data-icon="history_edu">history_edu</span>
+<span class="font-label-md text-label-md">Audit Log</span>
+</a>
+<a class="text-on-surface-variant hover:bg-surface-container-highest transition-colors rounded-lg flex items-center px-4 py-2 group" href="#">
+<span class="material-symbols-outlined mr-3 group-hover:scale-110 transition-transform" data-icon="settings">settings</span>
+<span class="font-label-md text-label-md">Settings</span>
+</a>
+</nav>
+<div class="px-4 mt-auto border-t border-outline-variant pt-6 space-y-1">
+<a class="text-on-surface-variant hover:bg-surface-container-highest transition-colors rounded-lg flex items-center px-4 py-2 group" href="#">
+<span class="material-symbols-outlined mr-3 group-hover:rotate-12 transition-transform" data-icon="health_and_safety">health_and_safety</span>
+<span class="font-label-md text-label-md">System Health</span>
+</a>
+<a class="text-on-surface-variant hover:bg-surface-container-highest transition-colors rounded-lg flex items-center px-4 py-2 group" href="#">
+<span class="material-symbols-outlined mr-3 group-hover:rotate-12 transition-transform" data-icon="menu_book">menu_book</span>
+<span class="font-label-md text-label-md">Documentation</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="ml-64 min-h-screen flex flex-col">
+<!-- TopAppBar -->
+<header class="flex justify-between items-center w-full px-margin-desktop sticky top-0 z-50 bg-surface border-b border-outline-variant h-16 shadow-sm">
+<div class="flex items-center gap-base">
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline" data-icon="search">search</span>
+<input class="bg-surface-container-low border-none rounded-full pl-10 pr-4 py-2 text-body-md w-64 focus:ring-2 focus:ring-primary transition-all" placeholder="Search resources..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 rounded-full hover:bg-surface-container-high text-on-surface-variant transition-colors relative">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full"></span>
+</button>
+<button class="p-2 rounded-full hover:bg-surface-container-high text-on-surface-variant transition-colors">
+<span class="material-symbols-outlined" data-icon="help_outline">help_outline</span>
+</button>
+<div class="h-8 w-8 bg-primary rounded-full flex items-center justify-center text-white font-bold text-xs ring-2 ring-surface shadow-sm">
+          JD
+        </div>
+</div>
+</header>
+<div class="p-margin-desktop max-w-container-max mx-auto w-full flex-1">
+<!-- Page Header -->
+<section class="mb-8 flex flex-col md:flex-row md:items-end justify-between gap-gutter">
+<div>
+<h2 class="text-headline-lg font-headline-lg text-on-surface">Channels</h2>
+<p class="text-body-lg text-on-surface-variant mt-1">Configure routing channels for data exchange (OpenHIM-compatible)</p>
+</div>
+<div class="flex gap-4">
+<button class="px-6 py-2.5 bg-primary text-white rounded-lg font-bold flex items-center gap-2 hover:opacity-90 active:scale-95 transition-all shadow-md">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+            + New Channel
+          </button>
+</div>
+</section>
+<!-- Bento-style Summary Stats -->
+<section class="grid grid-cols-1 md:grid-cols-3 gap-gutter mb-8">
+<div class="bg-surface-container-lowest border border-outline-variant p-6 rounded-xl flex items-center gap-4 shadow-sm">
+<div class="w-12 h-12 rounded-lg bg-primary-container flex items-center justify-center text-on-primary-container">
+<span class="material-symbols-outlined" data-icon="router">router</span>
+</div>
+<div>
+<p class="text-label-md text-on-surface-variant">Total Channels</p>
+<h3 class="text-headline-md font-bold">6</h3>
+</div>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant p-6 rounded-xl flex items-center gap-4 shadow-sm">
+<div class="w-12 h-12 rounded-lg bg-secondary-container flex items-center justify-center text-on-secondary-container">
+<span class="material-symbols-outlined" data-icon="check_circle">check_circle</span>
+</div>
+<div>
+<p class="text-label-md text-on-surface-variant">Enabled</p>
+<h3 class="text-headline-md font-bold">5</h3>
+</div>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant p-6 rounded-xl flex items-center gap-4 shadow-sm">
+<div class="w-12 h-12 rounded-lg bg-tertiary-fixed flex items-center justify-center text-on-tertiary-fixed-variant">
+<span class="material-symbols-outlined" data-icon="alt_route">alt_route</span>
+</div>
+<div>
+<p class="text-label-md text-on-surface-variant">Total Routes</p>
+<h3 class="text-headline-md font-bold">10</h3>
+</div>
+</div>
+</section>
+<!-- Data Table Card -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden shadow-sm">
+<div class="px-6 py-4 border-b border-outline-variant bg-surface-bright flex items-center justify-between">
+<div class="flex items-center gap-4 flex-1">
+<span class="material-symbols-outlined text-outline" data-icon="filter_list">filter_list</span>
+<input class="bg-transparent border-none focus:ring-0 text-body-md w-full" placeholder="Filter channels by name or pattern..." type="text"/>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container border-b border-outline-variant">
+<th class="px-6 py-3 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Channel Name</th>
+<th class="px-6 py-3 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">URL Pattern</th>
+<th class="px-6 py-3 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Method</th>
+<th class="px-6 py-3 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Protocol</th>
+<th class="px-6 py-3 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider text-center">Routes</th>
+<th class="px-6 py-3 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Status</th>
+<th class="px-6 py-3 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="font-bold text-on-surface">Birth Declaration</span>
+<span class="text-label-md text-on-surface-variant">Electronic notification of new births</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<code class="text-code-sm bg-surface-container p-1 rounded">/birth-declaration</code>
+</td>
+<td class="px-6 py-4">
+<span class="px-2 py-1 bg-primary-container/20 text-primary font-bold text-xs rounded">POST</span>
+</td>
+<td class="px-6 py-4 text-on-surface-variant">HTTP/REST</td>
+<td class="px-6 py-4 text-center">
+<span class="text-body-md font-bold">3</span>
+</td>
+<td class="px-6 py-4">
+<div class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-outline-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+<span class="ml-3 text-label-md font-bold text-primary">Enabled</span>
+</div>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex justify-end gap-2">
+<button class="p-2 hover:bg-surface-container-high rounded-lg text-outline-variant hover:text-primary transition-all">
+<span class="material-symbols-outlined text-[20px]" data-icon="edit">edit</span>
+</button>
+<button class="p-2 hover:bg-surface-container-high rounded-lg text-outline-variant hover:text-error transition-all">
+<span class="material-symbols-outlined text-[20px]" data-icon="delete">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="font-bold text-on-surface">Patient Lookup</span>
+<span class="text-label-md text-on-surface-variant">Master Patient Index cross-referencing</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<code class="text-code-sm bg-surface-container p-1 rounded">/mpi-search</code>
+</td>
+<td class="px-6 py-4">
+<span class="px-2 py-1 bg-surface-container-highest text-on-surface-variant font-bold text-xs rounded">GET</span>
+</td>
+<td class="px-6 py-4 text-on-surface-variant">HTTP/REST</td>
+<td class="px-6 py-4 text-center">
+<span class="text-body-md font-bold">1</span>
+</td>
+<td class="px-6 py-4">
+<div class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-outline-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+<span class="ml-3 text-label-md font-bold text-primary">Enabled</span>
+</div>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex justify-end gap-2">
+<button class="p-2 hover:bg-surface-container-high rounded-lg text-outline-variant hover:text-primary transition-all">
+<span class="material-symbols-outlined text-[20px]" data-icon="edit">edit</span>
+</button>
+<button class="p-2 hover:bg-surface-container-high rounded-lg text-outline-variant hover:text-error transition-all">
+<span class="material-symbols-outlined text-[20px]" data-icon="delete">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="font-bold text-on-surface">Lab Results (Legacy)</span>
+<span class="text-label-md text-on-surface-variant">TCP based HL7 receiver</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<code class="text-code-sm bg-surface-container p-1 rounded">tcp://7000</code>
+</td>
+<td class="px-6 py-4">
+<span class="px-2 py-1 bg-surface-container-highest text-on-surface-variant font-bold text-xs rounded">N/A</span>
+</td>
+<td class="px-6 py-4 text-on-surface-variant">HL7 v2.x</td>
+<td class="px-6 py-4 text-center">
+<span class="text-body-md font-bold">2</span>
+</td>
+<td class="px-6 py-4">
+<div class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-outline-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+<span class="ml-3 text-label-md font-bold text-on-surface-variant">Disabled</span>
+</div>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex justify-end gap-2">
+<button class="p-2 hover:bg-surface-container-high rounded-lg text-outline-variant hover:text-primary transition-all">
+<span class="material-symbols-outlined text-[20px]" data-icon="edit">edit</span>
+</button>
+<button class="p-2 hover:bg-surface-container-high rounded-lg text-outline-variant hover:text-error transition-all">
+<span class="material-symbols-outlined text-[20px]" data-icon="delete">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="font-bold text-on-surface">Immunization Records</span>
+<span class="text-label-md text-on-surface-variant">Global registry sync</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<code class="text-code-sm bg-surface-container p-1 rounded">/immunization/update</code>
+</td>
+<td class="px-6 py-4">
+<span class="px-2 py-1 bg-primary-container/20 text-primary font-bold text-xs rounded">POST</span>
+</td>
+<td class="px-6 py-4 text-on-surface-variant">HTTP/REST</td>
+<td class="px-6 py-4 text-center">
+<span class="text-body-md font-bold">2</span>
+</td>
+<td class="px-6 py-4">
+<div class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-outline-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+<span class="ml-3 text-label-md font-bold text-primary">Enabled</span>
+</div>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex justify-end gap-2">
+<button class="p-2 hover:bg-surface-container-high rounded-lg text-outline-variant hover:text-primary transition-all">
+<span class="material-symbols-outlined text-[20px]" data-icon="edit">edit</span>
+</button>
+<button class="p-2 hover:bg-surface-container-high rounded-lg text-outline-variant hover:text-error transition-all">
+<span class="material-symbols-outlined text-[20px]" data-icon="delete">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 5 -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="font-bold text-on-surface">Prescription Sync</span>
+<span class="text-label-md text-on-surface-variant">E-pharmacy integration gateway</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<code class="text-code-sm bg-surface-container p-1 rounded">/prescriptions</code>
+</td>
+<td class="px-6 py-4">
+<span class="px-2 py-1 bg-primary-container/20 text-primary font-bold text-xs rounded">POST</span>
+</td>
+<td class="px-6 py-4 text-on-surface-variant">HTTP/REST</td>
+<td class="px-6 py-4 text-center">
+<span class="text-body-md font-bold">1</span>
+</td>
+<td class="px-6 py-4">
+<div class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-outline-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+<span class="ml-3 text-label-md font-bold text-primary">Enabled</span>
+</div>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex justify-end gap-2">
+<button class="p-2 hover:bg-surface-container-high rounded-lg text-outline-variant hover:text-primary transition-all">
+<span class="material-symbols-outlined text-[20px]" data-icon="edit">edit</span>
+</button>
+<button class="p-2 hover:bg-surface-container-high rounded-lg text-outline-variant hover:text-error transition-all">
+<span class="material-symbols-outlined text-[20px]" data-icon="delete">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 6 -->
+<tr class="hover:bg-surface-container-low transition-colors group border-b-0">
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="font-bold text-on-surface">Emergency Admission</span>
+<span class="text-label-md text-on-surface-variant">Real-time trauma unit alerting</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<code class="text-code-sm bg-surface-container p-1 rounded">/emergency/admit</code>
+</td>
+<td class="px-6 py-4">
+<span class="px-2 py-1 bg-primary-container/20 text-primary font-bold text-xs rounded">PUT</span>
+</td>
+<td class="px-6 py-4 text-on-surface-variant">HTTP/REST</td>
+<td class="px-6 py-4 text-center">
+<span class="text-body-md font-bold">1</span>
+</td>
+<td class="px-6 py-4">
+<div class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-outline-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+<span class="ml-3 text-label-md font-bold text-primary">Enabled</span>
+</div>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex justify-end gap-2">
+<button class="p-2 hover:bg-surface-container-high rounded-lg text-outline-variant hover:text-primary transition-all">
+<span class="material-symbols-outlined text-[20px]" data-icon="edit">edit</span>
+</button>
+<button class="p-2 hover:bg-surface-container-high rounded-lg text-outline-variant hover:text-error transition-all">
+<span class="material-symbols-outlined text-[20px]" data-icon="delete">delete</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="px-6 py-4 border-t border-outline-variant flex items-center justify-between bg-surface-bright">
+<p class="text-label-md text-on-surface-variant">Showing 6 of 6 results</p>
+<div class="flex items-center gap-2">
+<button class="p-1 hover:bg-surface-container rounded border border-outline-variant disabled:opacity-30" disabled="">
+<span class="material-symbols-outlined text-[18px]" data-icon="chevron_left">chevron_left</span>
+</button>
+<span class="px-3 text-label-md font-bold">1</span>
+<button class="p-1 hover:bg-surface-container rounded border border-outline-variant disabled:opacity-30" disabled="">
+<span class="material-symbols-outlined text-[18px]" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Activity Feed Section -->
+<section class="mt-margin-desktop">
+<h4 class="text-headline-md font-bold mb-6">Recent Channel Activity</h4>
+<div class="relative pl-8 space-y-8 before:content-[''] before:absolute before:left-[11px] before:top-2 before:bottom-0 before:w-px before:bg-outline-variant">
+<!-- Item 1 -->
+<div class="relative group">
+<div class="absolute -left-8 top-1.5 w-6 h-6 rounded-full bg-primary flex items-center justify-center ring-4 ring-background z-10">
+<span class="material-symbols-outlined text-[12px] text-white" data-icon="add">add</span>
+</div>
+<div>
+<p class="text-body-md"><span class="font-bold">System Admin</span> created channel <span class="font-code-sm text-primary">/emergency/admit</span></p>
+<time class="text-label-md text-on-surface-variant opacity-60">2 hours ago</time>
+</div>
+</div>
+<!-- Item 2 -->
+<div class="relative group">
+<div class="absolute -left-8 top-1.5 w-6 h-6 rounded-full bg-tertiary flex items-center justify-center ring-4 ring-background z-10">
+<span class="material-symbols-outlined text-[12px] text-white" data-icon="sync">sync</span>
+</div>
+<div>
+<p class="text-body-md"><span class="font-bold">Automated Hook</span> updated routing logic for <span class="font-code-sm text-primary">/birth-declaration</span></p>
+<time class="text-label-md text-on-surface-variant opacity-60">5 hours ago</time>
+</div>
+</div>
+<!-- Item 3 -->
+<div class="relative group">
+<div class="absolute -left-8 top-1.5 w-6 h-6 rounded-full bg-error flex items-center justify-center ring-4 ring-background z-10">
+<span class="material-symbols-outlined text-[12px] text-white" data-icon="block">block</span>
+</div>
+<div>
+<p class="text-body-md"><span class="font-bold">Security Module</span> disabled legacy channel <span class="font-code-sm text-primary">tcp://7000</span> due to inactivity</p>
+<time class="text-label-md text-on-surface-variant opacity-60">Yesterday at 14:45</time>
+</div>
+</div>
+</div>
+</section>
+</div>
+</main>
+<script>
+    // Micro-interactions
+    document.querySelectorAll('tr').forEach(row => {
+      row.addEventListener('mouseenter', () => {
+        row.style.transform = 'translateX(4px)';
+      });
+      row.addEventListener('mouseleave', () => {
+        row.style.transform = 'translateX(0)';
+      });
+    });
+
+    // Toggle interaction simulation
+    document.querySelectorAll('input[type="checkbox"]').forEach(toggle => {
+      toggle.addEventListener('change', (e) => {
+        const label = e.target.nextElementSibling.nextElementSibling;
+        if (e.target.checked) {
+          label.textContent = 'Enabled';
+          label.classList.remove('text-on-surface-variant');
+          label.classList.add('text-primary');
+        } else {
+          label.textContent = 'Disabled';
+          label.classList.remove('text-primary');
+          label.classList.add('text-on-surface-variant');
+        }
+      });
+    });
+  </script>
+</body></html>

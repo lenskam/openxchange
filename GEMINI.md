@@ -44,7 +44,7 @@ The platform monitors all activity via a **Dashboard**, **Transactions**, and **
 | Layer              | Technology                                                                 |
 |--------------------|----------------------------------------------------------------------------|
 | Backend            | FastAPI (Python 3.11+), SQLAlchemy 2.0 (async), Alembic                   |
-| Frontend           | React 18, TypeScript, Material‑UI (MUI) v5, React Router v6, Recharts     |
+| Frontend           | React 19, TypeScript, Material‑UI (MUI) v7, React Router v7, Recharts, Tailwind CSS v4     |
 | Databases          | PostgreSQL 15 (primary), MongoDB (optional for ML data)                    |
 | Cache / Message Broker | Redis                                                                  |
 | Task Queue         | Celery (with Redis as broker)                                             |

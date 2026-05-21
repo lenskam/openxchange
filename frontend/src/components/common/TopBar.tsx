@@ -1,62 +1,7 @@
-import React, { useState } from 'react';
-import {
-  AppBar,
-  Toolbar,
-  IconButton,
-  InputBase,
-  Badge,
-  Menu,
-  MenuItem,
-  Avatar,
-  Box,
-} from '@mui/material';
-import { styled, alpha } from '@mui/material/styles';
-import {
-  Menu as MenuIcon,
-  Search as SearchIcon,
-  Notifications as NotificationsIcon,
-} from '@mui/icons-material';
-import { useAuth } from '../../features/auth/AuthContext';
-import { useNavigate } from 'react-router-dom';
-
-const Search = styled('div')(({ theme }) => ({
-  position: 'relative',
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
-  '&:hover': {
-    backgroundColor: alpha(theme.palette.common.white, 0.25),
-  },
-  marginRight: theme.spacing(2),
-  marginLeft: 0,
-  width: '100%',
-  [theme.breakpoints.up('sm')]: {
-    marginLeft: theme.spacing(3),
-    width: 'auto',
-  },
-}));
-
-const SearchIconWrapper = styled('div')(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-  height: '100%',
-  position: 'absolute',
-  pointerEvents: 'none',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-}));
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: 'inherit',
-  '& .MuiInputBase-input': {
-    padding: theme.spacing(1, 1, 1, 0),
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create('width'),
-    width: '100%',
-    [theme.breakpoints.up('md')]: {
-      width: '40ch',
-    },
-  },
-}));
+import { useState } from "react";
+import { Menu, MenuItem } from "@mui/material";
+import { useAuth } from "../../features/auth/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 interface TopBarProps {
   onMenuClick: () => void;
@@ -67,87 +12,81 @@ const TopBar: React.FC<TopBarProps> = ({ onMenuClick }) => {
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
-  const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleMenuClose = () => {
-    setAnchorEl(null);
-  };
-
   const handleLogout = async () => {
-    handleMenuClose();
+    setAnchorEl(null);
     await logout();
-    navigate('/login');
+    navigate("/login");
   };
+
+  const initials = user?.full_name
+    ? user.full_name
+        .split(" ")
+        .map((n: string) => n[0])
+        .join("")
+        .toUpperCase()
+        .slice(0, 2)
+    : "U";
 
   return (
-    <AppBar position="sticky" sx={{ backgroundColor: 'primary.main' }}>
-      <Toolbar>
-        <IconButton
-          size="large"
-          edge="start"
-          color="inherit"
-          aria-label="open drawer"
-          sx={{ mr: 2 }}
+    <header className="h-16 sticky top-0 z-40 bg-surface dark:bg-inverse-surface border-b border-outline-variant dark:border-outline flex justify-between items-center px-margin-desktop shadow-sm dark:shadow-none">
+      <div className="flex items-center flex-1 max-w-xl">
+        <button
           onClick={onMenuClick}
+          className="md:hidden p-2 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-colors"
         >
-          <MenuIcon />
-        </IconButton>
-        
-        <Box sx={{ flexGrow: 1 }} />
-        
-        <Search>
-          <SearchIconWrapper>
-            <SearchIcon />
-          </SearchIconWrapper>
-          <StyledInputBase
-            placeholder="Search connections, workflows, transactions..."
-            inputProps={{ 'aria-label': 'search' }}
+          <span className="material-symbols-outlined">menu</span>
+        </button>
+        <div className="relative w-full">
+          <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant opacity-60">
+            search
+          </span>
+          <input
+            className="w-full bg-surface-container-low border-none rounded-full pl-10 pr-4 py-2 text-body-md font-body-md focus:outline-none focus:ring-2 focus:ring-primary placeholder:text-on-surface-variant/60"
+            placeholder="Search data, workflows, or logs..."
+            type="text"
           />
-        </Search>
-        
-        <Box sx={{ display: { xs: 'none', md: 'flex' }, alignItems: 'center' }}>
-          <IconButton size="large" aria-label="show 4 new notifications" color="inherit">
-            <Badge badgeContent={4} color="error">
-              <NotificationsIcon />
-            </Badge>
-          </IconButton>
-          
-          <IconButton
-            size="large"
-            edge="end"
-            aria-label="account of current user"
-            aria-haspopup="true"
-            onClick={handleProfileMenuOpen}
-            color="inherit"
-          >
-            <Avatar sx={{ width: 32, height: 32, bgcolor: 'secondary.main' }}>
-              {user?.full_name?.charAt(0) || 'U'}
-            </Avatar>
-          </IconButton>
-        </Box>
-      </Toolbar>
-      
+        </div>
+      </div>
+      <div className="flex items-center gap-4">
+        <button className="w-10 h-10 rounded-full flex items-center justify-center text-on-surface-variant hover:bg-surface-container-high transition-colors">
+          <span className="material-symbols-outlined">notifications</span>
+        </button>
+        <button className="w-10 h-10 rounded-full flex items-center justify-center text-on-surface-variant hover:bg-surface-container-high transition-colors">
+          <span className="material-symbols-outlined">help_outline</span>
+        </button>
+        <div className="h-8 w-[1px] bg-outline-variant mx-2" />
+        <button
+          onClick={(e) => setAnchorEl(e.currentTarget)}
+          className="flex items-center gap-3 cursor-pointer hover:bg-surface-container-high p-1 rounded-full pr-4 transition-colors"
+        >
+          <div className="w-8 h-8 rounded-full bg-primary-fixed-dim flex items-center justify-center text-on-primary-fixed font-bold border border-outline-variant">
+            {initials}
+          </div>
+          <span className="text-label-md font-label-md text-on-surface hidden sm:block">
+            {user?.full_name || "User"}
+          </span>
+        </button>
+      </div>
+
       <Menu
         anchorEl={anchorEl}
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'right',
-        }}
-        keepMounted
-        transformOrigin={{
-          vertical: 'top',
-          horizontal: 'right',
-        }}
         open={Boolean(anchorEl)}
-        onClose={handleMenuClose}
+        onClose={() => setAnchorEl(null)}
+        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+        transformOrigin={{ vertical: "top", horizontal: "right" }}
+        slotProps={{ paper: { sx: { borderRadius: 2, mt: 1, minWidth: 160 } } }}
       >
-        <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-        <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+        <MenuItem
+          onClick={() => {
+            setAnchorEl(null);
+            navigate("/settings");
+          }}
+        >
+          Profile
+        </MenuItem>
         <MenuItem onClick={handleLogout}>Logout</MenuItem>
       </Menu>
-    </AppBar>
+    </header>
   );
 };
 

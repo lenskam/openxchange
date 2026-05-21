@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Connections | InterExchange</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;family=JetBrains+Mono&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-high": "#e6e8ea",
+                        "surface-container-highest": "#e0e3e5",
+                        "primary-fixed-dim": "#b4c5ff",
+                        "outline": "#737686",
+                        "on-tertiary-fixed-variant": "#7d2d00",
+                        "on-secondary-fixed-variant": "#38485d",
+                        "surface-tint": "#0053db",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary": "#505f76",
+                        "surface-bright": "#f7f9fb",
+                        "on-tertiary": "#ffffff",
+                        "on-tertiary-container": "#ffede6",
+                        "on-secondary-container": "#54647a",
+                        "surface": "#f7f9fb",
+                        "on-surface": "#191c1e",
+                        "surface-variant": "#e0e3e5",
+                        "background": "#f7f9fb",
+                        "error": "#ba1a1a",
+                        "tertiary-fixed-dim": "#ffb596",
+                        "tertiary-fixed": "#ffdbcd",
+                        "tertiary": "#943700",
+                        "secondary-container": "#d0e1fb",
+                        "primary-container": "#2563eb",
+                        "on-surface-variant": "#434655",
+                        "tertiary-container": "#bc4800",
+                        "on-tertiary-fixed": "#360f00",
+                        "inverse-on-surface": "#eff1f3",
+                        "primary": "#004ac6",
+                        "surface-dim": "#d8dadc",
+                        "secondary-fixed": "#d3e4fe",
+                        "surface-container-low": "#f2f4f6",
+                        "inverse-surface": "#2d3133",
+                        "on-error": "#ffffff",
+                        "on-primary-fixed-variant": "#003ea8",
+                        "secondary-fixed-dim": "#b7c8e1",
+                        "surface-container": "#eceef0",
+                        "on-error-container": "#93000a",
+                        "on-background": "#191c1e",
+                        "on-primary-container": "#eeefff",
+                        "outline-variant": "#c3c6d7",
+                        "on-primary-fixed": "#00174b",
+                        "inverse-primary": "#b4c5ff",
+                        "on-primary": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "on-secondary-fixed": "#0b1c30",
+                        "error-container": "#ffdad6",
+                        "primary-fixed": "#dbe1ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-mobile": "16px",
+                        "gutter": "24px",
+                        "container-max": "1440px",
+                        "base": "8px",
+                        "margin-desktop": "32px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Inter"],
+                        "headline-lg-mobile": ["Inter"],
+                        "body-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "code-sm": ["JetBrains Mono"],
+                        "headline-md": ["Inter"],
+                        "label-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                        "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "code-sm": ["12px", {"lineHeight": "18px", "fontWeight": "400"}],
+                        "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-background text-on-surface">
+<!-- Sidebar (Shared Component JSON Mapping) -->
+<aside class="fixed left-0 top-0 h-full w-64 bg-surface-container-low border-r border-outline-variant flex flex-col py-8 gap-base z-40 hidden md:flex">
+<div class="px-6 mb-8">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 bg-primary rounded-lg flex items-center justify-center text-on-primary">
+<span class="material-symbols-outlined" data-icon="hub">hub</span>
+</div>
+<div>
+<h1 class="text-headline-md font-headline-md font-bold text-primary">InterExchange</h1>
+<p class="text-label-md font-label-md text-on-surface-variant opacity-70">Data Integration Platform</p>
+</div>
+</div>
+</div>
+<nav class="flex-1 px-4 flex flex-col gap-1">
+<!-- Dashboard -->
+<a class="text-on-surface-variant flex items-center px-4 py-2 hover:bg-surface-container-highest transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="dashboard">dashboard</span>
+<span class="font-label-md text-label-md">Dashboard</span>
+</a>
+<!-- Connections (ACTIVE STATE) -->
+<a class="bg-secondary-container text-on-secondary-container font-bold rounded-lg flex items-center px-4 py-2 scale-[0.98] transition-transform duration-150" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="hub">hub</span>
+<span class="font-label-md text-label-md">Connections</span>
+</a>
+<!-- Workflows -->
+<a class="text-on-surface-variant flex items-center px-4 py-2 hover:bg-surface-container-highest transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="account_tree">account_tree</span>
+<span class="font-label-md text-label-md">Workflows</span>
+</a>
+<!-- Transactions -->
+<a class="text-on-surface-variant flex items-center px-4 py-2 hover:bg-surface-container-highest transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="swap_horiz">swap_horiz</span>
+<span class="font-label-md text-label-md">Transactions</span>
+</a>
+<!-- Channels -->
+<a class="text-on-surface-variant flex items-center px-4 py-2 hover:bg-surface-container-highest transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="settings_input_component">settings_input_component</span>
+<span class="font-label-md text-label-md">Channels</span>
+</a>
+<!-- Mappings -->
+<a class="text-on-surface-variant flex items-center px-4 py-2 hover:bg-surface-container-highest transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="transform">transform</span>
+<span class="font-label-md text-label-md">Mappings</span>
+</a>
+<!-- Users -->
+<a class="text-on-surface-variant flex items-center px-4 py-2 hover:bg-surface-container-highest transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="group">group</span>
+<span class="font-label-md text-label-md">Users</span>
+</a>
+<!-- Audit Log -->
+<a class="text-on-surface-variant flex items-center px-4 py-2 hover:bg-surface-container-highest transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="history_edu">history_edu</span>
+<span class="font-label-md text-label-md">Audit Log</span>
+</a>
+<!-- Settings -->
+<a class="text-on-surface-variant flex items-center px-4 py-2 hover:bg-surface-container-highest transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="settings">settings</span>
+<span class="font-label-md text-label-md">Settings</span>
+</a>
+</nav>
+<div class="px-4 mt-auto pt-8 flex flex-col gap-1">
+<a class="text-on-surface-variant flex items-center px-4 py-2 hover:bg-surface-container-highest transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="health_and_safety">health_and_safety</span>
+<span class="font-label-md text-label-md">System Health</span>
+</a>
+<a class="text-on-surface-variant flex items-center px-4 py-2 hover:bg-surface-container-highest transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="menu_book">menu_book</span>
+<span class="font-label-md text-label-md">Documentation</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="md:ml-64 min-h-screen flex flex-col">
+<!-- Top App Bar -->
+<header class="h-16 sticky top-0 z-50 bg-surface border-b border-outline-variant flex justify-between items-center px-margin-desktop shadow-sm">
+<div class="flex items-center flex-1 max-w-xl">
+<div class="relative w-full">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant" data-icon="search">search</span>
+<input class="w-full bg-surface-container-low border-none rounded-lg pl-10 pr-4 py-2 text-body-md focus:ring-2 focus:ring-primary/20" placeholder="Search systems, protocols, or endpoints..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-full">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-full">
+<span class="material-symbols-outlined" data-icon="help_outline">help_outline</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container font-bold text-label-md ml-2 border border-outline-variant">
+                    JD
+                </div>
+</div>
+</header>
+<section class="p-8 max-w-7xl mx-auto w-full">
+<!-- Header Section -->
+<div class="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-on-surface">Connections</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Manage connections to external data systems</p>
+</div>
+<button class="bg-primary text-on-primary px-6 py-2.5 rounded-lg font-label-md text-label-md flex items-center gap-2 hover:bg-primary/90 transition-all shadow-md active:scale-95">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+                    New Connection
+                </button>
+</div>
+<!-- Bento-style Connection Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+<!-- Card 1: DHIS2 -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow group relative">
+<div class="flex justify-between items-start mb-4">
+<div class="w-12 h-12 bg-[#00529b]/10 rounded-lg flex items-center justify-center text-[#00529b]">
+<span class="material-symbols-outlined text-3xl" data-icon="database">database</span>
+</div>
+<button class="text-on-surface-variant hover:bg-surface-container-high p-1 rounded-md">
+<span class="material-symbols-outlined" data-icon="more_vert">more_vert</span>
+</button>
+</div>
+<h3 class="font-headline-md text-headline-md mb-1 truncate">National DHIS2 Instance</h3>
+<div class="flex items-center gap-2 mb-3">
+<span class="bg-surface-container-high text-on-surface-variant px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider">DHIS2</span>
+<span class="bg-green-100 text-green-700 px-2 py-0.5 rounded-full text-label-md flex items-center gap-1">
+<span class="w-1.5 h-1.5 bg-green-500 rounded-full"></span> Active
+                        </span>
+</div>
+<p class="font-code-sm text-code-sm text-on-surface-variant truncate mb-4 opacity-70">https://dhis2.moh.gov.internal/api</p>
+<div class="grid grid-cols-2 gap-4 pt-4 border-t border-outline-variant/30">
+<div>
+<p class="text-[10px] font-bold text-on-surface-variant/60 uppercase">Last Sync</p>
+<p class="text-body-md font-body-md">2 mins ago</p>
+</div>
+<div>
+<p class="text-[10px] font-bold text-on-surface-variant/60 uppercase">Created</p>
+<p class="text-body-md font-body-md">Oct 24, 2023</p>
+</div>
+</div>
+</div>
+<!-- Card 2: OpenHIM -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow group relative">
+<div class="flex justify-between items-start mb-4">
+<div class="w-12 h-12 bg-[#f44336]/10 rounded-lg flex items-center justify-center text-[#f44336]">
+<span class="material-symbols-outlined text-3xl" data-icon="terminal">terminal</span>
+</div>
+<button class="text-on-surface-variant hover:bg-surface-container-high p-1 rounded-md">
+<span class="material-symbols-outlined" data-icon="more_vert">more_vert</span>
+</button>
+</div>
+<h3 class="font-headline-md text-headline-md mb-1 truncate">HIM Mediator Primary</h3>
+<div class="flex items-center gap-2 mb-3">
+<span class="bg-surface-container-high text-on-surface-variant px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider">OpenHIM</span>
+<span class="bg-green-100 text-green-700 px-2 py-0.5 rounded-full text-label-md flex items-center gap-1">
+<span class="w-1.5 h-1.5 bg-green-500 rounded-full"></span> Active
+                        </span>
+</div>
+<p class="font-code-sm text-code-sm text-on-surface-variant truncate mb-4 opacity-70">https://mediator.openhim.org:5001</p>
+<div class="grid grid-cols-2 gap-4 pt-4 border-t border-outline-variant/30">
+<div>
+<p class="text-[10px] font-bold text-on-surface-variant/60 uppercase">Last Sync</p>
+<p class="text-body-md font-body-md">15 mins ago</p>
+</div>
+<div>
+<p class="text-[10px] font-bold text-on-surface-variant/60 uppercase">Created</p>
+<p class="text-body-md font-body-md">Nov 12, 2023</p>
+</div>
+</div>
+</div>
+<!-- Card 3: FHIR Server -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow group relative">
+<div class="flex justify-between items-start mb-4">
+<div class="w-12 h-12 bg-[#2196f3]/10 rounded-lg flex items-center justify-center text-[#2196f3]">
+<span class="material-symbols-outlined text-3xl" data-icon="health_metrics">health_metrics</span>
+</div>
+<button class="text-on-surface-variant hover:bg-surface-container-high p-1 rounded-md">
+<span class="material-symbols-outlined" data-icon="more_vert">more_vert</span>
+</button>
+</div>
+<h3 class="font-headline-md text-headline-md mb-1 truncate">HAPI FHIR R4 Store</h3>
+<div class="flex items-center gap-2 mb-3">
+<span class="bg-surface-container-high text-on-surface-variant px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider">FHIR</span>
+<span class="bg-yellow-100 text-yellow-700 px-2 py-0.5 rounded-full text-label-md flex items-center gap-1">
+<span class="w-1.5 h-1.5 bg-yellow-500 rounded-full"></span> Slow
+                        </span>
+</div>
+<p class="font-code-sm text-code-sm text-on-surface-variant truncate mb-4 opacity-70">https://fhir.internal-repo.v4/</p>
+<div class="grid grid-cols-2 gap-4 pt-4 border-t border-outline-variant/30">
+<div>
+<p class="text-[10px] font-bold text-on-surface-variant/60 uppercase">Last Sync</p>
+<p class="text-body-md font-body-md">1 hr ago</p>
+</div>
+<div>
+<p class="text-[10px] font-bold text-on-surface-variant/60 uppercase">Created</p>
+<p class="text-body-md font-body-md">Jan 05, 2024</p>
+</div>
+</div>
+</div>
+<!-- Card 4: HL7 Feed -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow group relative">
+<div class="flex justify-between items-start mb-4">
+<div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-3xl" data-icon="sync_alt">sync_alt</span>
+</div>
+<button class="text-on-surface-variant hover:bg-surface-container-high p-1 rounded-md">
+<span class="material-symbols-outlined" data-icon="more_vert">more_vert</span>
+</button>
+</div>
+<h3 class="font-headline-md text-headline-md mb-1 truncate">Regional HL7 MLLP</h3>
+<div class="flex items-center gap-2 mb-3">
+<span class="bg-surface-container-high text-on-surface-variant px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider">HL7</span>
+<span class="bg-red-100 text-red-700 px-2 py-0.5 rounded-full text-label-md flex items-center gap-1">
+<span class="w-1.5 h-1.5 bg-red-500 rounded-full"></span> Failed
+                        </span>
+</div>
+<p class="font-code-sm text-code-sm text-on-surface-variant truncate mb-4 opacity-70">mllp://10.0.4.155:2575</p>
+<div class="grid grid-cols-2 gap-4 pt-4 border-t border-outline-variant/30">
+<div>
+<p class="text-[10px] font-bold text-on-surface-variant/60 uppercase">Last Sync</p>
+<p class="text-body-md font-body-md">6 hrs ago</p>
+</div>
+<div>
+<p class="text-[10px] font-bold text-on-surface-variant/60 uppercase">Created</p>
+<p class="text-body-md font-body-md">Feb 11, 2024</p>
+</div>
+</div>
+</div>
+<!-- Card 5: DHIS2 (Secondary) -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow group relative">
+<div class="flex justify-between items-start mb-4">
+<div class="w-12 h-12 bg-[#00529b]/10 rounded-lg flex items-center justify-center text-[#00529b]">
+<span class="material-symbols-outlined text-3xl" data-icon="database">database</span>
+</div>
+<button class="text-on-surface-variant hover:bg-surface-container-high p-1 rounded-md">
+<span class="material-symbols-outlined" data-icon="more_vert">more_vert</span>
+</button>
+</div>
+<h3 class="font-headline-md text-headline-md mb-1 truncate">Logistics DHIS2 Backup</h3>
+<div class="flex items-center gap-2 mb-3">
+<span class="bg-surface-container-high text-on-surface-variant px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider">DHIS2</span>
+<span class="bg-green-100 text-green-700 px-2 py-0.5 rounded-full text-label-md flex items-center gap-1">
+<span class="w-1.5 h-1.5 bg-green-500 rounded-full"></span> Active
+                        </span>
+</div>
+<p class="font-code-sm text-code-sm text-on-surface-variant truncate mb-4 opacity-70">https://logistics.backup.dhis2/api</p>
+<div class="grid grid-cols-2 gap-4 pt-4 border-t border-outline-variant/30">
+<div>
+<p class="text-[10px] font-bold text-on-surface-variant/60 uppercase">Last Sync</p>
+<p class="text-body-md font-body-md">45 mins ago</p>
+</div>
+<div>
+<p class="text-[10px] font-bold text-on-surface-variant/60 uppercase">Created</p>
+<p class="text-body-md font-body-md">Dec 12, 2023</p>
+</div>
+</div>
+</div>
+<!-- Card 6: OpenHIM (Secondary) -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow group relative">
+<div class="flex justify-between items-start mb-4">
+<div class="w-12 h-12 bg-[#f44336]/10 rounded-lg flex items-center justify-center text-[#f44336]">
+<span class="material-symbols-outlined text-3xl" data-icon="terminal">terminal</span>
+</div>
+<button class="text-on-surface-variant hover:bg-surface-container-high p-1 rounded-md">
+<span class="material-symbols-outlined" data-icon="more_vert">more_vert</span>
+</button>
+</div>
+<h3 class="font-headline-md text-headline-md mb-1 truncate">Lab Results Mediator</h3>
+<div class="flex items-center gap-2 mb-3">
+<span class="bg-surface-container-high text-on-surface-variant px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider">OpenHIM</span>
+<span class="bg-green-100 text-green-700 px-2 py-0.5 rounded-full text-label-md flex items-center gap-1">
+<span class="w-1.5 h-1.5 bg-green-500 rounded-full"></span> Active
+                        </span>
+</div>
+<p class="font-code-sm text-code-sm text-on-surface-variant truncate mb-4 opacity-70">https://lab.him.internal:3000</p>
+<div class="grid grid-cols-2 gap-4 pt-4 border-t border-outline-variant/30">
+<div>
+<p class="text-[10px] font-bold text-on-surface-variant/60 uppercase">Last Sync</p>
+<p class="text-body-md font-body-md">Yesterday</p>
+</div>
+<div>
+<p class="text-[10px] font-bold text-on-surface-variant/60 uppercase">Created</p>
+<p class="text-body-md font-body-md">Aug 30, 2023</p>
+</div>
+</div>
+</div>
+<!-- Card 7: FHIR Server (Public) -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow group relative">
+<div class="flex justify-between items-start mb-4">
+<div class="w-12 h-12 bg-[#2196f3]/10 rounded-lg flex items-center justify-center text-[#2196f3]">
+<span class="material-symbols-outlined text-3xl" data-icon="health_metrics">health_metrics</span>
+</div>
+<button class="text-on-surface-variant hover:bg-surface-container-high p-1 rounded-md">
+<span class="material-symbols-outlined" data-icon="more_vert">more_vert</span>
+</button>
+</div>
+<h3 class="font-headline-md text-headline-md mb-1 truncate">Grahame FHIR Test</h3>
+<div class="flex items-center gap-2 mb-3">
+<span class="bg-surface-container-high text-on-surface-variant px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider">FHIR</span>
+<span class="bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full text-label-md flex items-center gap-1">
+<span class="w-1.5 h-1.5 bg-blue-500 rounded-full"></span> Testing
+                        </span>
+</div>
+<p class="font-code-sm text-code-sm text-on-surface-variant truncate mb-4 opacity-70">http://hapi.fhir.org/baseR4</p>
+<div class="grid grid-cols-2 gap-4 pt-4 border-t border-outline-variant/30">
+<div>
+<p class="text-[10px] font-bold text-on-surface-variant/60 uppercase">Last Sync</p>
+<p class="text-body-md font-body-md">Never</p>
+</div>
+<div>
+<p class="text-[10px] font-bold text-on-surface-variant/60 uppercase">Created</p>
+<p class="text-body-md font-body-md">Mar 02, 2024</p>
+</div>
+</div>
+</div>
+<!-- Card 8: HL7 (Private) -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow group relative">
+<div class="flex justify-between items-start mb-4">
+<div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-3xl" data-icon="sync_alt">sync_alt</span>
+</div>
+<button class="text-on-surface-variant hover:bg-surface-container-high p-1 rounded-md">
+<span class="material-symbols-outlined" data-icon="more_vert">more_vert</span>
+</button>
+</div>
+<h3 class="font-headline-md text-headline-md mb-1 truncate">On-Site Clinic ADT</h3>
+<div class="flex items-center gap-2 mb-3">
+<span class="bg-surface-container-high text-on-surface-variant px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider">HL7</span>
+<span class="bg-green-100 text-green-700 px-2 py-0.5 rounded-full text-label-md flex items-center gap-1">
+<span class="w-1.5 h-1.5 bg-green-500 rounded-full"></span> Active
+                        </span>
+</div>
+<p class="font-code-sm text-code-sm text-on-surface-variant truncate mb-4 opacity-70">mllp://clinic-vlan.local:2575</p>
+<div class="grid grid-cols-2 gap-4 pt-4 border-t border-outline-variant/30">
+<div>
+<p class="text-[10px] font-bold text-on-surface-variant/60 uppercase">Last Sync</p>
+<p class="text-body-md font-body-md">5 mins ago</p>
+</div>
+<div>
+<p class="text-[10px] font-bold text-on-surface-variant/60 uppercase">Created</p>
+<p class="text-body-md font-body-md">Dec 01, 2023</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Monitoring Preview Section (Bento Extension) -->
+<div class="mt-12 grid grid-cols-1 lg:grid-cols-3 gap-8">
+<div class="lg:col-span-2 bg-surface-container rounded-2xl p-8 border border-outline-variant">
+<div class="flex justify-between items-center mb-6">
+<h4 class="font-headline-md text-headline-md">Recent Sync Activity</h4>
+<button class="text-primary font-label-md text-label-md flex items-center gap-1">
+                            View All Events <span class="material-symbols-outlined text-sm" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+<div class="space-y-6">
+<div class="flex items-start gap-4">
+<div class="mt-1 w-2 h-2 rounded-full bg-green-500"></div>
+<div class="flex-1">
+<div class="flex justify-between">
+<p class="text-body-md font-bold">Successfully pushed 450 records to National DHIS2</p>
+<p class="text-label-md text-on-surface-variant">2 mins ago</p>
+</div>
+<p class="text-body-md text-on-surface-variant mt-1">Transaction ID: TX-99420-BA. Latency: 240ms.</p>
+</div>
+</div>
+<div class="flex items-start gap-4">
+<div class="mt-1 w-2 h-2 rounded-full bg-red-500"></div>
+<div class="flex-1">
+<div class="flex justify-between">
+<p class="text-body-md font-bold">Connection Timeout on Regional HL7 MLLP</p>
+<p class="text-label-md text-on-surface-variant">6 hrs ago</p>
+</div>
+<p class="text-body-md text-on-surface-variant mt-1">Error: Handshake failure at socket layer. Retrying in 15 mins.</p>
+</div>
+</div>
+<div class="flex items-start gap-4">
+<div class="mt-1 w-2 h-2 rounded-full bg-blue-500"></div>
+<div class="flex-1">
+<div class="flex justify-between">
+<p class="text-body-md font-bold">Updated Metadata for HAPI FHIR Server</p>
+<p class="text-label-md text-on-surface-variant">Yesterday</p>
+</div>
+<p class="text-body-md text-on-surface-variant mt-1">Modified by Admin: Updated TLS certificates for endpoint security.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-primary-container text-on-primary-container rounded-2xl p-8 flex flex-col justify-between relative overflow-hidden">
+<!-- Background Illustration / Pattern -->
+<div class="absolute -right-10 -bottom-10 opacity-20 transform rotate-12">
+<span class="material-symbols-outlined text-[200px]" data-icon="cloud_sync" style="font-variation-settings: 'FILL' 1;">cloud_sync</span>
+</div>
+<div>
+<span class="bg-on-primary-container/20 px-3 py-1 rounded-full text-label-md mb-4 inline-block">Pro Tip</span>
+<h4 class="font-headline-md text-headline-md mb-2">Automate Connections</h4>
+<p class="text-body-md opacity-90">Use our CLI tool to bootstrap secure connections using OAuth2 or Client Certificates directly from your terminal.</p>
+</div>
+<button class="mt-8 bg-on-primary-container text-primary px-6 py-2 rounded-lg font-bold text-label-md w-fit hover:bg-on-primary-container/90 transition-all">
+                        Open Documentation
+                    </button>
+</div>
+</div>
+</section>
+<!-- Footer -->
+<footer class="mt-auto py-8 px-margin-desktop border-t border-outline-variant flex flex-col md:flex-row justify-between items-center gap-4 text-on-surface-variant">
+<p class="text-label-md font-label-md">© 2024 InterExchange. Managed Data Integration Services.</p>
+<div class="flex gap-6">
+<a class="text-label-md font-label-md hover:text-primary" href="#">Privacy Policy</a>
+<a class="text-label-md font-label-md hover:text-primary" href="#">Terms of Service</a>
+<a class="text-label-md font-label-md hover:text-primary" href="#">API Status</a>
+</div>
+</footer>
+</main>
+<!-- Mobile Nav Anchor -->
+<div class="md:hidden fixed bottom-0 left-0 w-full bg-surface border-t border-outline-variant flex justify-around items-center h-16 z-50">
+<a class="flex flex-col items-center justify-center gap-1 text-on-surface-variant" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="text-[10px] font-bold">Dashboard</span>
+</a>
+<a class="flex flex-col items-center justify-center gap-1 text-primary" href="#">
+<span class="material-symbols-outlined" data-icon="hub">hub</span>
+<span class="text-[10px] font-bold">Connections</span>
+</a>
+<button class="bg-primary text-on-primary w-12 h-12 rounded-full -mt-8 shadow-lg flex items-center justify-center">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+</button>
+<a class="flex flex-col items-center justify-center gap-1 text-on-surface-variant" href="#">
+<span class="material-symbols-outlined" data-icon="account_tree">account_tree</span>
+<span class="text-[10px] font-bold">Workflows</span>
+</a>
+<a class="flex flex-col items-center justify-center gap-1 text-on-surface-variant" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="text-[10px] font-bold">Settings</span>
+</a>
+</div>
+<script>
+        // Simple micro-interaction for cards
+        document.querySelectorAll('.group').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.classList.add('border-primary/40');
+            });
+            card.addEventListener('mouseleave', () => {
+                card.classList.remove('border-primary/40');
+            });
+        });
+    </script>
+</body></html>

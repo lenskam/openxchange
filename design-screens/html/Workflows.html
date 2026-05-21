@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Workflows | InterExchange</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;family=JetBrains+Mono:wght@400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-container-high": "#e6e8ea",
+                    "surface-container-highest": "#e0e3e5",
+                    "primary-fixed-dim": "#b4c5ff",
+                    "outline": "#737686",
+                    "on-tertiary-fixed-variant": "#7d2d00",
+                    "on-secondary-fixed-variant": "#38485d",
+                    "surface-tint": "#0053db",
+                    "surface-container-lowest": "#ffffff",
+                    "secondary": "#505f76",
+                    "surface-bright": "#f7f9fb",
+                    "on-tertiary": "#ffffff",
+                    "on-tertiary-container": "#ffede6",
+                    "on-secondary-container": "#54647a",
+                    "surface": "#f7f9fb",
+                    "on-surface": "#191c1e",
+                    "surface-variant": "#e0e3e5",
+                    "background": "#f7f9fb",
+                    "error": "#ba1a1a",
+                    "tertiary-fixed-dim": "#ffb596",
+                    "tertiary-fixed": "#ffdbcd",
+                    "tertiary": "#943700",
+                    "secondary-container": "#d0e1fb",
+                    "primary-container": "#2563eb",
+                    "on-surface-variant": "#434655",
+                    "tertiary-container": "#bc4800",
+                    "on-tertiary-fixed": "#360f00",
+                    "inverse-on-surface": "#eff1f3",
+                    "primary": "#004ac6",
+                    "surface-dim": "#d8dadc",
+                    "secondary-fixed": "#d3e4fe",
+                    "surface-container-low": "#f2f4f6",
+                    "inverse-surface": "#2d3133",
+                    "on-error": "#ffffff",
+                    "on-primary-fixed-variant": "#003ea8",
+                    "secondary-fixed-dim": "#b7c8e1",
+                    "surface-container": "#eceef0",
+                    "on-error-container": "#93000a",
+                    "on-background": "#191c1e",
+                    "on-primary-container": "#eeefff",
+                    "outline-variant": "#c3c6d7",
+                    "on-primary-fixed": "#00174b",
+                    "inverse-primary": "#b4c5ff",
+                    "on-primary": "#ffffff",
+                    "on-secondary": "#ffffff",
+                    "on-secondary-fixed": "#0b1c30",
+                    "error-container": "#ffdad6",
+                    "primary-fixed": "#dbe1ff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "margin-mobile": "16px",
+                    "gutter": "24px",
+                    "container-max": "1440px",
+                    "base": "8px",
+                    "margin-desktop": "32px"
+            },
+            "fontFamily": {
+                    "headline-lg": ["Inter"],
+                    "headline-lg-mobile": ["Inter"],
+                    "body-md": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "code-sm": ["jetbrainsMono"],
+                    "headline-md": ["Inter"],
+                    "label-md": ["Inter"]
+            },
+            "fontSize": {
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "code-sm": ["12px", {"lineHeight": "18px", "fontWeight": "400"}],
+                    "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .workflow-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+            gap: 24px;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen">
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-0 h-full flex flex-col py-8 gap-base bg-surface-container-low dark:bg-inverse-surface border-r border-outline-variant dark:border-outline w-64 z-50">
+<div class="px-6 mb-8 flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-primary flex items-center justify-center text-on-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">hub</span>
+</div>
+<div>
+<h1 class="text-headline-md font-headline-md font-bold text-primary dark:text-primary-fixed-dim leading-none">InterExchange</h1>
+<p class="text-label-md font-label-md text-on-surface-variant">Data Integration Platform</p>
+</div>
+</div>
+<nav class="flex-1 flex flex-col gap-1 px-4">
+<a class="text-on-surface-variant dark:text-surface-variant flex items-center px-4 py-3 hover:bg-surface-container-highest dark:hover:bg-surface-variant transition-colors rounded-lg gap-3" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-body-md font-body-md">Dashboard</span>
+</a>
+<a class="text-on-surface-variant dark:text-surface-variant flex items-center px-4 py-3 hover:bg-surface-container-highest dark:hover:bg-surface-variant transition-colors rounded-lg gap-3" href="#">
+<span class="material-symbols-outlined">hub</span>
+<span class="text-body-md font-body-md">Connections</span>
+</a>
+<a class="bg-secondary-container dark:bg-on-secondary-fixed-variant text-on-secondary-container dark:text-secondary-fixed font-bold rounded-lg flex items-center px-4 py-3 gap-3 active:scale-[0.98] transition-transform duration-150" href="#">
+<span class="material-symbols-outlined">account_tree</span>
+<span class="text-body-md font-body-md">Workflows</span>
+</a>
+<a class="text-on-surface-variant dark:text-surface-variant flex items-center px-4 py-3 hover:bg-surface-container-highest dark:hover:bg-surface-variant transition-colors rounded-lg gap-3" href="#">
+<span class="material-symbols-outlined">swap_horiz</span>
+<span class="text-body-md font-body-md">Transactions</span>
+</a>
+<a class="text-on-surface-variant dark:text-surface-variant flex items-center px-4 py-3 hover:bg-surface-container-highest dark:hover:bg-surface-variant transition-colors rounded-lg gap-3" href="#">
+<span class="material-symbols-outlined">settings_input_component</span>
+<span class="text-body-md font-body-md">Channels</span>
+</a>
+<a class="text-on-surface-variant dark:text-surface-variant flex items-center px-4 py-3 hover:bg-surface-container-highest dark:hover:bg-surface-variant transition-colors rounded-lg gap-3" href="#">
+<span class="material-symbols-outlined">transform</span>
+<span class="text-body-md font-body-md">Mappings</span>
+</a>
+<a class="text-on-surface-variant dark:text-surface-variant flex items-center px-4 py-3 hover:bg-surface-container-highest dark:hover:bg-surface-variant transition-colors rounded-lg gap-3" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="text-body-md font-body-md">Users</span>
+</a>
+<a class="text-on-surface-variant dark:text-surface-variant flex items-center px-4 py-3 hover:bg-surface-container-highest dark:hover:bg-surface-variant transition-colors rounded-lg gap-3" href="#">
+<span class="material-symbols-outlined">history_edu</span>
+<span class="text-body-md font-body-md">Audit Log</span>
+</a>
+<a class="text-on-surface-variant dark:text-surface-variant flex items-center px-4 py-3 hover:bg-surface-container-highest dark:hover:bg-surface-variant transition-colors rounded-lg gap-3" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-body-md font-body-md">Settings</span>
+</a>
+</nav>
+<div class="mt-auto px-4 flex flex-col gap-1">
+<a class="text-on-surface-variant dark:text-surface-variant flex items-center px-4 py-2 hover:bg-surface-container-highest dark:hover:bg-surface-variant transition-colors rounded-lg gap-3" href="#">
+<span class="material-symbols-outlined">health_and_safety</span>
+<span class="text-body-md font-body-md">System Health</span>
+</a>
+<a class="text-on-surface-variant dark:text-surface-variant flex items-center px-4 py-2 hover:bg-surface-container-highest dark:hover:bg-surface-variant transition-colors rounded-lg gap-3" href="#">
+<span class="material-symbols-outlined">menu_book</span>
+<span class="text-body-md font-body-md">Documentation</span>
+</a>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="ml-64 min-h-screen flex flex-col">
+<!-- TopAppBar -->
+<header class="flex justify-between items-center w-full px-margin-desktop sticky top-0 z-50 bg-surface dark:bg-inverse-surface border-b border-outline-variant dark:border-outline shadow-sm dark:shadow-none h-16">
+<div class="flex items-center flex-1 max-w-xl">
+<div class="relative w-full">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="w-full bg-surface-container-low border border-outline-variant rounded-full py-2 pl-10 pr-4 text-body-md focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all" placeholder="Search workflows..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4 ml-6">
+<button class="hover:bg-surface-container-high dark:hover:bg-surface-variant transition-colors p-2 rounded-full relative">
+<span class="material-symbols-outlined text-on-surface-variant">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full"></span>
+</button>
+<button class="hover:bg-surface-container-high dark:hover:bg-surface-variant transition-colors p-2 rounded-full">
+<span class="material-symbols-outlined text-on-surface-variant">help_outline</span>
+</button>
+<div class="h-8 w-px bg-outline-variant mx-2"></div>
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center font-bold">JD</div>
+</div>
+</div>
+</header>
+<!-- Content Canvas -->
+<div class="p-margin-desktop max-w-container-max mx-auto w-full">
+<!-- Header Section -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8">
+<div>
+<h2 class="text-headline-lg font-headline-lg text-on-surface">Workflows</h2>
+<p class="text-body-lg text-on-surface-variant mt-1">Manage data integration workflows and their mappings</p>
+</div>
+<div class="flex items-center gap-3">
+<div class="relative">
+<select class="appearance-none bg-surface border border-outline-variant rounded-lg px-4 py-2.5 pr-10 text-body-md font-label-md focus:outline-none focus:ring-2 focus:ring-primary/20">
+<option>All Statuses</option>
+<option>Active</option>
+<option>Paused</option>
+<option>Failed</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-on-surface-variant">expand_more</span>
+</div>
+<button class="bg-primary text-on-primary px-6 py-2.5 rounded-lg flex items-center gap-2 font-bold hover:opacity-90 active:scale-95 transition-all shadow-sm">
+<span class="material-symbols-outlined">add</span>
+                        New Workflow
+                    </button>
+</div>
+</div>
+<!-- Workflow Grid -->
+<div class="workflow-grid">
+<!-- Card 1: Active -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow group relative">
+<div class="flex justify-between items-start mb-4">
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 rounded-lg bg-primary-fixed text-on-primary-fixed flex items-center justify-center">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">child_care</span>
+</div>
+<div>
+<h3 class="text-headline-md font-bold text-on-surface">Birth Declaration Sync</h3>
+<p class="text-body-md text-on-surface-variant line-clamp-1">Syncing medical records to national registry</p>
+</div>
+</div>
+<button class="text-on-surface-variant hover:bg-surface-container-high p-1.5 rounded-lg transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</div>
+<div class="flex items-center justify-center gap-4 bg-surface-container-low py-4 rounded-lg mb-6 border border-dashed border-outline-variant">
+<div class="text-center">
+<p class="text-label-md text-on-surface-variant mb-1 uppercase tracking-tighter">Source</p>
+<span class="font-bold text-body-md text-primary">HIS_PRO_01</span>
+</div>
+<span class="material-symbols-outlined text-outline-variant">arrow_forward</span>
+<div class="text-center">
+<p class="text-label-md text-on-surface-variant mb-1 uppercase tracking-tighter">Destination</p>
+<span class="font-bold text-body-md text-secondary">REG_NAT_SYS</span>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-y-4 gap-x-2 mb-6">
+<div>
+<p class="text-label-md text-on-surface-variant mb-1">Schedule</p>
+<div class="flex items-center gap-1.5 text-body-md font-medium">
+<span class="material-symbols-outlined text-[18px]">update</span>
+                                Every 15 mins
+                            </div>
+</div>
+<div>
+<p class="text-label-md text-on-surface-variant mb-1">Mappings</p>
+<div class="flex items-center gap-1.5 text-body-md font-medium">
+<span class="material-symbols-outlined text-[18px]">alt_route</span>
+                                24 Fields
+                            </div>
+</div>
+<div class="col-span-2">
+<p class="text-label-md text-on-surface-variant mb-1">Last Run</p>
+<div class="text-body-md font-medium">Success — 4 minutes ago</div>
+</div>
+</div>
+<div class="flex items-center justify-between pt-4 border-t border-outline-variant">
+<span class="px-3 py-1 rounded-full bg-secondary-container/30 text-on-secondary-container text-label-md border border-secondary-container flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+                            ACTIVE
+                        </span>
+<button class="text-primary font-bold text-label-md hover:underline">View Flow</button>
+</div>
+</div>
+<!-- Card 2: Paused -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow group relative">
+<div class="flex justify-between items-start mb-4">
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 rounded-lg bg-surface-container-high text-on-surface-variant flex items-center justify-center">
+<span class="material-symbols-outlined">vaccines</span>
+</div>
+<div>
+<h3 class="text-headline-md font-bold text-on-surface">Immunization Logs</h3>
+<p class="text-body-md text-on-surface-variant line-clamp-1">Daily vaccine tracking and batching</p>
+</div>
+</div>
+<button class="text-on-surface-variant hover:bg-surface-container-high p-1.5 rounded-lg transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</div>
+<div class="flex items-center justify-center gap-4 bg-surface-container-low py-4 rounded-lg mb-6 border border-dashed border-outline-variant">
+<div class="text-center">
+<p class="text-label-md text-on-surface-variant mb-1 uppercase tracking-tighter">Source</p>
+<span class="font-bold text-body-md text-primary">HL7_SINK_A</span>
+</div>
+<span class="material-symbols-outlined text-outline-variant">arrow_forward</span>
+<div class="text-center">
+<p class="text-label-md text-on-surface-variant mb-1 uppercase tracking-tighter">Destination</p>
+<span class="font-bold text-body-md text-secondary">CDC_GATEWAY</span>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-y-4 gap-x-2 mb-6">
+<div>
+<p class="text-label-md text-on-surface-variant mb-1">Schedule</p>
+<div class="flex items-center gap-1.5 text-body-md font-medium">
+<span class="material-symbols-outlined text-[18px]">calendar_today</span>
+                                Daily 00:00
+                            </div>
+</div>
+<div>
+<p class="text-label-md text-on-surface-variant mb-1">Mappings</p>
+<div class="flex items-center gap-1.5 text-body-md font-medium">
+<span class="material-symbols-outlined text-[18px]">alt_route</span>
+                                12 Fields
+                            </div>
+</div>
+<div class="col-span-2">
+<p class="text-label-md text-on-surface-variant mb-1">Last Run</p>
+<div class="text-body-md font-medium">Paused by admin — Oct 24, 08:30</div>
+</div>
+</div>
+<div class="flex items-center justify-between pt-4 border-t border-outline-variant">
+<span class="px-3 py-1 rounded-full bg-surface-container-high text-on-surface-variant text-label-md border border-outline-variant flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-outline"></span>
+                            PAUSED
+                        </span>
+<button class="text-primary font-bold text-label-md hover:underline">Resume</button>
+</div>
+</div>
+<!-- Card 3: Failed -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow group relative">
+<div class="flex justify-between items-start mb-4">
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 rounded-lg bg-error-container text-on-error-container flex items-center justify-center">
+<span class="material-symbols-outlined">payments</span>
+</div>
+<div>
+<h3 class="text-headline-md font-bold text-on-surface">Billing Export V2</h3>
+<p class="text-body-md text-on-surface-variant line-clamp-1">Financial reconciliation to ERP system</p>
+</div>
+</div>
+<button class="text-on-surface-variant hover:bg-surface-container-high p-1.5 rounded-lg transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</div>
+<div class="flex items-center justify-center gap-4 bg-surface-container-low py-4 rounded-lg mb-6 border border-dashed border-outline-variant">
+<div class="text-center">
+<p class="text-label-md text-on-surface-variant mb-1 uppercase tracking-tighter">Source</p>
+<span class="font-bold text-body-md text-primary">ERP_BILL_SQL</span>
+</div>
+<span class="material-symbols-outlined text-outline-variant">arrow_forward</span>
+<div class="text-center">
+<p class="text-label-md text-on-surface-variant mb-1 uppercase tracking-tighter">Destination</p>
+<span class="font-bold text-body-md text-secondary">SAP_CENTRAL</span>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-y-4 gap-x-2 mb-6">
+<div>
+<p class="text-label-md text-on-surface-variant mb-1">Schedule</p>
+<div class="flex items-center gap-1.5 text-body-md font-medium">
+<span class="material-symbols-outlined text-[18px]">update</span>
+                                Hourly
+                            </div>
+</div>
+<div>
+<p class="text-label-md text-on-surface-variant mb-1">Mappings</p>
+<div class="flex items-center gap-1.5 text-body-md font-medium">
+<span class="material-symbols-outlined text-[18px]">alt_route</span>
+                                88 Fields
+                            </div>
+</div>
+<div class="col-span-2">
+<p class="text-label-md text-on-surface-variant mb-1 text-error">Error Message</p>
+<div class="text-body-md font-medium text-error truncate">Auth failure: Connection string expired</div>
+</div>
+</div>
+<div class="flex items-center justify-between pt-4 border-t border-outline-variant">
+<span class="px-3 py-1 rounded-full bg-error-container text-on-error-container text-label-md border border-error/20 flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[14px]">error</span>
+                            FAILED
+                        </span>
+<button class="text-primary font-bold text-label-md hover:underline">Troubleshoot</button>
+</div>
+</div>
+<!-- Card 4: Active -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow group relative">
+<div class="flex justify-between items-start mb-4">
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 rounded-lg bg-primary-fixed text-on-primary-fixed flex items-center justify-center">
+<span class="material-symbols-outlined">biotech</span>
+</div>
+<div>
+<h3 class="text-headline-md font-bold text-on-surface">Lab Results Router</h3>
+<p class="text-body-md text-on-surface-variant line-clamp-1">Automated distribution of pathology reports</p>
+</div>
+</div>
+<button class="text-on-surface-variant hover:bg-surface-container-high p-1.5 rounded-lg transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</div>
+<div class="flex items-center justify-center gap-4 bg-surface-container-low py-4 rounded-lg mb-6 border border-dashed border-outline-variant">
+<div class="text-center">
+<p class="text-label-md text-on-surface-variant mb-1 uppercase tracking-tighter">Source</p>
+<span class="font-bold text-body-md text-primary">PATH_LAB_01</span>
+</div>
+<span class="material-symbols-outlined text-outline-variant">arrow_forward</span>
+<div class="text-center">
+<p class="text-label-md text-on-surface-variant mb-1 uppercase tracking-tighter">Destination</p>
+<span class="font-bold text-body-md text-secondary">PHYSICIAN_PORTAL</span>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-y-4 gap-x-2 mb-6">
+<div>
+<p class="text-label-md text-on-surface-variant mb-1">Schedule</p>
+<div class="flex items-center gap-1.5 text-body-md font-medium">
+<span class="material-symbols-outlined text-[18px]">bolt</span>
+                                Real-time
+                            </div>
+</div>
+<div>
+<p class="text-label-md text-on-surface-variant mb-1">Mappings</p>
+<div class="flex items-center gap-1.5 text-body-md font-medium">
+<span class="material-symbols-outlined text-[18px]">alt_route</span>
+                                45 Fields
+                            </div>
+</div>
+<div class="col-span-2">
+<p class="text-label-md text-on-surface-variant mb-1">Last Run</p>
+<div class="text-body-md font-medium">Success — Just now</div>
+</div>
+</div>
+<div class="flex items-center justify-between pt-4 border-t border-outline-variant">
+<span class="px-3 py-1 rounded-full bg-secondary-container/30 text-on-secondary-container text-label-md border border-secondary-container flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+                            ACTIVE
+                        </span>
+<button class="text-primary font-bold text-label-md hover:underline">View Flow</button>
+</div>
+</div>
+<!-- Card 5: Active -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow group relative">
+<div class="flex justify-between items-start mb-4">
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 rounded-lg bg-primary-fixed text-on-primary-fixed flex items-center justify-center">
+<span class="material-symbols-outlined">emergency</span>
+</div>
+<div>
+<h3 class="text-headline-md font-bold text-on-surface">ER Admission Alerts</h3>
+<p class="text-body-md text-on-surface-variant line-clamp-1">Push notifications for critical care admissions</p>
+</div>
+</div>
+<button class="text-on-surface-variant hover:bg-surface-container-high p-1.5 rounded-lg transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</div>
+<div class="flex items-center justify-center gap-4 bg-surface-container-low py-4 rounded-lg mb-6 border border-dashed border-outline-variant">
+<div class="text-center">
+<p class="text-label-md text-on-surface-variant mb-1 uppercase tracking-tighter">Source</p>
+<span class="font-bold text-body-md text-primary">HL7_V2_ER</span>
+</div>
+<span class="material-symbols-outlined text-outline-variant">arrow_forward</span>
+<div class="text-center">
+<p class="text-label-md text-on-surface-variant mb-1 uppercase tracking-tighter">Destination</p>
+<span class="font-bold text-body-md text-secondary">MOBILE_NOTIF</span>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-y-4 gap-x-2 mb-6">
+<div>
+<p class="text-label-md text-on-surface-variant mb-1">Schedule</p>
+<div class="flex items-center gap-1.5 text-body-md font-medium">
+<span class="material-symbols-outlined text-[18px]">bolt</span>
+                                Real-time
+                            </div>
+</div>
+<div>
+<p class="text-label-md text-on-surface-variant mb-1">Mappings</p>
+<div class="flex items-center gap-1.5 text-body-md font-medium">
+<span class="material-symbols-outlined text-[18px]">alt_route</span>
+                                6 Fields
+                            </div>
+</div>
+<div class="col-span-2">
+<p class="text-label-md text-on-surface-variant mb-1">Last Run</p>
+<div class="text-body-md font-medium">Success — 12 seconds ago</div>
+</div>
+</div>
+<div class="flex items-center justify-between pt-4 border-t border-outline-variant">
+<span class="px-3 py-1 rounded-full bg-secondary-container/30 text-on-secondary-container text-label-md border border-secondary-container flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+                            ACTIVE
+                        </span>
+<button class="text-primary font-bold text-label-md hover:underline">View Flow</button>
+</div>
+</div>
+<!-- Card 6: Paused -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow group relative">
+<div class="flex justify-between items-start mb-4">
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 rounded-lg bg-surface-container-high text-on-surface-variant flex items-center justify-center">
+<span class="material-symbols-outlined">inventory_2</span>
+</div>
+<div>
+<h3 class="text-headline-md font-bold text-on-surface">Pharmacy Stock Sync</h3>
+<p class="text-body-md text-on-surface-variant line-clamp-1">Weekly inventory replenishment mapping</p>
+</div>
+</div>
+<button class="text-on-surface-variant hover:bg-surface-container-high p-1.5 rounded-lg transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</div>
+<div class="flex items-center justify-center gap-4 bg-surface-container-low py-4 rounded-lg mb-6 border border-dashed border-outline-variant">
+<div class="text-center">
+<p class="text-label-md text-on-surface-variant mb-1 uppercase tracking-tighter">Source</p>
+<span class="font-bold text-body-md text-primary">STOCK_MASTER</span>
+</div>
+<span class="material-symbols-outlined text-outline-variant">arrow_forward</span>
+<div class="text-center">
+<p class="text-label-md text-on-surface-variant mb-1 uppercase tracking-tighter">Destination</p>
+<span class="font-bold text-body-md text-secondary">WAREHOUSE_ERP</span>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-y-4 gap-x-2 mb-6">
+<div>
+<p class="text-label-md text-on-surface-variant mb-1">Schedule</p>
+<div class="flex items-center gap-1.5 text-body-md font-medium">
+<span class="material-symbols-outlined text-[18px]">event</span>
+                                Weekly
+                            </div>
+</div>
+<div>
+<p class="text-label-md text-on-surface-variant mb-1">Mappings</p>
+<div class="flex items-center gap-1.5 text-body-md font-medium">
+<span class="material-symbols-outlined text-[18px]">alt_route</span>
+                                110 Fields
+                            </div>
+</div>
+<div class="col-span-2">
+<p class="text-label-md text-on-surface-variant mb-1">Last Run</p>
+<div class="text-body-md font-medium">Completed — 6 days ago</div>
+</div>
+</div>
+<div class="flex items-center justify-between pt-4 border-t border-outline-variant">
+<span class="px-3 py-1 rounded-full bg-surface-container-high text-on-surface-variant text-label-md border border-outline-variant flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-outline"></span>
+                            PAUSED
+                        </span>
+<button class="text-primary font-bold text-label-md hover:underline">Resume</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+<script>
+        // Simple micro-interactions
+        document.querySelectorAll('button').forEach(button => {
+            button.addEventListener('mousedown', () => {
+                button.classList.add('scale-95');
+            });
+            button.addEventListener('mouseup', () => {
+                button.classList.remove('scale-95');
+            });
+            button.addEventListener('mouseleave', () => {
+                button.classList.remove('scale-95');
+            });
+        });
+
+        // Search input highlight simulation
+        const searchInput = document.querySelector('input[type="text"]');
+        searchInput.addEventListener('focus', () => {
+            searchInput.parentElement.classList.add('ring-2', 'ring-primary/20');
+        });
+        searchInput.addEventListener('blur', () => {
+            searchInput.parentElement.classList.remove('ring-2', 'ring-primary/20');
+        });
+    </script>
+</body></html>

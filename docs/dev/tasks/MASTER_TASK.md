@@ -681,3 +681,143 @@ tasks:
     plan_id: phase-9-documentation
     priority: medium
     depends_on: [9.4]
+
+  # ============================================
+  # PHASE 10: STITCH DESIGN INTEGRATION (Completed)
+  # ============================================
+
+  - id: 10.1
+    description: "Configure Stitch MCP with OAuth2 access token via wrapper script"
+    status: completed
+    created_at: 2026-05-19T00:00:00Z
+    completed_at: 2026-05-19T00:00:00Z
+    plan_id: (direct)
+    priority: high
+
+  - id: 10.2
+    description: "Download all 9 Stitch design screens (Dashboard, Connections, Workflows, Transactions, Channels, Mappings, Users, Audit Log, Settings)"
+    status: completed
+    created_at: 2026-05-19T00:00:00Z
+    completed_at: 2026-05-19T00:00:00Z
+    plan_id: (direct)
+    priority: high
+
+  - id: 10.3
+    description: "Install and configure Tailwind CSS v4 with Stitch design tokens"
+    status: completed
+    created_at: 2026-05-19T00:00:00Z
+    completed_at: 2026-05-19T00:00:00Z
+    plan_id: (direct)
+    priority: high
+
+  - id: 10.4
+    description: "Refactor Sidebar and TopBar from MUI to Tailwind"
+    status: completed
+    created_at: 2026-05-19T00:00:00Z
+    completed_at: 2026-05-19T00:00:00Z
+    plan_id: (direct)
+    priority: high
+
+  - id: 10.5
+    description: "Update App.tsx layout to use Tailwind sidebar offset + max-width container"
+    status: completed
+    created_at: 2026-05-19T00:00:00Z
+    completed_at: 2026-05-19T00:00:00Z
+    plan_id: (direct)
+    priority: high
+
+  - id: 10.6
+    description: "Rewrite DashboardPage to match Stitch design (glass cards, charts, activity feed, workflow grid)"
+    status: completed
+    created_at: 2026-05-19T00:00:00Z
+    completed_at: 2026-05-19T00:00:00Z
+    plan_id: (direct)
+    priority: high
+
+  - id: 10.7
+    description: "Rewrite ConnectionsPage to match Stitch design (typed cards, CRUD, sync activity)"
+    status: completed
+    created_at: 2026-05-19T00:00:00Z
+    completed_at: 2026-05-19T00:00:00Z
+    plan_id: (direct)
+    priority: high
+
+  - id: 10.8
+    description: "Create WorkflowsPage matching Stitch design (cards with status bar, source→destination)"
+    status: completed
+    created_at: 2026-05-19T00:00:00Z
+    completed_at: 2026-05-19T00:00:00Z
+    plan_id: (direct)
+    priority: high
+
+  - id: 10.9
+    description: "Create TransactionsPage matching Stitch design (summary pills, table, info drawer)"
+    status: completed
+    created_at: 2026-05-19T00:00:00Z
+    completed_at: 2026-05-19T00:00:00Z
+    plan_id: (direct)
+    priority: high
+
+  - id: 10.10
+    description: "Create ChannelsPage matching Stitch design (stats grid, table with toggles, activity timeline)"
+    status: completed
+    created_at: 2026-05-19T00:00:00Z
+    completed_at: 2026-05-19T00:00:00Z
+    plan_id: (direct)
+    priority: high
+
+  - id: 10.11
+    description: "Create MappingsPage matching Stitch design (4-column bento cards, table with type badges)"
+    status: completed
+    created_at: 2026-05-19T00:00:00Z
+    completed_at: 2026-05-19T00:00:00Z
+    plan_id: (direct)
+    priority: high
+
+  - id: 10.12
+    description: "Refactor UsersPage from MUI-heavy to Tailwind matching Stitch design (stat cards, role filter, status pills)"
+    status: completed
+    created_at: 2026-05-19T00:00:00Z
+    completed_at: 2026-05-19T00:00:00Z
+    plan_id: (direct)
+    priority: high
+
+  - id: 10.13
+    description: "Create AuditLogPage matching Stitch design (4-column stats, searchable event table, info banner)"
+    status: completed
+    created_at: 2026-05-19T00:00:00Z
+    completed_at: 2026-05-19T00:00:00Z
+    plan_id: (direct)
+    priority: high
+
+  - id: 10.14
+    description: "Create SettingsPage matching Stitch design (hero banner, tabbed navigation, Profile form, placeholder tabs)"
+    status: completed
+    created_at: 2026-05-19T00:00:00Z
+    completed_at: 2026-05-19T00:00:00Z
+    plan_id: (direct)
+    priority: high
+
+  - id: 10.15
+    description: "Update GEMINI.md technology stack with Tailwind CSS v4"
+    status: completed
+    created_at: 2026-05-19T00:00:00Z
+    completed_at: 2026-05-19T00:00:00Z
+    plan_id: (direct)
+    priority: medium
+
+  - id: 10.16
+    description: "Update MASTER_TASK.md with Stitch redesign tasks"
+    status: completed
+    created_at: 2026-05-19T00:00:00Z
+    completed_at: 2026-05-19T00:00:00Z
+    plan_id: (direct)
+    priority: medium
+
+  - id: 10.17
+    description: "Verify frontend builds successfully with all new pages"
+    status: completed
+    created_at: 2026-05-19T00:00:00Z
+    completed_at: 2026-05-19T00:00:00Z
+    plan_id: (direct)
+    priority: high

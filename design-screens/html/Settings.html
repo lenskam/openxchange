@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;family=JetBrains+Mono&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-container-high": "#e6e8ea",
+                    "surface-container-highest": "#e0e3e5",
+                    "primary-fixed-dim": "#b4c5ff",
+                    "outline": "#737686",
+                    "on-tertiary-fixed-variant": "#7d2d00",
+                    "on-secondary-fixed-variant": "#38485d",
+                    "surface-tint": "#0053db",
+                    "surface-container-lowest": "#ffffff",
+                    "secondary": "#505f76",
+                    "surface-bright": "#f7f9fb",
+                    "on-tertiary": "#ffffff",
+                    "on-tertiary-container": "#ffede6",
+                    "on-secondary-container": "#54647a",
+                    "surface": "#f7f9fb",
+                    "on-surface": "#191c1e",
+                    "surface-variant": "#e0e3e5",
+                    "background": "#f7f9fb",
+                    "error": "#ba1a1a",
+                    "tertiary-fixed-dim": "#ffb596",
+                    "tertiary-fixed": "#ffdbcd",
+                    "tertiary": "#943700",
+                    "secondary-container": "#d0e1fb",
+                    "primary-container": "#2563eb",
+                    "on-surface-variant": "#434655",
+                    "tertiary-container": "#bc4800",
+                    "on-tertiary-fixed": "#360f00",
+                    "inverse-on-surface": "#eff1f3",
+                    "primary": "#004ac6",
+                    "surface-dim": "#d8dadc",
+                    "secondary-fixed": "#d3e4fe",
+                    "surface-container-low": "#f2f4f6",
+                    "inverse-surface": "#2d3133",
+                    "on-error": "#ffffff",
+                    "on-primary-fixed-variant": "#003ea8",
+                    "secondary-fixed-dim": "#b7c8e1",
+                    "surface-container": "#eceef0",
+                    "on-error-container": "#93000a",
+                    "on-background": "#191c1e",
+                    "on-primary-container": "#eeefff",
+                    "outline-variant": "#c3c6d7",
+                    "on-primary-fixed": "#00174b",
+                    "inverse-primary": "#b4c5ff",
+                    "on-primary": "#ffffff",
+                    "on-secondary": "#ffffff",
+                    "on-secondary-fixed": "#0b1c30",
+                    "error-container": "#ffdad6",
+                    "primary-fixed": "#dbe1ff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "margin-mobile": "16px",
+                    "gutter": "24px",
+                    "container-max": "1440px",
+                    "base": "8px",
+                    "margin-desktop": "32px"
+            },
+            "fontFamily": {
+                    "headline-lg": ["Inter"],
+                    "headline-lg-mobile": ["Inter"],
+                    "body-md": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "code-sm": ["jetbrainsMono"],
+                    "headline-md": ["Inter"],
+                    "label-md": ["Inter"]
+            },
+            "fontSize": {
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "code-sm": ["12px", {"lineHeight": "18px", "fontWeight": "400"}],
+                    "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        
+        .active-tab-indicator {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 2px;
+            background-color: #004ac6;
+            transition: all 0.3s ease;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md min-h-screen flex overflow-hidden">
+<!-- SideNavBar (Execution from JSON) -->
+<aside class="fixed left-0 top-0 h-full flex flex-col py-8 gap-base bg-surface-container-low border-r border-outline-variant w-64 z-50">
+<div class="px-6 mb-8 flex items-center gap-3">
+<div class="w-10 h-10 bg-primary rounded-lg flex items-center justify-center text-on-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">hub</span>
+</div>
+<div>
+<h1 class="text-headline-md font-headline-md font-bold text-primary">InterExchange</h1>
+<p class="text-[10px] text-on-surface-variant uppercase tracking-widest font-bold">Data Integration Platform</p>
+</div>
+</div>
+<nav class="flex-1 px-4 flex flex-col gap-1">
+<a class="text-on-surface-variant hover:bg-surface-container-highest transition-colors rounded-lg flex items-center px-4 py-3 gap-3" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-md text-label-md">Dashboard</span>
+</a>
+<a class="text-on-surface-variant hover:bg-surface-container-highest transition-colors rounded-lg flex items-center px-4 py-3 gap-3" href="#">
+<span class="material-symbols-outlined">hub</span>
+<span class="font-label-md text-label-md">Connections</span>
+</a>
+<a class="text-on-surface-variant hover:bg-surface-container-highest transition-colors rounded-lg flex items-center px-4 py-3 gap-3" href="#">
+<span class="material-symbols-outlined">account_tree</span>
+<span class="font-label-md text-label-md">Workflows</span>
+</a>
+<a class="text-on-surface-variant hover:bg-surface-container-highest transition-colors rounded-lg flex items-center px-4 py-3 gap-3" href="#">
+<span class="material-symbols-outlined">swap_horiz</span>
+<span class="font-label-md text-label-md">Transactions</span>
+</a>
+<a class="text-on-surface-variant hover:bg-surface-container-highest transition-colors rounded-lg flex items-center px-4 py-3 gap-3" href="#">
+<span class="material-symbols-outlined">settings_input_component</span>
+<span class="font-label-md text-label-md">Channels</span>
+</a>
+<a class="text-on-surface-variant hover:bg-surface-container-highest transition-colors rounded-lg flex items-center px-4 py-3 gap-3" href="#">
+<span class="material-symbols-outlined">transform</span>
+<span class="font-label-md text-label-md">Mappings</span>
+</a>
+<a class="text-on-surface-variant hover:bg-surface-container-highest transition-colors rounded-lg flex items-center px-4 py-3 gap-3" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="font-label-md text-label-md">Users</span>
+</a>
+<a class="text-on-surface-variant hover:bg-surface-container-highest transition-colors rounded-lg flex items-center px-4 py-3 gap-3" href="#">
+<span class="material-symbols-outlined">history_edu</span>
+<span class="font-label-md text-label-md">Audit Log</span>
+</a>
+<a class="bg-secondary-container text-on-secondary-container font-bold rounded-lg flex items-center px-4 py-3 gap-3 scale-[0.98]" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">settings</span>
+<span class="font-label-md text-label-md">Settings</span>
+</a>
+</nav>
+<div class="mt-auto px-4 pt-8 border-t border-outline-variant flex flex-col gap-1">
+<a class="text-on-surface-variant hover:bg-surface-container-highest transition-colors rounded-lg flex items-center px-4 py-3 gap-3" href="#">
+<span class="material-symbols-outlined">health_and_safety</span>
+<span class="font-label-md text-label-md">System Health</span>
+</a>
+<a class="text-on-surface-variant hover:bg-surface-container-highest transition-colors rounded-lg flex items-center px-4 py-3 gap-3" href="#">
+<span class="material-symbols-outlined">menu_book</span>
+<span class="font-label-md text-label-md">Documentation</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 ml-64 flex flex-col h-screen overflow-y-auto">
+<!-- TopAppBar (Execution from JSON) -->
+<header class="flex justify-between items-center w-full px-margin-desktop sticky top-0 z-50 h-16 bg-surface border-b border-outline-variant shadow-sm">
+<div class="flex items-center gap-4">
+<span class="text-headline-md font-headline-md font-bold text-primary">Settings</span>
+</div>
+<div class="flex items-center gap-6">
+<div class="relative group">
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-primary transition-colors">notifications</span>
+<span class="absolute -top-1 -right-1 w-2 h-2 bg-error rounded-full"></span>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-primary transition-colors">help_outline</span>
+<div class="flex items-center gap-3 pl-4 border-l border-outline-variant">
+<div class="text-right">
+<p class="text-label-md font-label-md text-on-surface">Alex Johnson</p>
+<p class="text-[10px] text-on-surface-variant font-bold uppercase">Administrator</p>
+</div>
+<div class="w-10 h-10 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-bold">AJ</div>
+</div>
+</div>
+</header>
+<!-- Page Canvas -->
+<div class="p-8 max-w-5xl mx-auto w-full">
+<!-- Bento-style Header Card -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+<div class="md:col-span-2 bg-surface-container-lowest border border-outline-variant rounded-xl p-8 flex flex-col justify-center">
+<h2 class="text-headline-lg font-headline-lg text-on-surface mb-2">Configure Your Environment</h2>
+<p class="text-body-lg text-on-surface-variant">Manage your personal profile, team permissions, and platform-wide security protocols from a single centralized dashboard.</p>
+</div>
+<div class="bg-primary-container text-on-primary-container rounded-xl p-8 flex flex-col justify-between overflow-hidden relative group">
+<div class="z-10">
+<span class="material-symbols-outlined text-4xl mb-4">verified_user</span>
+<h3 class="font-headline-md text-headline-md mb-1">Security Score: 94%</h3>
+<p class="text-body-md opacity-90">Your account is well protected. Two-factor authentication is active.</p>
+</div>
+<div class="absolute -bottom-4 -right-4 opacity-10 transition-transform group-hover:scale-110 duration-500">
+<span class="material-symbols-outlined text-[120px]">security</span>
+</div>
+</div>
+</div>
+<!-- MUI-style Navigation Tabs -->
+<div class="relative flex items-center border-b border-outline-variant mb-8 px-2 overflow-x-auto whitespace-nowrap">
+<button class="px-6 py-4 font-label-md text-label-md text-primary font-bold transition-colors relative" id="tab-btn-profile" onclick="switchTab('profile')">Profile</button>
+<button class="px-6 py-4 font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" id="tab-btn-organization" onclick="switchTab('organization')">Organization</button>
+<button class="px-6 py-4 font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" id="tab-btn-notifications" onclick="switchTab('notifications')">Notifications</button>
+<button class="px-6 py-4 font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" id="tab-btn-security" onclick="switchTab('security')">Security</button>
+<button class="px-6 py-4 font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" id="tab-btn-system" onclick="switchTab('system')">System</button>
+<div class="active-tab-indicator" id="tab-indicator" style="width: 100px; transform: translateX(8px);"></div>
+</div>
+<!-- Profile Tab Content -->
+<div class="space-y-8 animate-in fade-in duration-500" id="tab-content-profile">
+<!-- Avatar & Identity Section -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
+<div class="md:col-span-4 bg-surface-container-lowest border border-outline-variant rounded-xl p-8 text-center flex flex-col items-center">
+<div class="relative group cursor-pointer mb-4">
+<img class="w-32 h-32 rounded-full object-cover border-4 border-surface shadow-md" data-alt="A professional studio portrait of a mid-30s male professional with a clean, modern aesthetic. He is wearing a crisp white shirt against a neutral, high-key studio background that matches a clean light-mode UI. The lighting is soft and flattering, highlighting his confident yet approachable expression. The overall style is corporate, minimalist, and perfectly aligned with a premium health data platform design." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDAFkdvX4pXiriNR-mSDHMBPwP0HcqZ1Xj0xDa9nCbchHYvctCR35a-jcll71Hmqkf7VKAj2cb2Nv7H66nk4TW8WUhENTsIwOTJGTUb5s4MN-utv32lEB5UAFWSKres0HcQua_0-nuMvCHQpmSL_RfGS0HrAfGbLEJe-smE-qyKAjClGpchHh1QmSOsYs1hQPrFMFaliObCxMs5WUmicfGecsQyQHFQw3FpRpZpklTemy61uDL6eJ1mYL-T9_Rx-n56mXo9XMaVsILc"/>
+<div class="absolute inset-0 bg-black/40 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-white">photo_camera</span>
+</div>
+</div>
+<h4 class="font-headline-md text-headline-md text-on-surface">Alex Johnson</h4>
+<p class="text-body-md text-on-surface-variant mb-6">alex.johnson@interexchange.io</p>
+<button class="w-full py-2.5 px-4 bg-secondary-container text-on-secondary-container font-label-md text-label-md rounded-lg hover:bg-surface-container-highest transition-all flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]">upload</span>
+                            Change Photo
+                        </button>
+</div>
+<div class="md:col-span-8 bg-surface-container-lowest border border-outline-variant rounded-xl p-8">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="flex flex-col gap-2">
+<label class="text-label-md font-label-md text-on-surface-variant uppercase tracking-wider">First Name</label>
+<input class="bg-surface border border-outline-variant rounded-lg px-4 py-3 text-body-md focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all" type="text" value="Alex"/>
+</div>
+<div class="flex flex-col gap-2">
+<label class="text-label-md font-label-md text-on-surface-variant uppercase tracking-wider">Last Name</label>
+<input class="bg-surface border border-outline-variant rounded-lg px-4 py-3 text-body-md focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all" type="text" value="Johnson"/>
+</div>
+<div class="flex flex-col gap-2 md:col-span-2">
+<label class="text-label-md font-label-md text-on-surface-variant uppercase tracking-wider">Email Address</label>
+<input class="bg-surface border border-outline-variant rounded-lg px-4 py-3 text-body-md focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all" type="email" value="alex.johnson@interexchange.io"/>
+</div>
+<div class="flex flex-col gap-2 md:col-span-2">
+<label class="text-label-md font-label-md text-on-surface-variant uppercase tracking-wider">Role</label>
+<div class="bg-surface-container-high border border-outline-variant rounded-lg px-4 py-3 text-body-md text-on-surface-variant flex items-center justify-between">
+<span>Administrator</span>
+<span class="material-symbols-outlined text-[18px]">lock</span>
+</div>
+<p class="text-[11px] text-on-surface-variant italic">Roles can only be modified by the System Owner.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Password Section -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-8">
+<div class="flex items-center gap-3 mb-8">
+<div class="w-10 h-10 rounded-lg bg-tertiary-fixed text-on-tertiary-fixed-variant flex items-center justify-center">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">password</span>
+</div>
+<div>
+<h3 class="font-headline-md text-headline-md text-on-surface">Change Password</h3>
+<p class="text-body-md text-on-surface-variant">Update your account credentials to maintain security.</p>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="flex flex-col gap-2">
+<label class="text-label-md font-label-md text-on-surface-variant uppercase tracking-wider">Current Password</label>
+<input class="bg-surface border border-outline-variant rounded-lg px-4 py-3 text-body-md focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all" placeholder="••••••••" type="password"/>
+</div>
+<div class="flex flex-col gap-2">
+<label class="text-label-md font-label-md text-on-surface-variant uppercase tracking-wider">New Password</label>
+<input class="bg-surface border border-outline-variant rounded-lg px-4 py-3 text-body-md focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all" placeholder="••••••••" type="password"/>
+</div>
+<div class="flex flex-col gap-2">
+<label class="text-label-md font-label-md text-on-surface-variant uppercase tracking-wider">Confirm New Password</label>
+<input class="bg-surface border border-outline-variant rounded-lg px-4 py-3 text-body-md focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all" placeholder="••••••••" type="password"/>
+</div>
+</div>
+<div class="mt-8 flex justify-end gap-4">
+<button class="px-6 py-2.5 font-label-md text-label-md text-on-surface-variant hover:bg-surface-container transition-colors rounded-lg">Cancel</button>
+<button class="px-8 py-2.5 bg-primary text-on-primary font-label-md text-label-md rounded-lg shadow-md hover:shadow-lg hover:scale-[1.02] active:scale-95 transition-all">Update Password</button>
+</div>
+</div>
+<!-- Danger Zone -->
+<div class="bg-error-container/20 border border-error/20 rounded-xl p-8">
+<h3 class="font-headline-md text-headline-md text-error mb-2">Danger Zone</h3>
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
+<div>
+<p class="text-on-surface font-bold">Delete Account</p>
+<p class="text-body-md text-on-surface-variant">Once you delete your account, there is no going back. Please be certain.</p>
+</div>
+<button class="px-6 py-2.5 bg-error text-on-error font-label-md text-label-md rounded-lg hover:bg-red-700 transition-colors whitespace-nowrap">Delete Permanently</button>
+</div>
+</div>
+</div>
+<!-- Other Tab Content (Hidden by default) -->
+<div class="hidden space-y-8 min-h-[400px] flex flex-col items-center justify-center text-center" id="tab-content-other">
+<div class="w-24 h-24 rounded-full bg-surface-container-high flex items-center justify-center mb-6">
+<span class="material-symbols-outlined text-4xl text-on-surface-variant">construction</span>
+</div>
+<h3 class="text-headline-md font-headline-md text-on-surface">Section Under Development</h3>
+<p class="text-body-lg text-on-surface-variant max-w-md">The <span class="font-bold" id="current-tab-name"></span> configuration panel is currently being finalized for high-precision workflows.</p>
+<button class="mt-6 text-primary font-label-md text-label-md flex items-center gap-2 hover:underline" onclick="switchTab('profile')">
+<span class="material-symbols-outlined text-[18px]">arrow_back</span>
+                    Return to Profile Settings
+                </button>
+</div>
+</div>
+</main>
+<script>
+        function switchTab(tabId) {
+            const tabs = ['profile', 'organization', 'notifications', 'security', 'system'];
+            const profileContent = document.getElementById('tab-content-profile');
+            const otherContent = document.getElementById('tab-content-other');
+            const indicator = document.getElementById('tab-indicator');
+            const currentTabLabel = document.getElementById('current-tab-name');
+            
+            // UI state updates
+            tabs.forEach(t => {
+                const btn = document.getElementById(`tab-btn-${t}`);
+                if(t === tabId) {
+                    btn.classList.add('text-primary', 'font-bold');
+                    btn.classList.remove('text-on-surface-variant');
+                } else {
+                    btn.classList.remove('text-primary', 'font-bold');
+                    btn.classList.add('text-on-surface-variant');
+                }
+            });
+
+            // Tab Indicator Animation logic
+            const activeBtn = document.getElementById(`tab-btn-${tabId}`);
+            indicator.style.width = `${activeBtn.offsetWidth - 32}px`;
+            indicator.style.transform = `translateX(${activeBtn.offsetLeft + 16}px)`;
+
+            // Visibility toggle
+            if (tabId === 'profile') {
+                profileContent.classList.remove('hidden');
+                otherContent.classList.add('hidden');
+            } else {
+                profileContent.classList.add('hidden');
+                otherContent.classList.remove('hidden');
+                currentTabLabel.textContent = tabId.charAt(0).toUpperCase() + tabId.slice(1);
+            }
+        }
+
+        // Initialize indicator position
+        window.addEventListener('DOMContentLoaded', () => {
+            switchTab('profile');
+        });
+    </script>
+</body></html>

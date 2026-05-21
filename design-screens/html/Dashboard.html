@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>InterExchange - Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=JetBrains+Mono&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-container-high": "#e6e8ea",
+                    "surface-container-highest": "#e0e3e5",
+                    "primary-fixed-dim": "#b4c5ff",
+                    "outline": "#737686",
+                    "on-tertiary-fixed-variant": "#7d2d00",
+                    "on-secondary-fixed-variant": "#38485d",
+                    "surface-tint": "#0053db",
+                    "surface-container-lowest": "#ffffff",
+                    "secondary": "#505f76",
+                    "surface-bright": "#f7f9fb",
+                    "on-tertiary": "#ffffff",
+                    "on-tertiary-container": "#ffede6",
+                    "on-secondary-container": "#54647a",
+                    "surface": "#f7f9fb",
+                    "on-surface": "#191c1e",
+                    "surface-variant": "#e0e3e5",
+                    "background": "#f7f9fb",
+                    "error": "#ba1a1a",
+                    "tertiary-fixed-dim": "#ffb596",
+                    "tertiary-fixed": "#ffdbcd",
+                    "tertiary": "#943700",
+                    "secondary-container": "#d0e1fb",
+                    "primary-container": "#2563eb",
+                    "on-surface-variant": "#434655",
+                    "tertiary-container": "#bc4800",
+                    "on-tertiary-fixed": "#360f00",
+                    "inverse-on-surface": "#eff1f3",
+                    "primary": "#004ac6",
+                    "surface-dim": "#d8dadc",
+                    "secondary-fixed": "#d3e4fe",
+                    "surface-container-low": "#f2f4f6",
+                    "inverse-surface": "#2d3133",
+                    "on-error": "#ffffff",
+                    "on-primary-fixed-variant": "#003ea8",
+                    "secondary-fixed-dim": "#b7c8e1",
+                    "surface-container": "#eceef0",
+                    "on-error-container": "#93000a",
+                    "on-background": "#191c1e",
+                    "on-primary-container": "#eeefff",
+                    "outline-variant": "#c3c6d7",
+                    "on-primary-fixed": "#00174b",
+                    "inverse-primary": "#b4c5ff",
+                    "on-primary": "#ffffff",
+                    "on-secondary": "#ffffff",
+                    "on-secondary-fixed": "#0b1c30",
+                    "error-container": "#ffdad6",
+                    "primary-fixed": "#dbe1ff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "margin-mobile": "16px",
+                    "gutter": "24px",
+                    "container-max": "1440px",
+                    "base": "8px",
+                    "margin-desktop": "32px"
+            },
+            "fontFamily": {
+                    "headline-lg": ["Inter"],
+                    "headline-lg-mobile": ["Inter"],
+                    "body-md": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "code-sm": ["JetBrains Mono"],
+                    "headline-md": ["Inter"],
+                    "label-md": ["Inter"]
+            },
+            "fontSize": {
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "code-sm": ["12px", {"lineHeight": "18px", "fontWeight": "400"}],
+                    "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body { font-family: 'Inter', sans-serif; }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+        }
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 24px;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface">
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-0 h-full flex flex-col py-8 gap-base bg-surface-container-low dark:bg-inverse-surface border-r border-outline-variant dark:border-outline w-64 z-50">
+<div class="px-6 mb-8">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary" data-icon="hub">hub</span>
+</div>
+<div>
+<h1 class="text-headline-md font-headline-md font-bold text-primary dark:text-primary-fixed-dim">InterExchange</h1>
+<p class="text-label-md font-label-md text-on-surface-variant opacity-70">Data Integration Platform</p>
+</div>
+</div>
+</div>
+<nav class="flex-grow px-4 space-y-1">
+<a class="bg-secondary-container dark:bg-on-secondary-fixed-variant text-on-secondary-container dark:text-secondary-fixed font-bold rounded-lg flex items-center px-4 py-3 scale-[0.98] transition-transform duration-150" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="dashboard">dashboard</span>
+<span class="text-label-md font-label-md">Dashboard</span>
+</a>
+<a class="text-on-surface-variant dark:text-surface-variant flex items-center px-4 py-3 hover:bg-surface-container-highest dark:hover:bg-surface-variant transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="hub">hub</span>
+<span class="text-label-md font-label-md">Connections</span>
+</a>
+<a class="text-on-surface-variant dark:text-surface-variant flex items-center px-4 py-3 hover:bg-surface-container-highest dark:hover:bg-surface-variant transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="account_tree">account_tree</span>
+<span class="text-label-md font-label-md">Workflows</span>
+</a>
+<a class="text-on-surface-variant dark:text-surface-variant flex items-center px-4 py-3 hover:bg-surface-container-highest dark:hover:bg-surface-variant transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="swap_horiz">swap_horiz</span>
+<span class="text-label-md font-label-md">Transactions</span>
+</a>
+<a class="text-on-surface-variant dark:text-surface-variant flex items-center px-4 py-3 hover:bg-surface-container-highest dark:hover:bg-surface-variant transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="settings_input_component">settings_input_component</span>
+<span class="text-label-md font-label-md">Channels</span>
+</a>
+<a class="text-on-surface-variant dark:text-surface-variant flex items-center px-4 py-3 hover:bg-surface-container-highest dark:hover:bg-surface-variant transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="transform">transform</span>
+<span class="text-label-md font-label-md">Mappings</span>
+</a>
+<a class="text-on-surface-variant dark:text-surface-variant flex items-center px-4 py-3 hover:bg-surface-container-highest dark:hover:bg-surface-variant transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="group">group</span>
+<span class="text-label-md font-label-md">Users</span>
+</a>
+<a class="text-on-surface-variant dark:text-surface-variant flex items-center px-4 py-3 hover:bg-surface-container-highest dark:hover:bg-surface-variant transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="history_edu">history_edu</span>
+<span class="text-label-md font-label-md">Audit Log</span>
+</a>
+<a class="text-on-surface-variant dark:text-surface-variant flex items-center px-4 py-3 hover:bg-surface-container-highest dark:hover:bg-surface-variant transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="settings">settings</span>
+<span class="text-label-md font-label-md">Settings</span>
+</a>
+</nav>
+<div class="px-4 mt-auto border-t border-outline-variant pt-6 space-y-1">
+<a class="text-on-surface-variant dark:text-surface-variant flex items-center px-4 py-2 hover:bg-surface-container-highest transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined mr-3 text-[20px]" data-icon="health_and_safety">health_and_safety</span>
+<span class="text-label-md font-label-md">System Health</span>
+</a>
+<a class="text-on-surface-variant dark:text-surface-variant flex items-center px-4 py-2 hover:bg-surface-container-highest transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined mr-3 text-[20px]" data-icon="menu_book">menu_book</span>
+<span class="text-label-md font-label-md">Documentation</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="ml-64 min-h-screen">
+<!-- TopAppBar -->
+<header class="flex justify-between items-center w-full px-margin-desktop sticky top-0 z-40 bg-surface dark:bg-inverse-surface border-b border-outline-variant dark:border-outline h-16 shadow-sm dark:shadow-none">
+<div class="flex items-center flex-grow max-w-xl">
+<div class="relative w-full">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant opacity-60" data-icon="search">search</span>
+<input class="w-full bg-surface-container-low border-none rounded-full pl-10 pr-4 py-2 text-body-md font-body-md focus:ring-2 focus:ring-primary" placeholder="Search data, workflows, or logs..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="w-10 h-10 rounded-full flex items-center justify-center text-on-surface-variant hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="w-10 h-10 rounded-full flex items-center justify-center text-on-surface-variant hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined" data-icon="help_outline">help_outline</span>
+</button>
+<div class="h-8 w-[1px] bg-outline-variant mx-2"></div>
+<div class="flex items-center gap-3 cursor-pointer hover:bg-surface-container-high p-1 rounded-full pr-4 transition-colors">
+<img alt="User Avatar Initials" class="w-8 h-8 rounded-full bg-primary-fixed-dim text-on-primary-fixed font-bold flex items-center justify-center" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAeshd-x8s3--5F4yI_su_gArL1iznuI1GlWberM05Ym8-O5OH-o_iKTBwmvR94EZuNJSb8tnH6l88giVjpLckVFc45Z2pAkB2OqpUS99eEFR4q4msGJ8p3VDDPM9bfgp9-D8NVrOhxNkJ6UhQ3HZBBvNqUyv-EGa1TYEBZiVV5G9R1mDpXrKWhMgIK0IpZ3VnotxiTFl_x84_SiovVAKn1jA3uxEfsEpuaeyyEnxdJz6FuW8Wqh64Z-s4D2-4E5HXYIPtP7v6jROCm"/>
+<span class="text-label-md font-label-md text-on-surface">John Doe</span>
+</div>
+</div>
+</header>
+<!-- Dashboard Content -->
+<div class="p-8 max-w-[1440px] mx-auto">
+<div class="mb-8 flex justify-between items-end">
+<div>
+<h2 class="text-headline-lg font-headline-lg text-on-surface">System Overview</h2>
+<p class="text-body-md font-body-md text-on-surface-variant">Real-time performance monitoring across all data pipelines.</p>
+</div>
+<div class="flex gap-3">
+<button class="flex items-center gap-2 px-4 py-2 bg-surface border border-outline-variant rounded-lg text-label-md font-label-md hover:bg-surface-container-high transition-all">
+<span class="material-symbols-outlined text-[18px]" data-icon="calendar_today">calendar_today</span>
+                        Last 30 Days
+                    </button>
+<button class="flex items-center gap-2 px-4 py-2 bg-primary text-on-primary rounded-lg text-label-md font-label-md hover:opacity-90 transition-all shadow-sm">
+<span class="material-symbols-outlined text-[18px]" data-icon="add">add</span>
+                        New Workflow
+                    </button>
+</div>
+</div>
+<!-- Stat Cards Bento Section -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+<!-- Stat Card 1 -->
+<div class="glass-card p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-primary-fixed text-primary rounded-lg">
+<span class="material-symbols-outlined" data-icon="hub">hub</span>
+</div>
+<span class="text-label-md font-label-md text-primary bg-primary-fixed px-2 py-1 rounded">Active</span>
+</div>
+<div class="text-headline-lg font-headline-lg mb-1">8</div>
+<div class="text-label-md font-label-md text-on-surface-variant flex items-center justify-between">
+<span>Connections</span>
+<span class="text-on-surface font-bold">6 Active</span>
+</div>
+<div class="mt-4 h-1 w-full bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[75%]"></div>
+</div>
+</div>
+<!-- Stat Card 2 -->
+<div class="glass-card p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-secondary-fixed text-secondary rounded-lg">
+<span class="material-symbols-outlined" data-icon="account_tree">account_tree</span>
+</div>
+<span class="text-label-md font-label-md text-on-surface-variant bg-surface-container px-2 py-1 rounded">Scheduled</span>
+</div>
+<div class="text-headline-lg font-headline-lg mb-1">6</div>
+<div class="text-label-md font-label-md text-on-surface-variant flex items-center justify-between">
+<span>Workflows</span>
+<span class="text-on-surface font-bold">3 Active</span>
+</div>
+<div class="mt-4 h-1 w-full bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-secondary w-[50%]"></div>
+</div>
+</div>
+<!-- Stat Card 3 -->
+<div class="glass-card p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-tertiary-fixed text-tertiary rounded-lg">
+<span class="material-symbols-outlined" data-icon="swap_horiz">swap_horiz</span>
+</div>
+<div class="flex items-center text-error">
+<span class="material-symbols-outlined text-[16px]" data-icon="arrow_upward">arrow_upward</span>
+<span class="text-label-md font-label-md font-bold">12%</span>
+</div>
+</div>
+<div class="text-headline-lg font-headline-lg mb-1">1,847</div>
+<div class="text-label-md font-label-md text-on-surface-variant flex items-center justify-between">
+<span>Transactions</span>
+<span class="text-on-tertiary-fixed-variant font-bold">96.3% Success</span>
+</div>
+<div class="mt-4 flex gap-1 items-end h-6">
+<div class="w-2 bg-primary opacity-20 h-[30%] rounded-sm"></div>
+<div class="w-2 bg-primary opacity-40 h-[50%] rounded-sm"></div>
+<div class="w-2 bg-primary opacity-60 h-[80%] rounded-sm"></div>
+<div class="w-2 bg-primary opacity-30 h-[40%] rounded-sm"></div>
+<div class="w-2 bg-primary opacity-80 h-[100%] rounded-sm"></div>
+<div class="w-2 bg-primary opacity-50 h-[70%] rounded-sm"></div>
+</div>
+</div>
+<!-- Stat Card 4 -->
+<div class="glass-card p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-error-container text-error rounded-lg">
+<span class="material-symbols-outlined" data-icon="storage">storage</span>
+</div>
+<span class="text-label-md font-label-md text-error bg-error-container px-2 py-1 rounded">Attention</span>
+</div>
+<div class="text-headline-lg font-headline-lg mb-1">285K</div>
+<div class="text-label-md font-label-md text-on-surface-variant flex items-center justify-between">
+<span>Records</span>
+<span class="text-error font-bold">1,243 Failed</span>
+</div>
+<div class="mt-4 h-1 w-full bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-error w-[4%]"></div>
+</div>
+</div>
+</div>
+<!-- Charts and Activity Section -->
+<div class="bento-grid mb-8">
+<!-- Transaction Volume Chart -->
+<div class="col-span-12 lg:col-span-8 glass-card p-6 rounded-xl">
+<div class="flex justify-between items-center mb-8">
+<h3 class="text-headline-md font-headline-md text-on-surface">Transaction Volume</h3>
+<div class="flex gap-4">
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-primary-container"></span>
+<span class="text-label-md font-label-md text-on-surface-variant">Success</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-error"></span>
+<span class="text-label-md font-label-md text-on-surface-variant">Failed</span>
+</div>
+</div>
+</div>
+<div class="relative h-[300px] w-full flex items-end justify-between px-4 pb-8">
+<!-- Simulated Bar Chart -->
+<div class="flex flex-col items-center gap-2 w-12 group">
+<div class="flex items-end gap-1 w-full h-full">
+<div class="bg-primary-container w-1/2 h-[60%] rounded-t-sm transition-all group-hover:opacity-80"></div>
+<div class="bg-error w-1/2 h-[5%] rounded-t-sm transition-all group-hover:opacity-80"></div>
+</div>
+<span class="text-label-md font-label-md text-on-surface-variant">Sep</span>
+</div>
+<div class="flex flex-col items-center gap-2 w-12 group">
+<div class="flex items-end gap-1 w-full h-full">
+<div class="bg-primary-container w-1/2 h-[75%] rounded-t-sm transition-all group-hover:opacity-80"></div>
+<div class="bg-error w-1/2 h-[3%] rounded-t-sm transition-all group-hover:opacity-80"></div>
+</div>
+<span class="text-label-md font-label-md text-on-surface-variant">Oct</span>
+</div>
+<div class="flex flex-col items-center gap-2 w-12 group">
+<div class="flex items-end gap-1 w-full h-full">
+<div class="bg-primary-container w-1/2 h-[90%] rounded-t-sm transition-all group-hover:opacity-80"></div>
+<div class="bg-error w-1/2 h-[8%] rounded-t-sm transition-all group-hover:opacity-80"></div>
+</div>
+<span class="text-label-md font-label-md text-on-surface-variant">Nov</span>
+</div>
+<div class="flex flex-col items-center gap-2 w-12 group">
+<div class="flex items-end gap-1 w-full h-full">
+<div class="bg-primary-container w-1/2 h-[85%] rounded-t-sm transition-all group-hover:opacity-80"></div>
+<div class="bg-error w-1/2 h-[2%] rounded-t-sm transition-all group-hover:opacity-80"></div>
+</div>
+<span class="text-label-md font-label-md text-on-surface-variant">Dec</span>
+</div>
+<div class="flex flex-col items-center gap-2 w-12 group">
+<div class="flex items-end gap-1 w-full h-full">
+<div class="bg-primary-container w-1/2 h-[95%] rounded-t-sm transition-all group-hover:opacity-80"></div>
+<div class="bg-error w-1/2 h-[4%] rounded-t-sm transition-all group-hover:opacity-80"></div>
+</div>
+<span class="text-label-md font-label-md text-on-surface-variant">Jan</span>
+</div>
+<div class="flex flex-col items-center gap-2 w-12 group">
+<div class="flex items-end gap-1 w-full h-full">
+<div class="bg-primary-container w-1/2 h-[80%] rounded-t-sm transition-all group-hover:opacity-80"></div>
+<div class="bg-error w-1/2 h-[6%] rounded-t-sm transition-all group-hover:opacity-80"></div>
+</div>
+<span class="text-label-md font-label-md text-on-surface-variant">Feb</span>
+</div>
+<!-- Horizontal Grid Lines -->
+<div class="absolute inset-x-0 bottom-8 h-full border-b border-outline-variant border-dashed pointer-events-none opacity-20"></div>
+<div class="absolute inset-x-0 bottom-[33%] h-px border-b border-outline-variant border-dashed pointer-events-none opacity-20"></div>
+<div class="absolute inset-x-0 bottom-[66%] h-px border-b border-outline-variant border-dashed pointer-events-none opacity-20"></div>
+<div class="absolute inset-x-0 top-0 h-px border-b border-outline-variant border-dashed pointer-events-none opacity-20"></div>
+</div>
+</div>
+<!-- Workflow Status Pie Chart -->
+<div class="col-span-12 lg:col-span-4 glass-card p-6 rounded-xl flex flex-col">
+<h3 class="text-headline-md font-headline-md text-on-surface mb-8">Workflow Status</h3>
+<div class="flex-grow flex flex-col items-center justify-center">
+<div class="relative w-48 h-48 mb-6">
+<!-- SVG Donut Chart Mockup -->
+<svg class="w-full h-full transform -rotate-90" viewbox="0 0 36 36">
+<circle cx="18" cy="18" fill="transparent" r="15.915" stroke="#e6e8ea" stroke-width="3"></circle>
+<circle cx="18" cy="18" fill="transparent" r="15.915" stroke="#2563eb" stroke-dasharray="50 50" stroke-dashoffset="0" stroke-width="3"></circle>
+<circle cx="18" cy="18" fill="transparent" r="15.915" stroke="#505f76" stroke-dasharray="16 84" stroke-dashoffset="-50" stroke-width="3"></circle>
+<circle cx="18" cy="18" fill="transparent" r="15.915" stroke="#ba1a1a" stroke-dasharray="16 84" stroke-dashoffset="-66" stroke-width="3"></circle>
+<circle cx="18" cy="18" fill="transparent" r="15.915" stroke="#c3c6d7" stroke-dasharray="18 82" stroke-dashoffset="-82" stroke-width="3"></circle>
+</svg>
+<div class="absolute inset-0 flex flex-col items-center justify-center">
+<span class="text-headline-lg font-headline-lg">6</span>
+<span class="text-label-md font-label-md text-on-surface-variant">Total</span>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-4 w-full">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-primary-container"></span>
+<span class="text-label-md font-label-md text-on-surface-variant">Active (3)</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<span class="text-label-md font-label-md text-on-surface-variant">Paused (1)</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-error"></span>
+<span class="text-label-md font-label-md text-on-surface-variant">Error (1)</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-outline-variant"></span>
+<span class="text-label-md font-label-md text-on-surface-variant">Draft (1)</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Recent Transactions Table & Activity Feed -->
+<div class="bento-grid">
+<!-- Transactions Table -->
+<div class="col-span-12 xl:col-span-8 glass-card rounded-xl overflow-hidden">
+<div class="px-6 py-5 border-b border-outline-variant flex justify-between items-center">
+<h3 class="text-headline-md font-headline-md text-on-surface">Recent Transactions</h3>
+<button class="text-primary text-label-md font-label-md hover:underline">View All</button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead>
+<tr class="bg-surface-container-low text-on-surface-variant uppercase tracking-wider">
+<th class="px-6 py-4 text-label-md font-label-md">Workflow</th>
+<th class="px-6 py-4 text-label-md font-label-md">Records</th>
+<th class="px-6 py-4 text-label-md font-label-md">Duration</th>
+<th class="px-6 py-4 text-label-md font-label-md">Status</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant">
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="text-body-md font-bold text-on-surface">Clinical Data Sync</span>
+<span class="text-label-md font-label-md text-on-surface-variant">HL7 to FHIR Proxy</span>
+</div>
+</td>
+<td class="px-6 py-4 text-body-md font-body-md text-on-surface-variant">452 records</td>
+<td class="px-6 py-4 text-body-md font-body-md text-on-surface-variant">1.2s</td>
+<td class="px-6 py-4">
+<span class="px-3 py-1 bg-primary-fixed text-primary text-label-md font-bold rounded-full">Completed</span>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="text-body-md font-bold text-on-surface">Lab Results Webhook</span>
+<span class="text-label-md font-label-md text-on-surface-variant">External API Bridge</span>
+</div>
+</td>
+<td class="px-6 py-4 text-body-md font-body-md text-on-surface-variant">18 records</td>
+<td class="px-6 py-4 text-body-md font-body-md text-on-surface-variant">0.4s</td>
+<td class="px-6 py-4">
+<span class="px-3 py-1 bg-primary-fixed text-primary text-label-md font-bold rounded-full">Completed</span>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="text-body-md font-bold text-on-surface">Patient Billing Export</span>
+<span class="text-label-md font-label-md text-on-surface-variant">Daily CSV Aggregation</span>
+</div>
+</td>
+<td class="px-6 py-4 text-body-md font-body-md text-on-surface-variant">1,243 records</td>
+<td class="px-6 py-4 text-body-md font-body-md text-on-surface-variant">5.7s</td>
+<td class="px-6 py-4">
+<span class="px-3 py-1 bg-error-container text-error text-label-md font-bold rounded-full">Failed</span>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="text-body-md font-bold text-on-surface">Pharmacy Stock API</span>
+<span class="text-label-md font-label-md text-on-surface-variant">Real-time Inventory</span>
+</div>
+</td>
+<td class="px-6 py-4 text-body-md font-body-md text-on-surface-variant">52 records</td>
+<td class="px-6 py-4 text-body-md font-body-md text-on-surface-variant">0.8s</td>
+<td class="px-6 py-4">
+<span class="px-3 py-1 bg-tertiary-fixed text-tertiary text-label-md font-bold rounded-full">Processing</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Activity Feed -->
+<div class="col-span-12 xl:col-span-4 glass-card p-6 rounded-xl">
+<h3 class="text-headline-md font-headline-md text-on-surface mb-6">Activity Feed</h3>
+<div class="space-y-6 relative">
+<!-- Timeline Line -->
+<div class="absolute left-[19px] top-2 bottom-0 w-px bg-outline-variant"></div>
+<div class="relative flex gap-4">
+<div class="z-10 w-10 h-10 rounded-full bg-primary-fixed text-primary flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-[20px]" data-icon="update">update</span>
+</div>
+<div>
+<p class="text-body-md text-on-surface"><span class="font-bold">System</span> updated <span class="font-bold">Patient Billing Export</span></p>
+<p class="text-label-md text-on-surface-variant">Workflow configuration modified</p>
+<p class="text-label-md text-outline mt-1">2 mins ago</p>
+</div>
+</div>
+<div class="relative flex gap-4">
+<div class="z-10 w-10 h-10 rounded-full bg-secondary-fixed text-secondary flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-[20px]" data-icon="person">person</span>
+</div>
+<div>
+<p class="text-body-md text-on-surface"><span class="font-bold">John Doe</span> added <span class="font-bold">Azure SQL Endpoint</span></p>
+<p class="text-label-md text-on-surface-variant">New connection established</p>
+<p class="text-label-md text-outline mt-1">45 mins ago</p>
+</div>
+</div>
+<div class="relative flex gap-4">
+<div class="z-10 w-10 h-10 rounded-full bg-error-container text-error flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-[20px]" data-icon="error_outline">error_outline</span>
+</div>
+<div>
+<p class="text-body-md text-on-surface"><span class="font-bold">Clinical Data Sync</span> triggered an alert</p>
+<p class="text-label-md text-on-surface-variant">Unauthorized access attempt blocked</p>
+<p class="text-label-md text-outline mt-1">2 hours ago</p>
+</div>
+</div>
+<div class="relative flex gap-4">
+<div class="z-10 w-10 h-10 rounded-full bg-surface-container-high text-on-surface-variant flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-[20px]" data-icon="rocket_launch">rocket_launch</span>
+</div>
+<div>
+<p class="text-body-md text-on-surface"><span class="font-bold">System</span> initiated daily backup</p>
+<p class="text-label-md text-on-surface-variant">Storage cluster 04 synced</p>
+<p class="text-label-md text-outline mt-1">4 hours ago</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Active Workflows Grid -->
+<div class="mt-8">
+<h3 class="text-headline-md font-headline-md text-on-surface mb-6">Active Workflows</h3>
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+<div class="glass-card p-6 rounded-xl hover:border-primary transition-all group">
+<div class="flex justify-between items-start mb-4">
+<h4 class="text-body-lg font-bold text-on-surface group-hover:text-primary transition-colors">Clinical Data Sync</h4>
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-on-surface" data-icon="more_vert">more_vert</span>
+</div>
+<p class="text-body-md text-on-surface-variant mb-6 line-clamp-2">Bi-directional synchronization of clinical records between legacy on-prem HL7 systems and modern cloud FHIR endpoints.</p>
+<div class="flex items-center gap-4 py-3 border-t border-outline-variant">
+<div class="flex items-center gap-1 text-label-md text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px]" data-icon="schedule">schedule</span>
+                                Every 5m
+                            </div>
+<div class="flex items-center gap-1 text-label-md text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px]" data-icon="history">history</span>
+                                2m ago
+                            </div>
+</div>
+</div>
+<div class="glass-card p-6 rounded-xl hover:border-primary transition-all group">
+<div class="flex justify-between items-start mb-4">
+<h4 class="text-body-lg font-bold text-on-surface group-hover:text-primary transition-colors">Lab Results Webhook</h4>
+</div>
+<p class="text-body-md text-on-surface-variant mb-6 line-clamp-2">Real-time HTTP push of validated lab results to the physician dashboard portal for immediate review.</p>
+<div class="flex items-center gap-4 py-3 border-t border-outline-variant">
+<div class="flex items-center gap-1 text-label-md text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px]" data-icon="bolt">bolt</span>
+                                Real-time
+                            </div>
+<div class="flex items-center gap-1 text-label-md text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px]" data-icon="history">history</span>
+                                14s ago
+                            </div>
+</div>
+</div>
+<div class="glass-card p-6 rounded-xl hover:border-primary transition-all group">
+<div class="flex justify-between items-start mb-4">
+<h4 class="text-body-lg font-bold text-on-surface group-hover:text-primary transition-colors">Pharmacy Stock API</h4>
+</div>
+<p class="text-body-md text-on-surface-variant mb-6 line-clamp-2">Aggregates medication inventory levels across 45 regional pharmacy locations to support centralized procurement.</p>
+<div class="flex items-center gap-4 py-3 border-t border-outline-variant">
+<div class="flex items-center gap-1 text-label-md text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px]" data-icon="schedule">schedule</span>
+                                Hourly
+                            </div>
+<div class="flex items-center gap-1 text-label-md text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px]" data-icon="history">history</span>
+                                48m ago
+                            </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Interactive Layer -->
+<script>
+        // Simple micro-interaction for cards
+        document.querySelectorAll('.glass-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-2px)';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0)';
+            });
+        });
+
+        // Floating Action Button logic for Dashboard only
+        const fab = document.createElement('button');
+        fab.className = 'fixed bottom-8 right-8 w-14 h-14 bg-primary text-on-primary rounded-full shadow-lg flex items-center justify-center hover:scale-110 active:scale-95 transition-all z-50';
+        fab.innerHTML = '<span class="material-symbols-outlined">add</span>';
+        fab.onclick = () => alert('Initiating new data connection wizard...');
+        document.body.appendChild(fab);
+    </script>
+</body></html>

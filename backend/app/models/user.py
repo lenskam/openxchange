@@ -14,6 +14,7 @@ class User(Base):
         Enum("admin", "analyst", "editor", "viewer", name="user_roles"),
         default="viewer"
     )
+    avatar_url = Column(String(512), nullable=True)
     is_active = Column(Boolean, default=True)
     two_factor_enabled = Column(Boolean, default=False)
     created_at = Column(DateTime, server_default=func.now())

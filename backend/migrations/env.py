@@ -10,6 +10,7 @@ from app.core.config import settings
 from app.core.database import Base
 from app.models.user import User
 from app.models.connection import Connection
+from app.models.mapping import Mapping
 
 from sqlalchemy import pool
 from sqlalchemy.engine import Connection

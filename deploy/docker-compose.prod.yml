@@ -15,6 +15,11 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
+    logging: &default-logging
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
     networks:
       - interxchange
 
@@ -28,6 +33,7 @@ services:
       interval: 5s
       timeout: 3s
       retries: 5
+    logging: *default-logging
     networks:
       - interxchange
 
@@ -47,13 +53,14 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    logging: *default-logging
     networks:
       - interxchange
 
   backend:
     build:
       context: ../backend
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.prod
     ports:
       - "${BACKEND_HOST_PORT:-8000}:8000"
     environment:
@@ -68,7 +75,6 @@ services:
       - REFRESH_TOKEN_EXPIRE_DAYS=${REFRESH_TOKEN_EXPIRE_DAYS:-7}
       - ENVIRONMENT=${ENVIRONMENT:-production}
       - LOG_LEVEL=${LOG_LEVEL:-WARNING}
-    command: ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
     restart: unless-stopped
     depends_on:
       postgres:
@@ -77,21 +83,35 @@ services:
         condition: service_healthy
       vault:
         condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      start_period: 15s
+      retries: 3
+    logging: *default-logging
     networks:
       - interxchange
 
   frontend:
     build:
       context: ../frontend
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.prod
+      args:
+        VITE_API_URL: ${VITE_API_URL:-/api/v1}
     ports:
-      - "${FRONTEND_HOST_PORT:-5173}:5173"
-    environment:
-      - VITE_API_URL=${VITE_API_URL:-/api/v1}
+      - "${FRONTEND_HOST_PORT:-8081}:80"
     restart: unless-stopped
     depends_on:
       backend:
         condition: service_started
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:80/health"]
+      interval: 30s
+      timeout: 5s
+      start_period: 5s
+      retries: 3
+    logging: *default-logging
     networks:
       - interxchange
 

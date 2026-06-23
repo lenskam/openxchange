@@ -3,7 +3,7 @@ upstream interxchange_backend {
 }
 
 upstream interxchange_frontend {
-    server localhost:5173;
+    server localhost:8081;
 }
 
 # Redirect HTTP to HTTPS

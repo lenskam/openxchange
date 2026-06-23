@@ -1,0 +1,60 @@
+{
+  "goal": "Implement Settings backend + frontend wiring + Audit Log wiring",
+  "created_at": "2026-06-18T00:00:00Z",
+  "tasks": [
+    {
+      "id": 5.1,
+      "description": "Create backend models (OrganizationSettings, NotificationSettings, SystemSettings, ApiKey, User.avatar_url)",
+      "status": "pending",
+      "depends_on": []
+    },
+    {
+      "id": 5.2,
+      "description": "Create Pydantic schemas for all settings types + API key",
+      "status": "pending",
+      "depends_on": [5.1]
+    },
+    {
+      "id": 5.3,
+      "description": "Create repositories (SettingsRepository, ApiKeyRepository)",
+      "status": "pending",
+      "depends_on": [5.1]
+    },
+    {
+      "id": 5.4,
+      "description": "Create SettingsService with settings + API key business logic",
+      "status": "pending",
+      "depends_on": [5.2, 5.3]
+    },
+    {
+      "id": 5.5,
+      "description": "Create settings API endpoints + profile endpoints (PUT /auth/me, PUT /auth/me/password)",
+      "status": "pending",
+      "depends_on": [5.4]
+    },
+    {
+      "id": 5.6,
+      "description": "Write tests for settings models, services, and API endpoints",
+      "status": "pending",
+      "depends_on": [5.5]
+    },
+    {
+      "id": 5.7,
+      "description": "Wire SettingsPage frontend tabs to backend APIs",
+      "status": "pending",
+      "depends_on": [5.5]
+    },
+    {
+      "id": 5.8,
+      "description": "Wire AuditLogPage frontend to real backend API",
+      "status": "pending",
+      "depends_on": [5.5]
+    },
+    {
+      "id": 5.9,
+      "description": "Final test run — all existing + new tests pass",
+      "status": "pending",
+      "depends_on": [5.6, 5.7, 5.8]
+    }
+  ]
+}

@@ -1,0 +1,77 @@
+{
+  "goal": "Implement Mapping Engine - Phase 2 refined plan after Stitch redesign",
+  "created_at": "2026-06-16T00:00:00Z",
+  "prerequisites": {
+    "backend_pattern": "Layered architecture: Model -> Schema -> Repository -> Service -> Router",
+    "frontend_state": "MappingsPage UI (Stitch design) already exists from Phase 10. Upload dialog needs building.",
+    "test_pattern": "Integration tests with in-memory SQLite + httpx ASGI client (see test_connections.py)"
+  },
+  "tasks": [
+    {
+      "id": 2.1,
+      "description": "Create Mapping SQLAlchemy model with MappingType enum, JSONB columns, versioning, FK to User",
+      "status": "pending",
+      "depends_on": []
+    },
+    {
+      "id": 2.2,
+      "description": "Create Alembic migration for mappings table + register model in env.py",
+      "status": "pending",
+      "depends_on": [2.1]
+    },
+    {
+      "id": 2.3,
+      "description": "Create Pydantic v2 schemas (MappingCreate/InDB/List/Version/Upload)",
+      "status": "pending",
+      "depends_on": [2.2]
+    },
+    {
+      "id": 2.4,
+      "description": "Implement MappingRepository extending BaseRepository with filters",
+      "status": "pending",
+      "depends_on": [2.3]
+    },
+    {
+      "id": 2.5,
+      "description": "Implement MappingEngine service (pandas-based file parsing: CSV, Excel, JSON, XML + transformation logic)",
+      "status": "pending",
+      "depends_on": [2.4]
+    },
+    {
+      "id": 2.6,
+      "description": "Implement MappingService (business logic: upload, versioning, CRUD)",
+      "status": "pending",
+      "depends_on": [2.5]
+    },
+    {
+      "id": 2.7,
+      "description": "Create Mappings API router (CRUD + upload + versions) and register in api.py",
+      "status": "pending",
+      "depends_on": [2.6]
+    },
+    {
+      "id": 2.8,
+      "description": "Write integration tests for mappings API endpoints",
+      "status": "pending",
+      "depends_on": [2.7]
+    },
+    {
+      "id": 2.9,
+      "description": "Write unit tests for MappingEngine service (file parsing per format + transformations)",
+      "status": "pending",
+      "depends_on": [2.5]
+    },
+    {
+      "id": 2.10,
+      "description": "Build UploadMappingDialog frontend component (drag-drop, file type, name/type fields)",
+      "status": "pending",
+      "depends_on": [2.7]
+    },
+    {
+      "id": 2.11,
+      "description": "Wire frontend MappingsPage to real API endpoints (upload, download, delete)",
+      "status": "pending",
+      "depends_on": [2.10]
+    }
+  ]
+}

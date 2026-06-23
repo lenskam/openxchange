@@ -7,15 +7,11 @@ from sqlalchemy.future import select
 from app.api.dependencies import get_current_user
 from app.core.config import settings
 from app.core.database import get_db
-from app.core.exceptions import BadRequestException
-from app.core.security import (
-    create_access_token,
-    create_refresh_token,
-    decode_token,
-    verify_password,
-)
+from app.core.exceptions import BadRequestException, NotFoundException
+from app.core.security import create_access_token, create_refresh_token, decode_token, get_password_hash, verify_password
+
 from app.models.user import User
-from app.schemas.auth import RegisterRequest, TokenResponse, UserLogin
+from app.schemas.auth import ChangePasswordRequest, ProfileUpdate, RegisterRequest, TokenResponse, UserLogin
 from app.schemas.user import UserCreate, UserInDB
 from app.services.user_service import UserService
 
@@ -164,3 +160,43 @@ async def logout(response: Response):
 @router.get("/me", response_model=UserInDB)
 async def get_me(current_user: User = Depends(get_current_user)):
     return current_user
+
+
+@router.put("/me", response_model=UserInDB)
+async def update_profile(
+    profile_data: ProfileUpdate,
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    service = UserService(db)
+    from app.schemas.user import UserUpdate
+    return await service.update(
+        current_user.id,
+        UserUpdate(**profile_data.model_dump(exclude_unset=True)),
+    )
+
+
+@router.put("/me/password")
+async def change_password(
+    pw_data: ChangePasswordRequest,
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    if not verify_password(pw_data.current_password, current_user.hashed_password):
+        raise HTTPException(status_code=400, detail="Current password is incorrect")
+    new_hashed = get_password_hash(pw_data.new_password)
+    await db.execute(
+        User.__table__.update().where(User.id == current_user.id).values(hashed_password=new_hashed)
+    )
+    await db.commit()
+    return {"detail": "Password updated successfully"}
+
+
+@router.delete("/me")
+async def delete_account(
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    current_user.is_active = False
+    await db.commit()
+    return {"detail": "Account deleted successfully"}

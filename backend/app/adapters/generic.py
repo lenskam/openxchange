@@ -7,10 +7,10 @@ from app.adapters.base import BaseAdapter
 
 logger = logging.getLogger(__name__)
 
-DHIS2_DEFAULT_TIMEOUT = 30
+GENERIC_DEFAULT_TIMEOUT = 30
 
 
-class DHIS2Adapter(BaseAdapter):
+class GenericAdapter(BaseAdapter):
     async def _get_client(self) -> httpx.AsyncClient:
         base_url = str(self.connection.url).rstrip("/")
         headers = {"Accept": "application/json", "Content-Type": "application/json"}
@@ -24,77 +24,51 @@ class DHIS2Adapter(BaseAdapter):
             headers["Authorization"] = (
                 f"ApiToken {(self.credentials or {}).get('api_key', '')}"
             )
+        elif self.connection.auth_type == "oauth2":
+            token = (self.credentials or {}).get("access_token", "")
+            headers["Authorization"] = f"Bearer {token}"
 
         return httpx.AsyncClient(
             base_url=base_url,
             auth=auth,
             headers=headers,
-            timeout=DHIS2_DEFAULT_TIMEOUT,
+            timeout=GENERIC_DEFAULT_TIMEOUT,
         )
 
     async def test_connection(self) -> bool:
         try:
             async with await self._get_client() as client:
-                response = await client.get("/api/system/info.json")
-                return response.status_code == 200
+                response = await client.get("/")
+                return response.status_code < 500
         except Exception as e:
-            logger.error(f"DHIS2 test connection failed: {e}")
+            logger.error(f"Generic test connection failed: {e}")
             return False
 
     async def fetch_data(self, params: dict) -> Any:
-        endpoint = params.get("endpoint", "/api/dataValueSets.json")
-        page_size = params.get("page_size", 1000)
-        data_set = params.get("data_set")
-        org_unit = params.get("org_unit")
-        period = params.get("period")
-        start_date = params.get("start_date")
-        end_date = params.get("end_date")
-
-        query_params: dict[str, Any] = {"pageSize": page_size}
-        if data_set:
-            query_params["dataSet"] = data_set
-        if org_unit:
-            query_params["orgUnit"] = org_unit
-        if period:
-            query_params["period"] = period
-        if start_date:
-            query_params["startDate"] = start_date
-        if end_date:
-            query_params["endDate"] = end_date
-
-        all_data = []
-        page = 1
+        endpoint = params.get("endpoint", "/")
+        method = params.get("method", "GET").upper()
+        query_params = params.get("params", {})
 
         async with await self._get_client() as client:
-            while True:
-                query_params["page"] = page
+            if method == "GET":
                 response = await client.get(endpoint, params=query_params)
-                response.raise_for_status()
-                data = response.json()
+            elif method == "POST":
+                response = await client.post(endpoint, json=params.get("body", {}))
+            else:
+                raise ValueError(f"Unsupported method: {method}")
 
-                rows = data.get("dataValues", [])
-                if not rows:
-                    break
-                all_data.extend(rows)
-
-                total_pages = data.get("pager", {}).get("pageCount", 1)
-                if page >= total_pages:
-                    break
-                page += 1
-
-        return {"data_values": all_data, "total_count": len(all_data)}
+            response.raise_for_status()
+            return response.json()
 
     async def send_data(self, data: Any, target: Optional[str] = None) -> dict:
-        endpoint = target or "/api/dataValueSets"
+        endpoint = target or "/"
         async with await self._get_client() as client:
             response = await client.post(endpoint, json=data)
             response.raise_for_status()
-            result = response.json()
             return {
                 "status": "success" if response.status_code < 300 else "failed",
                 "http_status": response.status_code,
-                "response": result,
-                "import_count": result.get("response", {}).get("importCount", {}),
+                "response": response.json(),
             }
 
     async def handle_request(
@@ -102,15 +76,20 @@ class DHIS2Adapter(BaseAdapter):
     ) -> dict:
         method = route_config.get("method", "GET").upper()
         path = route_config.get("path", "/")
-        params = {**request_data.get("params", {}), **request_data.get("query", {})}
 
         async with await self._get_client() as client:
             if method == "GET":
-                response = await client.get(path, params=params)
+                response = await client.get(
+                    path, params=request_data.get("query", {})
+                )
             elif method == "POST":
-                response = await client.post(path, json=request_data.get("body", {}))
+                response = await client.post(
+                    path, json=request_data.get("body", {})
+                )
             elif method == "PUT":
-                response = await client.put(path, json=request_data.get("body", {}))
+                response = await client.put(
+                    path, json=request_data.get("body", {})
+                )
             elif method == "DELETE":
                 response = await client.delete(path)
             else:

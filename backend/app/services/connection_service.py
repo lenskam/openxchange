@@ -4,7 +4,7 @@ import logging
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 
-from app.adapters.dhis2 import DHIS2Adapter # Phase 1 placeholder
+from app.adapters import get_adapter
 from app.core.exceptions import NotFoundException
 from app.models.connection import Connection
 from app.schemas.connection import ConnectionCreate, ConnectionUpdate
@@ -90,13 +90,10 @@ class ConnectionService:
         if not connection:
             raise NotFoundException(detail="Connection not found")
 
-        # For MVP, only DHIS2 adapter is implemented
-        if connection.type == "dhis2":
-            adapter = DHIS2Adapter(connection, self.vault_service)
-        else:
-            # Placeholder for other adapters
-            logger.info(f"Testing for connection type {connection.type} not fully implemented, returning True for MVP placeholder")
+        try:
+            adapter = get_adapter(connection, self.vault_service)
+            await adapter.initialize()
+            return await adapter.test_connection()
+        except ValueError as e:
+            logger.warning(f"No adapter for type {connection.type}: {e}")
             return True
-
-        await adapter.initialize()
-        return await adapter.test_connection()

@@ -12,6 +12,16 @@ class Settings(BaseSettings):
     VAULT_TOKEN: str
     ENVIRONMENT: str = "development"
     LOG_LEVEL: str = "INFO"
+    CELERY_BROKER_URL: str = ""
+    CELERY_RESULT_BACKEND: str = ""
+
+    @property
+    def celery_broker_url(self) -> str:
+        return self.CELERY_BROKER_URL or f"{self.REDIS_URL}/0"
+
+    @property
+    def celery_result_backend(self) -> str:
+        return self.CELERY_RESULT_BACKEND or f"{self.REDIS_URL}/1"
 
     model_config = SettingsConfigDict(env_file=".env", case_sensitive=True)
 

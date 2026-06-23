@@ -3,41 +3,75 @@ import { Snackbar, Alert } from '@mui/material';
 import api from '../../services/api';
 import LoadingSpinner from '../../components/common/LoadingSpinner';
 
-const defaultLogs = [
-  { id: 1, action: 'Workflow Executed', actionColor: 'bg-green-500', user: 'jane.doe@interx.com', userIcon: 'initials', initials: 'JD', userColor: 'bg-secondary-container', resource: 'WF-PAYROLL-04', details: 'Triggered monthly payroll sync.', ip: '192.168.1.42', timestamp: '2023-10-24 14:22:01' },
-  { id: 2, action: 'Mapping Updated', actionColor: 'bg-primary-container', user: 'm.keller@interx.com', userIcon: 'initials', initials: 'MK', userColor: 'bg-primary-fixed', resource: 'MAP-SFDC-INV', details: "Changed field 'tax_id' to required.", ip: '10.0.4.112', timestamp: '2023-10-24 13:45:12' },
-  { id: 3, action: 'Login Failed', actionColor: 'bg-error', user: 'unknown_user', userIcon: 'icon', icon: 'no_accounts', resource: 'AUTH-SERVER', details: 'Invalid credentials from remote host.', ip: '45.22.112.9', timestamp: '2023-10-24 13:30:45' },
-  { id: 4, action: 'Connection Reset', actionColor: 'bg-secondary', user: 'System', userIcon: 'icon', icon: 'settings_suggest', resource: 'CONN-AWS-S3', details: 'Automated retry after timeout.', ip: 'Internal', timestamp: '2023-10-24 12:05:33' },
-  { id: 5, action: 'User Invited', actionColor: 'bg-green-500', user: 'alex.r@interx.com', userIcon: 'initials', initials: 'AR', userColor: 'bg-secondary-container', resource: 'USER-MGMT', details: "Invited 's.chen@interx.com' as Editor.", ip: '192.168.1.10', timestamp: '2023-10-24 11:55:00' },
-  { id: 6, action: 'Channel Enabled', actionColor: 'bg-primary', user: 'alex.r@interx.com', userIcon: 'initials', initials: 'AR', userColor: 'bg-secondary-container', resource: 'CHN-WEBHOOK-PRD', details: 'Switched status from Inactive to Active.', ip: '192.168.1.10', timestamp: '2023-10-24 10:12:44' },
-];
-
 const AuditLogPage: React.FC = () => {
   const [logs, setLogs] = useState<any[]>([]);
+  const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
+  const [debouncedSearch, setDebouncedSearch] = useState('');
+  const [page, setPage] = useState(1);
   const [snack, setSnack] = useState<{ message: string; severity: 'success' | 'error' } | null>(null);
+  const limit = 20;
+
+  useEffect(() => {
+    const id = setTimeout(() => {
+      setDebouncedSearch(search);
+      setPage(1);
+    }, 400);
+    return () => clearTimeout(id);
+  }, [search]);
 
   const fetchLogs = useCallback(async () => {
     setLoading(true);
     try {
-      const res = await api.get('/audit-logs');
+      const skip = (page - 1) * limit;
+      const params: any = { skip, limit };
+      if (debouncedSearch) params.q = debouncedSearch;
+      const res = await api.get('/audit-logs', { params });
       setLogs(res.data.items || []);
+      setTotal(res.data.total || 0);
     } catch {
-      setLogs(defaultLogs);
+      setSnack({ message: 'Failed to load audit logs', severity: 'error' });
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [page, debouncedSearch]);
 
   useEffect(() => { fetchLogs(); }, [fetchLogs]);
 
-  const filtered = logs.filter(l =>
-    l.action.toLowerCase().includes(search.toLowerCase()) ||
-    l.user.toLowerCase().includes(search.toLowerCase()) ||
-    l.resource.toLowerCase().includes(search.toLowerCase()) ||
-    l.details.toLowerCase().includes(search.toLowerCase())
-  );
+  const totalPages = Math.ceil(total / limit) || 1;
+
+  const formatDetail = (details: any): string => {
+    if (!details) return '-';
+    if (typeof details === 'string') return details;
+    return JSON.stringify(details);
+  };
+
+  const actionColor = (action: string): string => {
+    const a = action.toLowerCase();
+    if (a.includes('fail') || a.includes('error') || a.includes('denied')) return 'bg-error';
+    if (a.includes('create') || a.includes('invite') || a.includes('enable')) return 'bg-green-500';
+    if (a.includes('update') || a.includes('change') || a.includes('edit')) return 'bg-primary-container';
+    if (a.includes('login')) return 'bg-secondary';
+    return 'bg-primary';
+  };
+
+  const userInitials = (name: string): string => {
+    if (!name) return '??';
+    return name.split(' ').map((s: string) => s[0]).join('').slice(0, 2).toUpperCase();
+  };
+
+  const formatTimestamp = (ts: string): string => {
+    if (!ts) return '-';
+    try {
+      return new Date(ts).toLocaleString('en-US', {
+        year: 'numeric', month: '2-digit', day: '2-digit',
+        hour: '2-digit', minute: '2-digit', second: '2-digit',
+      });
+    } catch {
+      return ts;
+    }
+  };
 
   if (loading) return <LoadingSpinner />;
 
@@ -69,7 +103,7 @@ const AuditLogPage: React.FC = () => {
             <span className="text-label-md text-green-600 bg-green-50 px-2 py-0.5 rounded-full">+12%</span>
           </div>
           <p className="text-on-surface-variant text-label-md">Total Events (24h)</p>
-          <p className="text-headline-md mt-1">12,482</p>
+          <p className="text-headline-md mt-1">{total.toLocaleString()}</p>
         </div>
         <div className="bg-surface-container-lowest border border-outline-variant p-6 rounded-xl shadow-sm">
           <div className="flex items-center justify-between mb-4">
@@ -79,7 +113,7 @@ const AuditLogPage: React.FC = () => {
             <span className="text-label-md text-error bg-error-container px-2 py-0.5 rounded-full">+2%</span>
           </div>
           <p className="text-on-surface-variant text-label-md">Failed Actions</p>
-          <p className="text-headline-md mt-1">143</p>
+          <p className="text-headline-md mt-1">{logs.filter(l => l.action.toLowerCase().includes('fail')).length}</p>
         </div>
         <div className="bg-surface-container-lowest border border-outline-variant p-6 rounded-xl shadow-sm">
           <div className="flex items-center justify-between mb-4">
@@ -98,7 +132,7 @@ const AuditLogPage: React.FC = () => {
             </div>
           </div>
           <p className="text-on-surface-variant text-label-md">Active Users</p>
-          <p className="text-headline-md mt-1">58</p>
+          <p className="text-headline-md mt-1">{new Set(logs.map(l => l.user_name)).size}</p>
         </div>
       </div>
 
@@ -127,43 +161,103 @@ const AuditLogPage: React.FC = () => {
               </tr>
             </thead>
             <tbody className="divide-y divide-outline-variant">
-              {filtered.map((l) => (
-                <tr key={l.id} className="hover:bg-surface-container transition-colors group cursor-pointer">
-                  <td className="px-6 py-4">
-                    <div className="flex items-center gap-3">
-                      <div className={`w-2 h-2 rounded-full ${l.actionColor}`}></div>
-                      <span className="text-body-md font-bold text-on-surface">{l.action}</span>
-                    </div>
+              {logs.length === 0 ? (
+                <tr>
+                  <td colSpan={6} className="px-6 py-12 text-center text-body-md text-on-surface-variant">
+                    No audit log entries found.
                   </td>
-                  <td className="px-6 py-4">
-                    <div className="flex items-center gap-2">
-                      {l.userIcon === 'initials' ? (
-                        <div className={`w-6 h-6 rounded-full ${l.userColor} text-[10px] flex items-center justify-center font-bold`}>{l.initials}</div>
-                      ) : (
-                        <span className="material-symbols-outlined text-on-surface-variant text-[20px]">{l.icon}</span>
-                      )}
-                      <span className={`text-body-md ${l.user === 'unknown_user' ? 'text-error' : ''}`}>{l.user}</span>
-                    </div>
-                  </td>
-                  <td className="px-6 py-4">
-                    <span className="text-code-sm bg-surface-container-high px-2 py-1 rounded">{l.resource}</span>
-                  </td>
-                  <td className="px-6 py-4 text-body-md text-on-surface-variant">{l.details}</td>
-                  <td className="px-6 py-4 text-code-sm text-on-surface-variant">{l.ip}</td>
-                  <td className="px-6 py-4 text-body-md text-on-surface-variant">{l.timestamp}</td>
                 </tr>
-              ))}
+              ) : (
+                logs.map((l: any) => (
+                  <tr key={l.id} className="hover:bg-surface-container transition-colors group cursor-pointer">
+                    <td className="px-6 py-4">
+                      <div className="flex items-center gap-3">
+                        <div className={`w-2 h-2 rounded-full ${actionColor(l.action)}`}></div>
+                        <span className="text-body-md font-bold text-on-surface">{l.action}</span>
+                      </div>
+                    </td>
+                    <td className="px-6 py-4">
+                      <div className="flex items-center gap-2">
+                        <div className="w-6 h-6 rounded-full bg-secondary-container text-[10px] flex items-center justify-center font-bold text-on-secondary-container">
+                          {userInitials(l.user_name || 'System')}
+                        </div>
+                        <span className="text-body-md">{l.user_name || 'System'}</span>
+                      </div>
+                    </td>
+                    <td className="px-6 py-4">
+                      <span className="text-code-sm bg-surface-container-high px-2 py-1 rounded">
+                        {l.resource_type}{l.resource_id ? `-${l.resource_id}` : ''}
+                      </span>
+                    </td>
+                    <td className="px-6 py-4 text-body-md text-on-surface-variant max-w-xs truncate">
+                      {l.description || formatDetail(l.details)}
+                    </td>
+                    <td className="px-6 py-4 text-code-sm text-on-surface-variant">{l.ip_address || '-'}</td>
+                    <td className="px-6 py-4 text-body-md text-on-surface-variant whitespace-nowrap">
+                      {formatTimestamp(l.timestamp)}
+                    </td>
+                  </tr>
+                ))
+              )}
             </tbody>
           </table>
         </div>
         <div className="px-6 py-4 border-t border-outline-variant bg-surface-container-low flex items-center justify-between">
-          <p className="text-body-md text-on-surface-variant">Showing 1 to {filtered.length} of {logs.length} events</p>
+          <p className="text-body-md text-on-surface-variant">
+            Showing {(page - 1) * limit + 1} to {Math.min(page * limit, total)} of {total} events
+          </p>
           <div className="flex items-center gap-2">
-            <button className="p-2 border border-outline-variant rounded-lg hover:bg-surface-container-high disabled:opacity-30" disabled>
+            <button
+              className="p-2 border border-outline-variant rounded-lg hover:bg-surface-container-high disabled:opacity-30"
+              disabled={page <= 1}
+              onClick={() => setPage(p => p - 1)}
+            >
               <span className="material-symbols-outlined text-[20px]">chevron_left</span>
             </button>
-            <button className="w-10 h-10 bg-primary text-on-primary rounded-lg font-bold text-body-md">1</button>
-            <button className="p-2 border border-outline-variant rounded-lg hover:bg-surface-container-high disabled:opacity-30" disabled>
+            {totalPages <= 7 ? (
+              Array.from({ length: totalPages }, (_, i) => i + 1).map(p => (
+                <button
+                  key={p}
+                  onClick={() => setPage(p)}
+                  className={`w-10 h-10 rounded-lg font-bold text-body-md transition-all ${
+                    p === page
+                      ? 'bg-primary text-on-primary'
+                      : 'hover:bg-surface-container-high text-on-surface-variant'
+                  }`}
+                >
+                  {p}
+                </button>
+              ))
+            ) : (
+              <>
+                {page > 1 && (
+                  <button onClick={() => setPage(1)} className="w-10 h-10 rounded-lg hover:bg-surface-container-high text-body-md text-on-surface-variant">1</button>
+                )}
+                {page > 3 && <span className="text-body-md text-on-surface-variant px-1">...</span>}
+                {Array.from({ length: 5 }, (_, i) => Math.max(1, page - 2) + i).filter(p => p <= totalPages).map(p => (
+                  <button
+                    key={p}
+                    onClick={() => setPage(p)}
+                    className={`w-10 h-10 rounded-lg font-bold text-body-md transition-all ${
+                      p === page
+                        ? 'bg-primary text-on-primary'
+                        : 'hover:bg-surface-container-high text-on-surface-variant'
+                    }`}
+                  >
+                    {p}
+                  </button>
+                ))}
+                {page < totalPages - 2 && <span className="text-body-md text-on-surface-variant px-1">...</span>}
+                {page < totalPages && (
+                  <button onClick={() => setPage(totalPages)} className="w-10 h-10 rounded-lg hover:bg-surface-container-high text-body-md text-on-surface-variant">{totalPages}</button>
+                )}
+              </>
+            )}
+            <button
+              className="p-2 border border-outline-variant rounded-lg hover:bg-surface-container-high disabled:opacity-30"
+              disabled={page >= totalPages}
+              onClick={() => setPage(p => p + 1)}
+            >
               <span className="material-symbols-outlined text-[20px]">chevron_right</span>
             </button>
           </div>

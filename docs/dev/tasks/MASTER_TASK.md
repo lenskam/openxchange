@@ -132,64 +132,72 @@ tasks:
 
   - id: 2.1
     description: "Create Mapping SQLAlchemy model (variable, org_unit, options, date_format)"
-    status: pending
+    status: completed
     created_at: 2025-01-15T00:00:00Z
+    completed_at: 2026-06-18T00:00:00Z
     plan_id: phase-2-mapping
     priority: high
     depends_on: [1.4]
 
   - id: 2.2
     description: "Create Pydantic schemas for Mapping (upload, response)"
-    status: pending
+    status: completed
     created_at: 2025-01-15T00:00:00Z
+    completed_at: 2026-06-18T00:00:00Z
     plan_id: phase-2-mapping
     priority: high
     depends_on: [2.1]
 
   - id: 2.3
     description: "Implement Mapping repository"
-    status: pending
+    status: completed
     created_at: 2025-01-15T00:00:00Z
+    completed_at: 2026-06-18T00:00:00Z
     plan_id: phase-2-mapping
     priority: high
     depends_on: [2.2]
 
   - id: 2.4
     description: "Implement file upload endpoint (CSV, Excel, JSON, XML parsing)"
-    status: pending
+    status: completed
     created_at: 2025-01-15T00:00:00Z
+    completed_at: 2026-06-18T00:00:00Z
     plan_id: phase-2-mapping
     priority: high
     depends_on: [2.3]
 
   - id: 2.5
     description: "Implement MappingEngine service (transformation logic)"
-    status: pending
+    status: completed
     created_at: 2025-01-15T00:00:00Z
+    completed_at: 2026-06-18T00:00:00Z
     plan_id: phase-2-mapping
     priority: high
     depends_on: [2.4]
 
   - id: 2.6
     description: "Create Mappings API endpoints"
-    status: pending
+    status: completed
     created_at: 2025-01-15T00:00:00Z
+    completed_at: 2026-06-18T00:00:00Z
     plan_id: phase-2-mapping
     priority: high
     depends_on: [2.5]
 
   - id: 2.7
     description: "Create Frontend Mappings page with upload functionality"
-    status: pending
+    status: completed
     created_at: 2025-01-15T00:00:00Z
+    completed_at: 2026-06-18T00:00:00Z
     plan_id: phase-2-mapping
     priority: high
     depends_on: [2.6]
 
   - id: 2.8
     description: "Add Mappings page to routing and sidebar"
-    status: pending
+    status: completed
     created_at: 2025-01-15T00:00:00Z
+    completed_at: 2026-06-18T00:00:00Z
     plan_id: phase-2-mapping
     priority: medium
     depends_on: [2.7]
@@ -200,80 +208,90 @@ tasks:
 
   - id: 3.1
     description: "Create Workflow SQLAlchemy model"
-    status: pending
+    status: completed
     created_at: 2025-01-22T00:00:00Z
+    completed_at: 2026-06-18T00:00:00Z
     plan_id: phase-3-workflow-channel
     priority: high
     depends_on: [1.4]
 
   - id: 3.2
     description: "Create Channel SQLAlchemy model"
-    status: pending
+    status: completed
     created_at: 2025-01-22T00:00:00Z
+    completed_at: 2026-06-18T00:00:00Z
     plan_id: phase-3-workflow-channel
     priority: high
     depends_on: [3.1]
 
   - id: 3.3
     description: "Create Pydantic schemas for Workflow and Channel"
-    status: pending
+    status: completed
     created_at: 2025-01-22T00:00:00Z
+    completed_at: 2026-06-18T00:00:00Z
     plan_id: phase-3-workflow-channel
     priority: high
     depends_on: [3.2]
 
   - id: 3.4
     description: "Implement Workflow repository and service"
-    status: pending
+    status: completed
     created_at: 2025-01-22T00:00:00Z
+    completed_at: 2026-06-18T00:00:00Z
     plan_id: phase-3-workflow-channel
     priority: high
     depends_on: [3.3]
 
   - id: 3.5
     description: "Implement Channel repository and service"
-    status: pending
+    status: completed
     created_at: 2025-01-22T00:00:00Z
+    completed_at: 2026-06-18T00:00:00Z
     plan_id: phase-3-workflow-channel
     priority: high
     depends_on: [3.4]
 
   - id: 3.6
     description: "Create Workflow API endpoints"
-    status: pending
+    status: completed
     created_at: 2025-01-22T00:00:00Z
+    completed_at: 2026-06-18T00:00:00Z
     plan_id: phase-3-workflow-channel
     priority: high
     depends_on: [3.5]
 
   - id: 3.7
     description: "Create Channel API endpoints"
-    status: pending
+    status: completed
     created_at: 2025-01-22T00:00:00Z
+    completed_at: 2026-06-18T00:00:00Z
     plan_id: phase-3-workflow-channel
     priority: high
     depends_on: [3.6]
 
   - id: 3.8
     description: "Set up Celery Beat for workflow scheduling"
-    status: pending
+    status: completed
     created_at: 2025-01-22T00:00:00Z
+    completed_at: 2026-06-18T00:00:00Z
     plan_id: phase-3-workflow-channel
     priority: high
     depends_on: [3.6]
 
   - id: 3.9
     description: "Create Frontend Workflows page"
-    status: pending
+    status: completed
     created_at: 2025-01-22T00:00:00Z
+    completed_at: 2026-06-18T00:00:00Z
     plan_id: phase-3-workflow-channel
     priority: high
     depends_on: [3.7]
 
   - id: 3.10
     description: "Create Frontend Channels page"
-    status: pending
+    status: completed
     created_at: 2025-01-22T00:00:00Z
+    completed_at: 2026-06-18T00:00:00Z
     plan_id: phase-3-workflow-channel
     priority: high
     depends_on: [3.9]
@@ -284,72 +302,81 @@ tasks:
 
   - id: 4.1
     description: "Create Transaction SQLAlchemy model"
-    status: pending
+    status: completed
     created_at: 2025-01-27T00:00:00Z
+    completed_at: 2026-06-18T00:00:00Z
     plan_id: phase-4-execution
     priority: high
     depends_on: [3.1]
 
   - id: 4.2
     description: "Create AuditLog SQLAlchemy model"
-    status: pending
+    status: completed
     created_at: 2025-01-27T00:00:00Z
+    completed_at: 2026-06-18T00:00:00Z
     plan_id: phase-4-execution
     priority: high
     depends_on: [4.1]
 
   - id: 4.3
     description: "Implement workflow executor Celery task"
-    status: pending
+    status: completed
     created_at: 2025-01-27T00:00:00Z
+    completed_at: 2026-06-18T00:00:00Z
     plan_id: phase-4-execution
     priority: high
     depends_on: [4.2]
 
   - id: 4.4
     description: "Implement external system adapters (DHIS2, FHIR, etc.)"
-    status: pending
+    status: completed
     created_at: 2025-01-27T00:00:00Z
+    completed_at: 2026-06-18T00:00:00Z
     plan_id: phase-4-execution
     priority: high
     depends_on: [4.3]
 
   - id: 4.5
     description: "Set up WebSocket for real-time transaction updates"
-    status: pending
+    status: completed
     created_at: 2025-01-27T00:00:00Z
+    completed_at: 2026-06-18T00:00:00Z
     plan_id: phase-4-execution
     priority: high
     depends_on: [4.4]
 
   - id: 4.6
     description: "Create Transactions API endpoints"
-    status: pending
+    status: completed
     created_at: 2025-01-27T00:00:00Z
+    completed_at: 2026-06-18T00:00:00Z
     plan_id: phase-4-execution
     priority: high
     depends_on: [4.5]
 
   - id: 4.7
     description: "Create Audit Logs API endpoints"
-    status: pending
+    status: completed
     created_at: 2025-01-27T00:00:00Z
+    completed_at: 2026-06-18T00:00:00Z
     plan_id: phase-4-execution
     priority: medium
     depends_on: [4.6]
 
   - id: 4.8
     description: "Create Frontend Transactions page"
-    status: pending
+    status: completed
     created_at: 2025-01-27T00:00:00Z
+    completed_at: 2026-06-18T00:00:00Z
     plan_id: phase-4-execution
     priority: high
     depends_on: [4.7]
 
   - id: 4.9
     description: "Dashboard enhancements with real transaction data, stat cards, and charts"
-    status: pending
+    status: completed
     created_at: 2025-01-27T00:00:00Z
+    completed_at: 2026-06-18T00:00:00Z
     plan_id: phase-4-execution
     priority: high
     depends_on: [4.8]
@@ -370,48 +397,54 @@ tasks:
 
   - id: 5.2
     description: "Create Settings page - Profile tab"
-    status: pending
+    status: completed
     created_at: 2025-02-01T00:00:00Z
+    completed_at: 2026-06-18T00:00:00Z
     plan_id: phase-5-advanced
     priority: high
     depends_on: [5.1]
 
   - id: 5.3
     description: "Create Settings page - Organization tab"
-    status: pending
+    status: completed
     created_at: 2025-02-01T00:00:00Z
+    completed_at: 2026-06-18T00:00:00Z
     plan_id: phase-5-advanced
     priority: high
     depends_on: [5.2]
 
   - id: 5.4
     description: "Create Settings page - Notifications tab"
-    status: pending
+    status: completed
     created_at: 2025-02-01T00:00:00Z
+    completed_at: 2026-06-18T00:00:00Z
     plan_id: phase-5-advanced
     priority: medium
     depends_on: [5.3]
 
   - id: 5.5
-    description: "Create Settings page - Security tab (2FA, API keys, sessions)"
-    status: pending
+    description: "Create Settings page - Security tab (API keys)"
+    status: completed
     created_at: 2025-02-01T00:00:00Z
+    completed_at: 2026-06-18T00:00:00Z
     plan_id: phase-5-advanced
     priority: medium
     depends_on: [5.4]
 
   - id: 5.6
     description: "Create Settings page - System tab (admin operations)"
-    status: pending
+    status: completed
     created_at: 2025-02-01T00:00:00Z
+    completed_at: 2026-06-18T00:00:00Z
     plan_id: phase-5-advanced
     priority: medium
     depends_on: [5.5]
 
   - id: 5.7
-    description: "Create Frontend Audit Log page"
-    status: pending
+    description: "Create Frontend Audit Log page with pagination and search"
+    status: completed
     created_at: 2025-02-01T00:00:00Z
+    completed_at: 2026-06-18T00:00:00Z
     plan_id: phase-5-advanced
     priority: high
     depends_on: [5.6]
@@ -427,80 +460,158 @@ tasks:
     note: "Already completed during Phase 1 implementation (task 1.14)"
 
   # ============================================
-  # PHASE 6: CI/CD & DEPLOYMENT
+  # PHASE 6: CI/CD & DEPLOYMENT (Simplified for single-VPS)
   # ============================================
 
   - id: 6.1
-    description: "Create GitHub Actions CI workflow (test, build, scan, deploy)"
-    status: pending
+    description: "Create GitHub Actions CI workflow — simplified deploy step added"
+    status: completed
     created_at: 2025-02-08T00:00:00Z
+    completed_at: 2026-06-23T00:00:00Z
     plan_id: phase-6-cicd
     priority: high
-    depends_on: []
+    note: "Deploy job added to ci.yml — SSHs into VPS, pulls, rebuilds, runs migrations"
 
   - id: 6.2
-    description: "Set up production Docker Compose configuration"
-    status: pending
+    description: "Create production Docker Compose configuration"
+    status: completed
     created_at: 2025-02-08T00:00:00Z
+    completed_at: 2026-06-23T00:00:00Z
     plan_id: phase-6-cicd
     priority: high
-    depends_on: [6.1]
+    note: "Updated docker-compose.prod.yml with Dockerfile.prod, healthchecks, logging"
 
   - id: 6.3
-    description: "Configure Vault for production secrets management"
-    status: pending
+    description: "Vault production mode (deferred — dev mode acceptable for single-VPS)"
+    status: cancelled
     created_at: 2025-02-08T00:00:00Z
+    completed_at: 2026-06-23T00:00:00Z
     plan_id: phase-6-cicd
-    priority: high
-    depends_on: [6.2]
+    priority: low
+    note: "Deferred — Vault dev mode sufficient for single-tenant single-VPS deployment"
 
   - id: 6.4
-    description: "Configure Nginx reverse proxy with SSL/TLS (Let's Encrypt)"
-    status: pending
+    description: "Nginx reverse proxy with SSL — already configured, updated frontend port"
+    status: completed
     created_at: 2025-02-08T00:00:00Z
+    completed_at: 2026-06-23T00:00:00Z
     plan_id: phase-6-cicd
     priority: high
-    depends_on: [6.3]
+    note: "Host nginx with Cloudflare SSL already running. Updated frontend upstream to :8080"
 
   - id: 6.5
-    description: "Set up database backup and restore procedures (pg_dump, WAL archiving)"
-    status: pending
+    description: "Database backup script"
+    status: completed
     created_at: 2025-02-08T00:00:00Z
+    completed_at: 2026-06-23T00:00:00Z
     plan_id: phase-6-cicd
     priority: high
-    depends_on: [6.4]
+    note: "deploy/backup.sh — pg_dump custom format, compressed, 30-day retention, local disk"
 
   - id: 6.6
-    description: "Implement health check endpoints and monitoring alerts"
-    status: pending
+    description: "Health check endpoints"
+    status: completed
     created_at: 2025-02-08T00:00:00Z
+    completed_at: 2026-06-23T00:00:00Z
     plan_id: phase-6-cicd
     priority: high
-    depends_on: [6.4]
+    note: "Backend /health now checks DB, Redis, Vault connectivity. Returns 503 on failure."
 
   - id: 6.7
-    description: "Configure load balancing and horizontal scaling"
-    status: pending
+    description: "Load balancing and scaling (deferred — single VPS)"
+    status: cancelled
     created_at: 2025-02-08T00:00:00Z
+    completed_at: 2026-06-23T00:00:00Z
     plan_id: phase-6-cicd
-    priority: medium
-    depends_on: [6.6]
+    priority: low
+    note: "Deferred — horizontal scaling not applicable on single VPS without Docker Swarm/K8s"
 
   - id: 6.8
-    description: "Set up Prometheus metrics endpoint and Grafana dashboards"
-    status: pending
+    description: "Prometheus/Grafana monitoring (deferred — minimal monitoring preferred)"
+    status: cancelled
     created_at: 2025-02-08T00:00:00Z
+    completed_at: 2026-06-23T00:00:00Z
     plan_id: phase-6-cicd
-    priority: medium
-    depends_on: [6.7]
+    priority: low
+    note: "Deferred per user preference for minimal monitoring. Docker healthchecks are in place."
 
   - id: 6.9
-    description: "Create disaster recovery runbook and multi-region plan"
-    status: pending
+    description: "Disaster recovery runbook (deferred — overkill for single-VPS MVP)"
+    status: cancelled
     created_at: 2025-02-08T00:00:00Z
+    completed_at: 2026-06-23T00:00:00Z
     plan_id: phase-6-cicd
+    priority: low
+    note: "Deferred. Backups + health checks provide basic DR coverage."
+
+  # New simplified Phase 6 tasks
+
+  - id: 6.10
+    description: "Create backend/Dockerfile.prod (multi-stage, no --reload, HEALTHCHECK)"
+    status: completed
+    created_at: 2026-06-23T00:00:00Z
+    completed_at: 2026-06-23T00:00:00Z
+    plan_id: phase-6-cicd-implementation-plan
+    priority: high
+
+  - id: 6.11
+    description: "Create frontend/Dockerfile.prod + nginx.conf (multi-stage SPA build + serve)"
+    status: completed
+    created_at: 2026-06-23T00:00:00Z
+    completed_at: 2026-06-23T00:00:00Z
+    plan_id: phase-6-cicd-implementation-plan
+    priority: high
+
+  - id: 6.12
+    description: "Update deploy/docker-compose.prod.yml (prod Dockerfiles, healthchecks, logging)"
+    status: completed
+    created_at: 2026-06-23T00:00:00Z
+    completed_at: 2026-06-23T00:00:00Z
+    plan_id: phase-6-cicd-implementation-plan
+    priority: high
+
+  - id: 6.13
+    description: "Update Nginx config (frontend proxy port 5173 → 8080)"
+    status: completed
+    created_at: 2026-06-23T00:00:00Z
+    completed_at: 2026-06-23T00:00:00Z
+    plan_id: phase-6-cicd-implementation-plan
+    priority: high
+
+  - id: 6.14
+    description: "Improve backend /health endpoint (DB, Redis, Vault checks)"
+    status: completed
+    created_at: 2026-06-23T00:00:00Z
+    completed_at: 2026-06-23T00:00:00Z
+    plan_id: phase-6-cicd-implementation-plan
+    priority: high
+
+  - id: 6.15
+    description: "Create deploy/backup.sh (pg_dump, compression, 30-day retention)"
+    status: completed
+    created_at: 2026-06-23T00:00:00Z
+    completed_at: 2026-06-23T00:00:00Z
+    plan_id: phase-6-cicd-implementation-plan
     priority: medium
-    depends_on: [6.5]
+    note: "Set up cron: 0 3 * * * /usr/local/bin/interxchange-backup"
+
+  - id: 6.16
+    description: "Add deploy job to GitHub Actions CI (SSH deploy on push to main)"
+    status: completed
+    created_at: 2026-06-23T00:00:00Z
+    completed_at: 2026-06-23T00:00:00Z
+    plan_id: phase-6-cicd-implementation-plan
+    priority: high
+    note: "Requires GitHub secrets: SSH_HOST, SSH_USER, SSH_KEY"
+
+  - id: 6.17
+    description: "Verify nginx logrotate covers interxchange logs"
+    status: completed
+    created_at: 2026-06-23T00:00:00Z
+    completed_at: 2026-06-23T00:00:00Z
+    plan_id: phase-6-cicd-implementation-plan
+    priority: low
+    note: "Global /var/log/nginx/*.log pattern already covers interxchange logs"
 
   # ============================================
   # PHASE 7: TESTING, OPTIMIZATION & DOCUMENTATION

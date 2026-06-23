@@ -1,0 +1,54 @@
+{
+  "goal": "Implement Phase 6: CI/CD & Production Deployment for single-VPS Interxchange",
+  "created_at": "2026-06-23T00:00:00Z",
+  "tasks": [
+    {
+      "id": 1,
+      "description": "Create backend/Dockerfile.prod (remove --reload, add HEALTHCHECK)",
+      "status": "pending",
+      "depends_on": []
+    },
+    {
+      "id": 2,
+      "description": "Create frontend/Dockerfile.prod + nginx.conf (multi-stage SPA build + serve)",
+      "status": "pending",
+      "depends_on": []
+    },
+    {
+      "id": 3,
+      "description": "Update deploy/docker-compose.prod.yml (prod Dockerfiles, healthchecks, logging)",
+      "status": "pending",
+      "depends_on": [1, 2]
+    },
+    {
+      "id": 4,
+      "description": "Update deploy/nginx/interxchange (frontend proxy :5173 → :8080)",
+      "status": "pending",
+      "depends_on": [3]
+    },
+    {
+      "id": 5,
+      "description": "Improve backend /health endpoint (DB, Redis, Vault connectivity checks)",
+      "status": "pending",
+      "depends_on": []
+    },
+    {
+      "id": 6,
+      "description": "Create deploy/backup.sh (pg_dump with rotation, cron setup)",
+      "status": "pending",
+      "depends_on": []
+    },
+    {
+      "id": 7,
+      "description": "Add deploy job to .github/workflows/ci.yml (SSH deploy on push to main)",
+      "status": "pending",
+      "depends_on": [3, 4]
+    },
+    {
+      "id": 8,
+      "description": "Check/set up nginx logrotate for interxchange logs",
+      "status": "pending",
+      "depends_on": []
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Menu, MenuItem } from "@mui/material";
-import { useAuth } from "../../features/auth/AuthContext";
+import { useAuth } from "../../features/auth/useAuth";
 import { useNavigate } from "react-router-dom";
 
 interface TopBarProps {

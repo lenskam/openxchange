@@ -15,6 +15,48 @@ import { useNavigate } from "react-router-dom";
 import api from "../../services/api";
 import LoadingSpinner from "../../components/common/LoadingSpinner";
 
+interface DashboardStats {
+  connections: { total: number; active: number };
+  workflows: { total: number; active: number };
+  transactions: { total: number; success_rate: number };
+  records: { total: string; failed: number };
+}
+
+interface VolumeDataItem {
+  month: string;
+  success: number;
+  failed: number;
+}
+
+interface TransactionItem {
+  id: number;
+  workflow: string;
+  desc?: string;
+  records?: number;
+  processed_count?: number;
+  duration?: string;
+  status: string;
+}
+
+interface ActivityItem {
+  icon?: string;
+  iconBg?: string;
+  user?: string;
+  action?: string;
+  resource?: string;
+  detail?: string;
+  time?: string;
+  timestamp?: string;
+}
+
+interface WorkflowItem {
+  name: string;
+  desc?: string;
+  schedule: string;
+  lastRun?: string;
+  last_run?: string;
+}
+
 const pieColors = ["#2563eb", "#505f76", "#ba1a1a", "#c3c6d7"];
 
 const defaultStats = {
@@ -207,11 +249,11 @@ function StatCard({
 
 const DashboardPage: React.FC = () => {
   const navigate = useNavigate();
-  const [stats, setStats] = useState<any>(null);
-  const [volumeData, setVolumeData] = useState<any[]>([]);
-  const [recentTxns, setRecentTxns] = useState<any[]>([]);
-  const [activity, setActivity] = useState<any[]>([]);
-  const [workflows, setWorkflows] = useState<any[]>([]);
+  const [stats, setStats] = useState<DashboardStats | null>(null);
+  const [volumeData, setVolumeData] = useState<VolumeDataItem[]>([]);
+  const [recentTxns, setRecentTxns] = useState<TransactionItem[]>([]);
+  const [activity, setActivity] = useState<ActivityItem[]>([]);
+  const [workflows, setWorkflows] = useState<WorkflowItem[]>([]);
   const [loading, setLoading] = useState(true);
 
   const fetchAll = useCallback(async () => {
@@ -494,7 +536,7 @@ const DashboardPage: React.FC = () => {
                 </tr>
               </thead>
               <tbody className="divide-y divide-outline-variant">
-                {txns.slice(0, 5).map((txn: any) => (
+                {txns.slice(0, 5).map((txn: TransactionItem) => (
                   <tr
                     key={txn.id}
                     className="hover:bg-surface-container-low transition-colors"
@@ -542,7 +584,7 @@ const DashboardPage: React.FC = () => {
           </h3>
           <div className="space-y-6 relative">
             <div className="absolute left-[19px] top-2 bottom-0 w-px bg-outline-variant" />
-            {feed.slice(0, 4).map((act: any, i: number) => (
+            {feed.slice(0, 4).map((act: ActivityItem, i: number) => (
               <div key={i} className="relative flex gap-4">
                 <div
                   className={`z-10 w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 ${act.iconBg || "bg-primary-fixed text-primary"}`}
@@ -583,7 +625,7 @@ const DashboardPage: React.FC = () => {
           Active Workflows
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-          {wfs.slice(0, 3).map((wf: any, i: number) => (
+          {wfs.slice(0, 3).map((wf: WorkflowItem, i: number) => (
             <div
               key={i}
               className="glass-card p-6 rounded-xl hover:border-primary transition-all group cursor-pointer"

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   Container,
   Box,
@@ -9,35 +9,40 @@ import {
   Alert,
   CircularProgress,
   Link,
-} from '@mui/material';
-import { useNavigate } from 'react-router-dom';
-import api from '../../services/api';
-import { useAuth } from './AuthContext';
+} from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import api from "../../services/api";
+import { useAuth } from "./useAuth";
 
 const LoginPage: React.FC = () => {
   const [isRegister, setIsRegister] = useState(false);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [fullName, setFullName] = useState('');
-  const [error, setError] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [fullName, setFullName] = useState("");
+  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  
+
   const { login } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError('');
+    setError("");
     setLoading(true);
 
     try {
       if (isRegister) {
-        await api.post('/auth/register', { email, password, full_name: fullName });
+        await api.post("/auth/register", {
+          email,
+          password,
+          full_name: fullName,
+        });
       }
       await login(email, password);
-      navigate('/dashboard');
-    } catch (err: any) {
-      setError(err.response?.data?.detail || 'Failed to login');
+      navigate("/dashboard");
+    } catch (err: unknown) {
+      const apiErr = err as { response?: { data?: { detail?: string } } };
+      setError(apiErr.response?.data?.detail || "Failed to login");
     } finally {
       setLoading(false);
     }
@@ -48,17 +53,22 @@ const LoginPage: React.FC = () => {
       <Box
         sx={{
           marginTop: 8,
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
         }}
       >
-        <Paper elevation={3} sx={{ p: 4, width: '100%' }}>
+        <Paper elevation={3} sx={{ p: 4, width: "100%" }}>
           <Typography component="h1" variant="h5" align="center" gutterBottom>
             Interxchange
           </Typography>
-          <Typography variant="body2" align="center" color="text.secondary" sx={{ mb: 3 }}>
-            {isRegister ? 'Create your account' : 'Data Integration Platform'}
+          <Typography
+            variant="body2"
+            align="center"
+            color="text.secondary"
+            sx={{ mb: 3 }}
+          >
+            {isRegister ? "Create your account" : "Data Integration Platform"}
           </Typography>
 
           {error && (
@@ -103,7 +113,7 @@ const LoginPage: React.FC = () => {
               label="Password"
               type="password"
               id="password"
-              autoComplete={isRegister ? 'new-password' : 'current-password'}
+              autoComplete={isRegister ? "new-password" : "current-password"}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               disabled={loading}
@@ -115,16 +125,27 @@ const LoginPage: React.FC = () => {
               sx={{ mt: 3, mb: 2 }}
               disabled={loading}
             >
-              {loading ? <CircularProgress size={24} /> : (isRegister ? 'Sign Up' : 'Sign In')}
+              {loading ? (
+                <CircularProgress size={24} />
+              ) : isRegister ? (
+                "Sign Up"
+              ) : (
+                "Sign In"
+              )}
             </Button>
-            <Box sx={{ textAlign: 'center' }}>
+            <Box sx={{ textAlign: "center" }}>
               <Link
                 component="button"
                 variant="body2"
-                onClick={() => { setIsRegister(!isRegister); setError(''); }}
+                onClick={() => {
+                  setIsRegister(!isRegister);
+                  setError("");
+                }}
                 underline="hover"
               >
-                {isRegister ? 'Already have an account? Sign In' : "Don't have an account? Sign Up"}
+                {isRegister
+                  ? "Already have an account? Sign In"
+                  : "Don't have an account? Sign Up"}
               </Link>
             </Box>
           </Box>

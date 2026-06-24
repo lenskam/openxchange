@@ -26,7 +26,7 @@ A data integration platform that connects health information systems (DHIS2, Ope
 | Layer | Technology |
 |-------|-----------|
 | **Backend** | Python 3.11, FastAPI, SQLAlchemy 2.0 (async), Alembic |
-| **Frontend** | React 19, TypeScript, MUI 7, Redux Toolkit, Recharts, Vite 7 |
+| **Frontend** | React 19, TypeScript, MUI 7, Redux Toolkit, Recharts, Vite 7, Tailwind CSS |
 | **Database** | PostgreSQL 15 |
 | **Cache / Queue** | Redis 7 |
 | **Secrets** | HashiCorp Vault 1.15 |

@@ -8,7 +8,7 @@ logger = logging.getLogger(__name__)
 class VaultService:
     def __init__(self):
         self.client = hvac.Client(
-            url=settings.VAULT_URL,
+            url=settings.VAULT_ADDR,
             token=settings.VAULT_TOKEN
         )
 

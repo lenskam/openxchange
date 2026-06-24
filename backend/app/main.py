@@ -77,7 +77,7 @@ async def _check_redis():
 async def _check_vault():
     try:
         import hvac
-        client = hvac.Client(url=settings.VAULT_URL, token=settings.VAULT_TOKEN)
+        client = hvac.Client(url=settings.VAULT_ADDR, token=settings.VAULT_TOKEN)
         if client.is_authenticated():
             return {"status": "healthy"}
         return {"status": "unhealthy", "detail": "Vault client not authenticated"}

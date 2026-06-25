@@ -160,7 +160,9 @@ jobs:
           set -e
           mkdir -p ~/.ssh
           echo "SSH connection test running..."
-          echo "$SSH_KEY" > ~/.ssh/deploy_key
+          cat > ~/.ssh/deploy_key <<'KEYEOF'
+${{ secrets.SSH_KEY }}
+KEYEOF
           chmod 600 ~/.ssh/deploy_key
           ssh -o StrictHostKeyChecking=no -o ServerAliveInterval=30 \
             -i ~/.ssh/deploy_key \

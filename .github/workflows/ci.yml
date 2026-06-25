@@ -151,15 +151,19 @@ jobs:
 
     steps:
       - name: Deploy to production VPS
-        uses: appleboy/ssh-action@v1.2.0
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_KEY }}
-          port: ${{ secrets.SSH_PORT || 22 }}
-          script: |
-            set -e
-            cd /home/deployer/projects/interxchange
-            git pull origin main
-            bash deploy/deploy.sh
-            echo "Deploy completed successfully"
+        env:
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_USER: ${{ secrets.SSH_USER }}
+          SSH_KEY: ${{ secrets.SSH_KEY }}
+          SSH_PORT: ${{ secrets.SSH_PORT || 22 }}
+        run: |
+          set -e
+          mkdir -p ~/.ssh
+          echo "SSH connection test running..."
+          echo "$SSH_KEY" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh -o StrictHostKeyChecking=no -o ServerAliveInterval=30 \
+            -i ~/.ssh/deploy_key \
+            -p "$SSH_PORT" \
+            "$SSH_USER@$SSH_HOST" \
+            "cd /home/deployer/projects/interxchange && git pull origin main && bash deploy/deploy.sh && echo 'Deploy completed successfully'"

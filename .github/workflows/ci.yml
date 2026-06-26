@@ -160,8 +160,12 @@ jobs:
           set -e
           mkdir -p ~/.ssh
           echo "SSH connection test running..."
-          echo "$SSH_KEY" > ~/.ssh/deploy_key
-          chmod 600 ~/.ssh/deploy_key
+          python3 -c "
+import os
+with open(os.path.expanduser('~/.ssh/deploy_key'), 'w') as f:
+    f.write(os.environ.get('SSH_KEY', ''))
+os.chmod(os.path.expanduser('~/.ssh/deploy_key'), 0o600)
+"
           ssh -o StrictHostKeyChecking=no -o ServerAliveInterval=30 \
             -i ~/.ssh/deploy_key \
             -p "$SSH_PORT" \

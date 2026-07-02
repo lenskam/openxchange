@@ -35,7 +35,16 @@ sudo cp "$SCRIPT_DIR/nginx/interxchange" /etc/nginx/sites-available/interxchange
 sudo ln -sf /etc/nginx/sites-available/interxchange /etc/nginx/sites-enabled/interxchange
 echo "[OK] Nginx config placed"
 
-# ── Step 3: Clean up previous containers ──────
+# ── Step 3: Export port overrides for .env ────
+# These override any old values in .env to prevent port conflicts
+export POSTGRES_HOST_PORT="${POSTGRES_HOST_PORT:-15432}"
+export REDIS_HOST_PORT="${REDIS_HOST_PORT:-16379}"
+export VAULT_HOST_PORT="${VAULT_HOST_PORT:-18200}"
+export BACKEND_HOST_PORT="${BACKEND_HOST_PORT:-18000}"
+export FRONTEND_HOST_PORT="${FRONTEND_HOST_PORT:-18081}"
+echo "[OK] Ports configured (Postgres=$POSTGRES_HOST_PORT, Redis=$REDIS_HOST_PORT, Vault=$VAULT_HOST_PORT, Backend=$BACKEND_HOST_PORT, Frontend=$FRONTEND_HOST_PORT)"
+
+# ── Step 4: Clean up previous containers ──────
 echo ""
 echo "--- Stopping previous containers ---"
 docker compose -f "$SCRIPT_DIR/docker-compose.prod.yml" down --remove-orphans || true
@@ -46,20 +55,20 @@ docker rm -f $(docker ps -aqf "name=deploy-") 2>/dev/null || true
 echo "[OK] Stale containers removed"
 
 echo "--- Freeing any reserved ports ---"
-for port in 5434 8000 8081; do
+for port in 15432 16379 18200 18000 18081; do
   if command -v fuser &>/dev/null; then
     fuser -k "${port}/tcp" 2>/dev/null || true
   fi
 done
 echo "[OK] Ports freed"
 
-# ── Step 4: Build and start services ──────────
+# ── Step 5: Build and start services ──────────
 echo ""
 echo "--- Building and starting Docker services ---"
 docker compose -f "$SCRIPT_DIR/docker-compose.prod.yml" up -d --build
 echo "[OK] Services started"
 
-# ── Step 5: Run database migrations ───────────
+# ── Step 6: Run database migrations ───────────
 echo ""
 echo "--- Running database migrations ---"
 echo "Waiting for backend to be ready..."
@@ -67,13 +76,13 @@ sleep 5
 docker compose -f "$SCRIPT_DIR/docker-compose.prod.yml" exec -T backend alembic upgrade head || echo "[WARN] Migrations failed (may need manual retry)"
 echo "[OK] Migrations applied"
 
-# ── Step 6: Reload Nginx ──────────────────────
+# ── Step 7: Reload Nginx ──────────────────────
 echo ""
 echo "--- Reloading Nginx ---"
 sudo nginx -t && sudo systemctl reload nginx
 echo "[OK] Nginx reloaded"
 
-# ── Step 7: Status summary ────────────────────
+# ── Step 8: Status summary ────────────────────
 echo ""
 echo "=========================================="
 echo "  Deployment Complete"

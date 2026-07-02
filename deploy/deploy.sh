@@ -39,7 +39,19 @@ echo "[OK] Nginx config placed"
 echo ""
 echo "--- Stopping previous containers ---"
 docker compose -f "$SCRIPT_DIR/docker-compose.prod.yml" down --remove-orphans || true
-echo "[OK] Previous containers stopped"
+echo "[OK] Graceful compose down done"
+
+echo "--- Force-removing any stale deploy containers ---"
+docker rm -f $(docker ps -aqf "name=deploy-") 2>/dev/null || true
+echo "[OK] Stale containers removed"
+
+echo "--- Freeing any reserved ports ---"
+for port in 5434 8000 8081; do
+  if command -v fuser &>/dev/null; then
+    fuser -k "${port}/tcp" 2>/dev/null || true
+  fi
+done
+echo "[OK] Ports freed"
 
 # ── Step 4: Build and start services ──────────
 echo ""
